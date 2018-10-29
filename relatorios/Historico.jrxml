@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="afefb4be-fb9b-4ad0-9e6d-a7ec6b405390">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="adapterSischool"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="455"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="531"/>
+	<subDataset name="DataSetTabela" uuid="10a93e26-97cc-4858-891f-c1e2e85b0304">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AdapterSischool.xml"/>
+		<queryString language="SQL">
+			<![CDATA[select * from notasfaltas]]>
+		</queryString>
+		<field name="ID" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="ID"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="ANO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="ANO"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="FALTAS" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="FALTAS"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="MATERIA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="MATERIA"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="NOTA1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOTA1"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="NOTA2" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOTA2"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="NOTA3" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOTA3"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="NOTA4" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOTA4"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+		<field name="ALUNO_ID" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="ALUNO_ID"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="notasfaltas"/>
+		</field>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[select * from aluno]]>
+	</queryString>
+	<field name="nota1" class="java.lang.String">
+		<fieldDescription><![CDATA[nota1]]></fieldDescription>
+	</field>
+	<field name="aluno" class="br.com.davi.sischool.model.Aluno">
+		<fieldDescription><![CDATA[aluno]]></fieldDescription>
+	</field>
+	<field name="ano" class="java.lang.String">
+		<fieldDescription><![CDATA[ano]]></fieldDescription>
+	</field>
+	<field name="nota4" class="java.lang.String">
+		<fieldDescription><![CDATA[nota4]]></fieldDescription>
+	</field>
+	<field name="nota2" class="java.lang.String">
+		<fieldDescription><![CDATA[nota2]]></fieldDescription>
+	</field>
+	<field name="nota3" class="java.lang.String">
+		<fieldDescription><![CDATA[nota3]]></fieldDescription>
+	</field>
+	<field name="materia" class="java.lang.String">
+		<fieldDescription><![CDATA[materia]]></fieldDescription>
+	</field>
+	<field name="faltas" class="java.lang.String">
+		<fieldDescription><![CDATA[faltas]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement x="292" y="3" width="70" height="20" uuid="d822d185-d894-42b3-b27f-5b946aa6bb2d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="221" y="3" width="70" height="20" uuid="a3c66ae8-06a1-4daa-837d-ba4fb5bf9d8e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="150" y="3" width="70" height="20" uuid="2e2fbc3f-8af6-4d04-97f5-a53b50b373b8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="80" y="3" width="70" height="20" uuid="e32b6e28-17df-456f-8aad-a24214acc247"/>
+			</rectangle>
+			<textField>
+				<reportElement x="84" y="5" width="66" height="18" uuid="329b9f05-fcb3-46ce-92db-923f5b4ba55b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0da665c-5d47-4e2e-88d0-9a2617faff36"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nota1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="5" width="50" height="18" uuid="557c7dff-1665-49e1-a1b7-23d5c0a609c8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36998319-7e56-4b7d-9f92-32148e39f1ee"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nota2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="4" width="50" height="18" uuid="abb4c6c0-0bfc-454b-b307-017df9c3d808">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e98ef3b-aeba-4611-8266-ac6ba088dbe2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nota3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="3" width="45" height="19" uuid="51b4213c-a986-4ca7-b4af-31be4978ddd9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e34339b6-6359-499b-a8e1-ffeebd3ea245"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nota4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

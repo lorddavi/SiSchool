@@ -1,0 +1,126 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.davi.sischool.regras;
+
+import br.com.davi.sischool.model.Aluno;
+import br.com.davi.sischool.model.Turma;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.TypedQuery;
+
+/**
+ *
+ * @author Davi
+ */
+public class AlunoDAO {
+    Aluno aluno = null;
+    NotasFaltasDAO bfdao = new NotasFaltasDAO();
+    
+    public AlunoDAO(){
+        
+    }
+    
+    public void inserir(Aluno aluno){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();    
+	em.getTransaction().begin();
+	em.persist(aluno);
+	em.getTransaction().commit();
+	em.close();
+	cem.fecharEM();
+    }
+    
+    public void editar(Aluno aluno){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+	em.getTransaction().begin();
+	Aluno a = aluno;
+        em.merge(a);
+	em.getTransaction().commit();
+	em.close();
+	cem.fecharEM();
+    }
+    
+    public void excluir(Aluno aluno){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+	em.getTransaction().begin();
+	Aluno a2 = em.merge(aluno);
+        em.remove(a2);
+	em.getTransaction().commit();
+	em.close();
+	cem.fecharEM();
+    }
+    
+    public List<Aluno> buscarPorNome(String busca){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        TypedQuery<Aluno> consulta = em.createQuery(
+            "SELECT a FROM Pessoa p, Aluno a WHERE p.id = a.id AND p.nome LIKE :busca", Aluno.class);
+        consulta.setParameter("busca", busca);
+        List<Aluno> alunos = consulta.getResultList();
+        em.close();
+        cem.fecharEM();
+        return alunos;
+    }
+    
+    public Aluno buscarUmPorRa(String ra){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        try {
+            TypedQuery<Aluno> consulta = 
+                em.createQuery("SELECT a FROM Aluno a WHERE a.ra like :ra", Aluno.class);
+            consulta.setParameter("ra", ra);
+            aluno = consulta.getSingleResult();
+        } catch(NoResultException ex) {
+    		System.out.println("Aluno não encontrado");
+        } catch(NonUniqueResultException ex) {
+    		System.out.println("Mais que um resultado encontrado");
+        }
+        em.close();
+        cem.fecharEM();    
+        
+        return aluno;
+    }
+    
+    public List<Aluno> buscaTodos(){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<Aluno> alunos = null;
+        try {
+            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a", Aluno.class);
+            alunos = consulta.getResultList();
+        } catch(NoResultException ex) {
+    		System.out.println("Aluno não encontrado");
+        }
+        em.close();
+        cem.fecharEM();    
+        
+        return alunos;
+    }
+    
+    public List<Aluno> buscaPorTurma(Turma turma){
+            CriaEntityManager cem = new CriaEntityManager();
+    EntityManager em = cem.criarEM();
+        List<Aluno> alunos = null;
+        try {
+            TypedQuery<Aluno> consulta = em.createQuery(
+                "SELECT a FROM Aluno a, Turma t WHERE t = :turma AND a.serie = t", Aluno.class);
+            consulta.setParameter("turma", turma);
+            alunos = consulta.getResultList();
+        } catch (NoResultException ex) {
+            System.out.println("Alunos não encontrados.");
+        } 
+        
+        em.close();
+        cem.fecharEM();
+        
+        return alunos;
+    }
+    
+}

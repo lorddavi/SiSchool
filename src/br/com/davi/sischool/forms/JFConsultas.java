@@ -13,7 +13,6 @@ import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.NotasFaltas;
 import br.com.davi.sischool.model.OutroCargo;
-import br.com.davi.sischool.model.Telefone;
 import br.com.davi.sischool.regras.AlunoDAO;
 import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.OutroCargoDAO;
@@ -23,8 +22,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -84,7 +81,7 @@ public class JFConsultas extends javax.swing.JFrame {
 	// Cria a fonte de dados
             int linha = tblConsultaAluno.getSelectedRow();
             List<NotasFaltas> nf = tma.getAluno(linha).getNotasFaltas();
-	           JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(nf);
+	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(nf);
 	// Preenche o relatório
 	           JasperPrint print = JasperFillManager.fillReport("relatorios/Historico.jasper", null, ds);
 	// Exibe o relatório
@@ -105,7 +102,15 @@ public class JFConsultas extends javax.swing.JFrame {
 
     private void buscarAluno() {
         try {
-            List<Aluno> alunos = adao.buscarPorNome('%' + txtConsultaAluno.getText() + '%');
+            List<Aluno> alunos = new ArrayList<>();
+            String busca = '%' + txtConsultaAluno.getText() + '%';
+            if (radioNomeConsultaAluno.isSelected()) {
+                alunos = adao.buscarPorNome(busca);
+            } else if (radioRaConsultaAluno.isSelected()){
+                alunos = adao.buscarUmPorRa(busca);
+            } else if (radioDataNascConsultaAluno.isSelected()){
+                
+            }
             tma = new TableModelAluno(alunos);
             tblConsultaAluno.setModel(tma);
         } catch (Exception ex) {
@@ -122,6 +127,19 @@ public class JFConsultas extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Erro ao buscar escola");
         }
+    }
+    
+    private void editar(){
+        AbrirTelas at = new AbrirTelas();
+                
+        int linha = tblConsultaAluno.getSelectedRow();
+        Aluno a = tma.getAluno(linha);
+        OutroCargo oc = new OutroCargo();
+        OutroCargoDAO ocdao = new OutroCargoDAO();
+                
+        oc = ocdao.buscarFunc(funcLogado.getId());
+                
+        at.abrirJFCadastrarAlunosEdicao(oc, a);
     }
     
     private void excluirAluno(Aluno a){
@@ -474,16 +492,7 @@ public class JFConsultas extends javax.swing.JFrame {
             } else if (evt.getSource() == btnConsultarAluno){
                 
             } else if (evt.getSource() == btnEditar){
-                AbrirTelas at = new AbrirTelas();
-                
-                int linha = tblConsultaAluno.getSelectedRow();
-                Aluno a = tma.getAluno(linha);
-                OutroCargo oc = new OutroCargo();
-                OutroCargoDAO ocdao = new OutroCargoDAO();
-                
-                oc = ocdao.buscarFunc(funcLogado.getId());
-                
-                at.abrirJFCadastrarAlunosEdicao(oc, a);
+                editar();
             } else if (evt.getSource() == btnExcluir){
                 excluirAluno(alunoSelecionado());
             } else if (evt.getSource() == btnHistorico){

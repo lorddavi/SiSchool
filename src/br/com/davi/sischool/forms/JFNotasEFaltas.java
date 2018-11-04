@@ -72,7 +72,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         comboProfs.addActionListener(oa);
         comboEscolas.addActionListener(oa);
         comboSerie.addActionListener(oa);
-        btnPreenche.addActionListener(oa);
+//        btnPreenche.addActionListener(oa);
     }
     
     private List<Aluno> listaAlunos(){
@@ -228,9 +228,8 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         comboSerie = new javax.swing.JComboBox<>();
         btnVoltaMateria = new javax.swing.JButton();
         txtMateria = new javax.swing.JTextField();
-        btnProximaMateria = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        btnPreenche = new javax.swing.JButton();
+        btnProximaMateria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -305,16 +304,16 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
+                .addGap(170, 170, 170)
                 .addComponent(jLabel5)
-                .addGap(50, 50, 50)
+                .addGap(58, 58, 58)
                 .addComponent(jLabel1)
                 .addGap(54, 54, 54)
                 .addComponent(jLabel2)
-                .addGap(79, 79, 79)
+                .addGap(68, 68, 68)
                 .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+                .addContainerGap(189, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,7 +324,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         lblTurma.setText("Série:");
@@ -338,6 +337,8 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         btnVoltaMateria.setContentAreaFilled(false);
 
         txtMateria.setEditable(false);
+
+        btnSalvar.setText("Salvar Notas");
 
         btnProximaMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/setas.png"))); // NOI18N
         btnProximaMateria.setContentAreaFilled(false);
@@ -370,6 +371,10 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     .addComponent(comboProfs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panTabelaLayout.createSequentialGroup()
+                .addGap(325, 325, 325)
+                .addComponent(btnSalvar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panTabelaLayout.setVerticalGroup(
             panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,26 +392,18 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(comboSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblTurma)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        btnSalvar.setText("Salvar Notas");
-
-        btnPreenche.setText("???");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPreenche)
-                .addGap(104, 104, 104)
-                .addComponent(btnSalvar)
-                .addGap(262, 262, 262))
             .addComponent(panTabela, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -414,12 +411,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar)
-                    .addComponent(btnPreenche))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -444,7 +436,6 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnMinimizar;
-    private javax.swing.JButton btnPreenche;
     private javax.swing.JButton btnProximaMateria;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltaMateria;
@@ -525,7 +516,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     tmnf = new TableModelNotasFaltas(listaAlunos(), notasExibidas);
                     tblNotasFaltas.setModel(tmnf);    
                 }
-            } else if (ae.getSource() == btnPreenche){
+//            } else if (ae.getSource() == btnPreenche){
                 
             }
         }

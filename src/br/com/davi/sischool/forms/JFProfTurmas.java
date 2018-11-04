@@ -218,6 +218,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lblPebI = new javax.swing.JLabel();
         lblArtes = new javax.swing.JLabel();
         lblIngles = new javax.swing.JLabel();
@@ -256,6 +257,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelBarraDeTituloLayout.setHorizontalGroup(
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,7 +270,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTituloPrincipal)
                     .addGroup(panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnMinimizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -338,8 +340,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
         PanelEscolaLayout.setVerticalGroup(
             PanelEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelEscolaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(comboEscola1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         panelTurma.setBackground(new java.awt.Color(204, 204, 204));
@@ -351,15 +354,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
             panelTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTurmaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(comboTurma1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(comboTurma1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         panelTurmaLayout.setVerticalGroup(
             panelTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTurmaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(comboTurma1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         btnCancelar1.setText("Cancelar");
@@ -374,14 +377,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelComponentesPebILayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PanelEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelTurma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(PanelEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelComponentesPebILayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
+                        .addGap(72, 72, 72)
                         .addComponent(btnCancelar1)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnSalvar1)))
+                        .addGap(63, 63, 63)
+                        .addComponent(btnSalvar1))
+                    .addGroup(panelComponentesPebILayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
         panelComponentesPebILayout.setVerticalGroup(
@@ -389,13 +393,13 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelComponentesPebILayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar1)
-                    .addComponent(btnSalvar1))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalvar1)
+                    .addComponent(btnCancelar1))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPebILayout = new javax.swing.GroupLayout(panelPebI);
@@ -528,6 +532,31 @@ public class JFProfTurmas extends javax.swing.JFrame {
 
         lblEducacaoFisica.setText("jLabel12");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPebI)
+                    .addComponent(lblArtes)
+                    .addComponent(lblIngles)
+                    .addComponent(lblEducacaoFisica))
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblPebI)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblArtes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIngles)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblEducacaoFisica))
+        );
+
         javax.swing.GroupLayout panelTurma1Layout = new javax.swing.GroupLayout(panelTurma1);
         panelTurma1.setLayout(panelTurma1Layout);
         panelTurma1Layout.setHorizontalGroup(
@@ -535,25 +564,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelTurma1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTurma1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(50, 50, 50)
-                            .addComponent(lblPebI))
-                        .addComponent(comboTurma2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTurma1Layout.createSequentialGroup()
+                    .addComponent(comboTurma2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelTurma1Layout.createSequentialGroup()
+                        .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addGap(47, 47, 47)
-                            .addComponent(lblEducacaoFisica))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTurma1Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(96, 96, 96)
-                            .addComponent(lblIngles))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTurma1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
                             .addComponent(jLabel6)
-                            .addGap(102, 102, 102)
-                            .addComponent(lblArtes))))
+                            .addComponent(jLabel7))
+                        .addGap(26, 26, 26)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTurma1Layout.setVerticalGroup(
@@ -562,22 +581,18 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(comboTurma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblPebI))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(lblArtes))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(lblIngles))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(lblEducacaoFisica))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTurma1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnCancelar2.setText("Cancelar");
@@ -653,7 +668,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(tabbedFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -705,6 +720,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblArtes;
@@ -774,7 +790,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private class TableModelPeb1 extends AbstractTableModel{
         // Lista de professores a serem exibidos na tabela
         private List<ProfessorPebI> linhas;
-        private String[] colunas = new String[] {"Matrícula", "Nome", "Pontos"};
+        private String[] colunas = new String[] {"CPF", "Nome", "Pontos"};
         private static final int MATRICULA = 0;
         private static final int NOME = 1;
         private static final int PONTOS = 2;
@@ -830,7 +846,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             ProfessorPebI prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:
-                    return prof.getMatricula();
+                    return prof.getCpf();
                 case NOME:
                     return prof.getNome();
                 case PONTOS:
@@ -894,7 +910,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private class TableModelPeb2 extends AbstractTableModel{
         // Lista de professores a serem exibidos na tabela
         private List<ProfessorPebII> linhas;
-        private String[] colunas = new String[] {"Matrícula", "Nome", "Pontos", "Especialidade"};
+        private String[] colunas = new String[] {"CPF", "Nome", "Pontos", "Especialidade"};
         private static final int MATRICULA = 0;
         private static final int NOME = 1;
         private static final int PONTOS = 2;
@@ -952,7 +968,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             ProfessorPebII prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:
-                    return prof.getMatricula();
+                    return prof.getCpf();
                 case NOME:
                     return prof.getNome();
                 case PONTOS:

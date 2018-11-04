@@ -7,6 +7,7 @@ package br.com.davi.sischool.funcoes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JFormattedTextField;
 
@@ -25,6 +26,7 @@ public class ConverteData {
     */
     public Date converteDataParaUtilDate(JFormattedTextField ftxt){
         SimpleDateFormat formato = new SimpleDateFormat( "dd/MM/yy" );
+        formato.setLenient(false);
         Date data = null;
         try {
             data = formato.parse(ftxt.getText());
@@ -36,8 +38,27 @@ public class ConverteData {
     }
     
     public String converteDateParaString(Date data){
-        DateFormat df = new SimpleDateFormat("dd/MM/yy");     
+        DateFormat df = new SimpleDateFormat("dd/MM/yy");  
+        df.setLenient(false);
         String dataConvertida = df.format(data);
         return dataConvertida;
+    }
+    
+    public int calculaIdade(Date dataNasc) {
+        Calendar dataNascimento = Calendar.getInstance();  
+        dataNascimento.setTime(dataNasc); 
+        Calendar hoje = Calendar.getInstance();  
+
+        int idade = hoje.get(Calendar.YEAR) - dataNascimento.get(Calendar.YEAR); 
+
+        if (hoje.get(Calendar.MONTH) < dataNascimento.get(Calendar.MONTH)) {
+          idade--;  
+        } else { 
+            if (hoje.get(Calendar.MONTH) == dataNascimento.get(Calendar.MONTH) && hoje.get(Calendar.DAY_OF_MONTH) < dataNascimento.get(Calendar.DAY_OF_MONTH)) {
+                idade--; 
+            }
+        }
+
+        return idade;
     }
 }

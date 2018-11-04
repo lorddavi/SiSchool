@@ -45,9 +45,9 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnCronogramaDeAulas.addActionListener(oa);
         btnCadastrarEscola.addActionListener(oa);
         btnCadFunc.addActionListener(oa);
-        btnInfo.addActionListener(oa);
+        //btnInfo.addActionListener(oa);
         btnWarning.addActionListener(oa);
-        btnDevCad.addActionListener(oa);
+        //btnDevCad.addActionListener(oa);
         btnHelp.addActionListener(oa);
         btnCadastrarAluno.addActionListener(oa);
         btnNotasProf.addActionListener(oa);
@@ -123,10 +123,8 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnSeguranca = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         panelMenuLateral = new javax.swing.JPanel();
-        btnInfo = new javax.swing.JButton();
         btnWarning = new javax.swing.JButton();
         btnHelp = new javax.swing.JButton();
-        btnDevCad = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
@@ -316,9 +314,9 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 .addComponent(panelBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94)
                 .addComponent(paneBtnCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
+                .addGap(106, 106, 106)
                 .addComponent(panelBtnCronogramaDeAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addComponent(panelBtnCadastrarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
         );
@@ -715,17 +713,12 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panelMenuLateral.setBackground(new java.awt.Color(204, 204, 204));
         panelMenuLateral.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/info.png"))); // NOI18N
-        btnInfo.setContentAreaFilled(false);
-
         btnWarning.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/warning.png"))); // NOI18N
         btnWarning.setContentAreaFilled(false);
+        btnWarning.setEnabled(false);
 
         btnHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/help.png"))); // NOI18N
         btnHelp.setContentAreaFilled(false);
-
-        btnDevCad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/devCad.png"))); // NOI18N
-        btnDevCad.setContentAreaFilled(false);
 
         javax.swing.GroupLayout panelMenuLateralLayout = new javax.swing.GroupLayout(panelMenuLateral);
         panelMenuLateral.setLayout(panelMenuLateralLayout);
@@ -734,24 +727,18 @@ public final class JFPrincipal extends javax.swing.JFrame {
             .addGroup(panelMenuLateralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHelp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnWarning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDevCad, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHelp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panelMenuLateralLayout.setVerticalGroup(
             panelMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMenuLateralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDevCad, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel5.setText("Usuário:");
@@ -868,11 +855,9 @@ public final class JFPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnCriarTurmas;
     private javax.swing.JButton btnCronogramaDeAulas;
-    private javax.swing.JButton btnDevCad;
     private javax.swing.JButton btnEstatisticas;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnHelp;
-    private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMaximizar;
     private javax.swing.JButton btnMinimizar;
@@ -953,8 +938,8 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 abrirTelas.abrirJFCronograma(login);
             } else if (ae.getSource() == btnNotasProf){
                 abrirTelas.abrirJFNotasEFaltas(login);
-            } else if (ae.getSource() == btnDevCad){
-                abrirTelas.abrirJFDevCad(login);
+//            } else if (ae.getSource() == btnDevCad){
+//                abrirTelas.abrirJFDevCad(login);
             } else if (ae.getSource() == btnCadFunc){
                 abrirTelas.abrirJFCadastrarFuncionarios(login);
             } else if (ae.getSource() == btnLogout){
@@ -967,9 +952,9 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 abrirTelas.abrirJFAvisos(login);
             } else if (ae.getSource() == btnProfTurmasII){
                 abrirTelas.abrirJFProfTurmasPebII(login);
-            } else if (ae.getSource() == btnInfo){
-                 JDTestarRetornos ce = new JDTestarRetornos(null, rootPaneCheckingEnabled);
-                 ce.setVisible(true);
+//            } else if (ae.getSource() == btnInfo){
+//                 JDTestarRetornos ce = new JDTestarRetornos(null, rootPaneCheckingEnabled);
+//                 ce.setVisible(true);
             } else if (ae.getSource() == btnTransferirAluno){
                 abrirTelas.abrirJFTransferirAlunos(login);
             } else if (ae.getSource() == btnCriarTurmas){

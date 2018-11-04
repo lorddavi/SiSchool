@@ -193,69 +193,60 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="55" pref="573" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="panelCheckBoxCadastroAluno" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="txtRaCadastroAluno" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                          <Component id="jLabel11" max="32767" attributes="0"/>
-                                                          <Component id="ftxtDataNasc" max="32767" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <Component id="txtNomeCadastroAluno" alignment="0" pref="343" max="32767" attributes="0"/>
-                                                  <Component id="txtEnderecoCadastroAluno" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <EmptySpace max="32767" attributes="0"/>
-                                                      <Component id="paneGeneroCadastroAluno" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jLabel14" min="-2" pref="149" max="-2" attributes="0"/>
-                                                          <Group type="102" attributes="0">
-                                                              <Component id="lblComprovanteResidenciaCadAluno" min="-2" pref="134" max="-2" attributes="0"/>
-                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                              <Component id="btnProcurarComprovResidenciaCadAluno" min="-2" pref="27" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtBairroCadastroAluno" alignment="0" min="-2" pref="277" max="-2" attributes="0"/>
-                                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="22" pref="305" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="panelCheckBoxCadastroAluno" max="32767" attributes="0"/>
                                       <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="txtRa" min="-2" pref="121" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="ftxtDataNasc" min="-2" pref="99" max="-2" attributes="0"/>
+                                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                      <Component id="txtNome" alignment="0" pref="343" max="32767" attributes="0"/>
+                                                      <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="lblComprovanteResidenciaCadAluno" min="-2" pref="134" max="-2" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="btnProcurarComprovResidenciaCadAluno" min="-2" pref="27" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                      <Component id="paneGeneroCadastroAluno" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel14" min="-2" pref="149" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <Component id="txtBairro" min="-2" pref="343" max="-2" attributes="0"/>
                                           <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="comboBoxSerieCadastroAluno" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
-                                          <Component id="comboEscolasCadAluno" alignment="0" min="-2" pref="342" max="-2" attributes="0"/>
-                                          <Component id="txtCep" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                                          <Component id="comboBoxSerie" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                                          <Component id="comboEscolas" alignment="0" min="-2" pref="342" max="-2" attributes="0"/>
                                           <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCep" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -264,13 +255,12 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="paneGeneroCadastroAluno" alignment="1" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNomeCadastroAluno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNome" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -278,15 +268,16 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtRaCadastroAluno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtRa" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="ftxtDataNasc" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="paneGeneroCadastroAluno" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEnderecoCadastroAluno" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtEndereco" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -294,22 +285,22 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtBairroCadastroAluno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtBairro" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblComprovanteResidenciaCadAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnProcurarComprovResidenciaCadAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="txtCep" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboEscolasCadAluno" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboEscolas" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboBoxSerieCadastroAluno" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxSerie" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="39" max="32767" attributes="0"/>
                               <Component id="panelCheckBoxCadastroAluno" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -321,23 +312,23 @@
                     <Component class="javax.swing.JLabel" name="jLabel9">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtNomeCadastroAluno"/>
+                          <ComponentRef name="txtNome"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Nome:"/>
                         <Property name="name" type="java.lang.String" value="" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtNomeCadastroAluno">
+                    <Component class="javax.swing.JTextField" name="txtNome">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel10">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtRaCadastroAluno"/>
+                          <ComponentRef name="txtRa"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="RA:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtRaCadastroAluno">
+                    <Component class="javax.swing.JTextField" name="txtRa">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel11">
                       <Properties>
@@ -374,7 +365,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="radioMasculinoCadastroAluno" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="14" max="32767" attributes="0"/>
                                   <Component id="radioFemininoCadastroAluno" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -404,22 +395,22 @@
                     <Component class="javax.swing.JLabel" name="jLabel12">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtEnderecoCadastroAluno"/>
+                          <ComponentRef name="txtEndereco"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Endere&#xe7;o:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtEnderecoCadastroAluno">
+                    <Component class="javax.swing.JTextField" name="txtEndereco">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel13">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtBairroCadastroAluno"/>
+                          <ComponentRef name="txtBairro"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Bairro:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBairroCadastroAluno">
+                    <Component class="javax.swing.JTextField" name="txtBairro">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel14">
                       <Properties>
@@ -532,6 +523,9 @@
                         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                           <Format format="##/##/##" subtype="-1" type="5"/>
                         </Property>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorDeData()" type="code"/>
+                        </Property>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel18">
@@ -539,14 +533,12 @@
                         <Property name="text" type="java.lang.String" value="CEP:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtCep">
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel17">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Escola:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="comboEscolasCadAluno">
+                    <Component class="javax.swing.JComboBox" name="comboEscolas">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="0"/>
@@ -559,12 +551,12 @@
                     <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="comboBoxSerieCadastroAluno"/>
+                          <ComponentRef name="comboBoxSerie"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Turma:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="comboBoxSerieCadastroAluno">
+                    <Component class="javax.swing.JComboBox" name="comboBoxSerie">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="0"/>
@@ -573,6 +565,16 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Turma&gt;"/>
                       </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="txtCep">
+                      <Properties>
+                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+                          <Format format="#####-###" subtype="-1" type="5"/>
+                        </Property>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorCEP()" type="code"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -610,8 +612,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtNomePaiCadastroAluno" max="32767" attributes="0"/>
-                                          <Component id="txtNomeMaeCadAluno" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtNomePai" max="32767" attributes="0"/>
+                                          <Component id="txtNomeMae" alignment="0" max="32767" attributes="0"/>
                                           <Component id="panelOutroResponsavel" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="radioOutroResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
@@ -628,35 +630,34 @@
                                       <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                                      <Component id="checkPaiResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="264" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                                              <Component id="checkPaiResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                          <Component id="txtTelefoneCadAluno" pref="146" max="32767" attributes="0"/>
-                                                          <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="btnAddTelefCadAluno" min="-2" pref="27" max="-2" attributes="0"/>
-                                                          <Component id="btnRemoveTelefoneCadAluno" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="txtTelefones" pref="146" max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="scrollPaneObservacoesCadAluno" min="-2" pref="185" max="-2" attributes="0"/>
-                                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="btnAddTelefCadAluno" min="-2" pref="27" max="-2" attributes="0"/>
+                                                  <Component id="btnRemoveTelefoneCadAluno" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="scrollPaneObservacoesCadAluno" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
@@ -674,14 +675,14 @@
                                           <Component id="checkPaiResponsavelCadAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNomePaiCadastroAluno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNomePai" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="checkMaeResponsavelCadAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNomeMaeCadAluno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNomeMae" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="radioOutroResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -698,9 +699,9 @@
                                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="txtTelefoneCadAluno" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtTelefones" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
@@ -710,11 +711,10 @@
                                           </Group>
                                           <Component id="jScrollPane1" min="-2" pref="103" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="scrollPaneObservacoesCadAluno" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -723,12 +723,12 @@
                     <Component class="javax.swing.JLabel" name="jLabel1">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtNomePaiCadastroAluno"/>
+                          <ComponentRef name="txtNomePai"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Nome do pai:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtNomePaiCadastroAluno">
+                    <Component class="javax.swing.JTextField" name="txtNomePai">
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="checkPaiResponsavelCadAluno">
                       <Properties>
@@ -741,7 +741,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel2">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtNomeMaeCadAluno"/>
+                          <ComponentRef name="txtNomeMae"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Nome da m&#xe3;e:"/>
                       </Properties>
@@ -754,7 +754,7 @@
                         <Property name="text" type="java.lang.String" value="Marcar como respons&#xe1;vel"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtNomeMaeCadAluno">
+                    <Component class="javax.swing.JTextField" name="txtNomeMae">
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="radioOutroResponsavelCadAluno">
                       <Properties>
@@ -772,7 +772,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
                         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="txtAObservacoesCadAluno"/>
+                          <ComponentRef name="txtAObservacoes"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Observa&#xe7;&#xf5;es:"/>
                       </Properties>
@@ -784,7 +784,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="txtAObservacoesCadAluno">
+                        <Component class="javax.swing.JTextArea" name="txtAObservacoes">
                           <Properties>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="lineWrap" type="boolean" value="true"/>
@@ -854,7 +854,7 @@
                     <Component class="javax.swing.JButton" name="btnAddTelefCadAluno">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/br/com/davi/sischool/icons/add.png"/>
+                          <Image iconType="3" name="/br/com/davi/sischool/icons/adic.png"/>
                         </Property>
                         <Property name="contentAreaFilled" type="boolean" value="false"/>
                       </Properties>
@@ -866,7 +866,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="jListTelefonesCadAluno">
+                        <Component class="javax.swing.JList" name="jListTelefones">
                           <Properties>
                             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                               <StringArray count="0"/>
@@ -879,16 +879,19 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JTextField" name="txtTelefoneCadAluno">
+                    <Component class="javax.swing.JTextField" name="txtTelefones">
                       <Properties>
                         <Property name="toolTipText" type="java.lang.String" value="Digite um telefone para adicion&#xe1;-lo."/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorDeTelefone()" type="code"/>
+                        </Property>
                         <Property name="name" type="java.lang.String" value="" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRemoveTelefoneCadAluno">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/br/com/davi/sischool/icons/delete.png"/>
+                          <Image iconType="3" name="/br/com/davi/sischool/icons/minus.png"/>
                         </Property>
                         <Property name="contentAreaFilled" type="boolean" value="false"/>
                       </Properties>
@@ -913,8 +916,8 @@
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtParentescoResponsavelCadAluno" alignment="0" pref="323" max="32767" attributes="0"/>
-                                      <Component id="txtNomeResponsavelCadAluno" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtParentescoResponsavel" alignment="0" pref="323" max="32767" attributes="0"/>
+                                      <Component id="txtNomeResponsavel" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
@@ -926,11 +929,11 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNomeResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNomeResponsavel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtParentescoResponsavelCadAluno" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtParentescoResponsavel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="29" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -940,12 +943,12 @@
                         <Component class="javax.swing.JLabel" name="jLabel3">
                           <Properties>
                             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                              <ComponentRef name="txtNomeResponsavelCadAluno"/>
+                              <ComponentRef name="txtNomeResponsavel"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Nome do respons&#xe1;vel:"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNomeResponsavelCadAluno">
+                        <Component class="javax.swing.JTextField" name="txtNomeResponsavel">
                           <Properties>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
@@ -953,12 +956,12 @@
                         <Component class="javax.swing.JLabel" name="jLabel4">
                           <Properties>
                             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                              <ComponentRef name="txtParentescoResponsavelCadAluno"/>
+                              <ComponentRef name="txtParentescoResponsavel"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Parentesco:"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtParentescoResponsavelCadAluno">
+                        <Component class="javax.swing.JTextField" name="txtParentescoResponsavel">
                           <Properties>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>

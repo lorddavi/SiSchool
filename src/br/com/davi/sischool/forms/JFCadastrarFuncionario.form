@@ -184,7 +184,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tabbedCadastrarFuncionarios" max="32767" attributes="0"/>
+                      <Component id="tabbedCadastrarFuncionarios" pref="632" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="panelTabelaBusca" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -235,23 +235,18 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtBairroCadFunc" alignment="0" pref="398" max="32767" attributes="0"/>
-                                              <Component id="txtEnderecoCadFunc" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtCidadeCadFunc" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtBairro" alignment="0" pref="398" max="32767" attributes="0"/>
+                                              <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtCidade" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtTelefonesCadFunc" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
                                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtNomeCadFunc" alignment="0" min="-2" pref="401" max="-2" attributes="0"/>
+                                          <Component id="txtNome" alignment="0" min="-2" pref="401" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -260,27 +255,43 @@
                                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txtCpfCadFunc" min="-2" pref="116" max="-2" attributes="0"/>
+                                                  <Component id="txtCpf" min="-2" pref="116" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace pref="45" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                          <Component id="checkPossuiDeficiencia" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCepCadFunc" min="-2" pref="143" max="-2" attributes="0"/>
-                                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jScrollPane1" min="-2" pref="188" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <EmptySpace pref="41" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="btnAddTelefoneCadFunc" min="-2" pref="31" max="-2" attributes="0"/>
-                                          <Component id="btnRemoveTelefoneCadFunc" pref="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                          <Component id="checkPossuiDeficiencia" max="32767" attributes="0"/>
+                                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCep" alignment="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="txtTelefonesCadFunc" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jScrollPane1" alignment="0" pref="188" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                          <Component id="btnAddTelefoneCadFunc" min="-2" pref="31" max="-2" attributes="0"/>
+                                                          <Component id="btnRemoveTelefoneCadFunc" pref="0" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="258" max="-2" attributes="0"/>
+                                                      <Component id="checkDesligado" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -290,59 +301,64 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="checkDesligado" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                      <Component id="txtNomeCadFunc" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                              <Component id="txtNome" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="txtFDataNasc" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="txtCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="checkPossuiDeficiencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtBairro" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtFDataNasc" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCpfCadFunc" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCep" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtEnderecoCadFunc" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="checkPossuiDeficiencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtBairroCadFunc" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCidadeCadFunc" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCepCadFunc" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtTelefonesCadFunc" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane1" min="-2" pref="94" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnAddTelefoneCadFunc" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnRemoveTelefoneCadFunc" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtTelefonesCadFunc" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jScrollPane1" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="btnAddTelefoneCadFunc" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnRemoveTelefoneCadFunc" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace pref="37" max="32767" attributes="0"/>
@@ -356,7 +372,7 @@
                         <Property name="text" type="java.lang.String" value="Nome:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtNomeCadFunc">
+                    <Component class="javax.swing.JTextField" name="txtNome">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -366,7 +382,7 @@
                         <Property name="text" type="java.lang.String" value="Endere&#xe7;o:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtEnderecoCadFunc">
+                    <Component class="javax.swing.JTextField" name="txtEndereco">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -383,10 +399,16 @@
                         </Property>
                         <Property name="toolTipText" type="java.lang.String" value="dd/mm/aa"/>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorDeData()" type="code"/>
+                        </Property>
                       </Properties>
                       <AccessibilityProperties>
                         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
                       </AccessibilityProperties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+                      </AuxValues>
                     </Component>
                     <Container class="javax.swing.JPanel" name="jPanel3">
                       <Properties>
@@ -456,7 +478,7 @@
                         <Property name="text" type="java.lang.String" value="Bairro:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtBairroCadFunc">
+                    <Component class="javax.swing.JTextField" name="txtBairro">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -466,7 +488,7 @@
                         <Property name="text" type="java.lang.String" value="Cidade:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtCidadeCadFunc">
+                    <Component class="javax.swing.JTextField" name="txtCidade">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -496,11 +518,6 @@
                         <Property name="text" type="java.lang.String" value="Telefones:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtTelefonesCadFunc">
-                      <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="btnAddTelefoneCadFunc">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -524,11 +541,6 @@
                         <Property name="text" type="java.lang.String" value="CEP:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtCepCadFunc">
-                      <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JCheckBox" name="checkPossuiDeficiencia">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -538,14 +550,42 @@
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="txtCpfCadFunc">
+                    <Component class="javax.swing.JFormattedTextField" name="txtCpf">
                       <Properties>
                         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                           <Format format="###.###.###-##" subtype="-1" type="5"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
                         <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="ivcpf" type="code"/>
+                          <Connection code="new VerificadorDeCpf()" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="txtTelefonesCadFunc">
+                      <Properties>
+                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                          <Format format="#0" subtype="-1" type="0"/>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorDeTelefone()" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="checkDesligado">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio desligado."/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="txtCep">
+                      <Properties>
+                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+                          <Format format="#####-###" subtype="-1" type="5"/>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="inputVerifier" type="javax.swing.InputVerifier" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new VerificadorCEP()" type="code"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -568,45 +608,38 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="radioCargoOutrosCadFunc" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="panelOutrosCargos" max="32767" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="radioCargoProfCadFunc" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="panelProf" max="32767" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="radioCargoOutrosCadFunc" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <Component id="panelOutrosCargos" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="radioCargoProfCadFunc" min="-2" max="-2" attributes="0"/>
                                   <Component id="panelProf" min="-2" max="-2" attributes="0"/>
+                                  <Component id="radioCargoProfCadFunc" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="radioCargoOutrosCadFunc" min="-2" max="-2" attributes="0"/>
                                   <Component id="panelOutrosCargos" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="33" max="32767" attributes="0"/>
+                              <EmptySpace pref="70" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -646,7 +679,7 @@
                                   <Component id="panelProf1PeriodoCargoCadFunc" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanelEspecialidadePebII" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                                  <EmptySpace pref="50" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -949,46 +982,6 @@
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Container class="javax.swing.JPanel" name="jPanel2">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="cc" green="cc" red="cc" type="rgb"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder title="Matr&#xed;cula"/>
-                          </Border>
-                        </Property>
-                      </Properties>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtMatriculaCadFunc" min="-2" pref="140" max="-2" attributes="0"/>
-                                  <EmptySpace pref="20" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtMatriculaCadFunc" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JTextField" name="txtMatriculaCadFunc">
-                          <Properties>
-                            <Property name="enabled" type="boolean" value="false"/>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="panelTabUsuario">
@@ -1020,7 +1013,7 @@
                                   <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNickNameUsrCadFunc" alignment="0" min="-2" pref="217" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="207" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="203" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1120,7 +1113,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">

@@ -16,7 +16,6 @@ import br.com.davi.sischool.regras.ProfessorDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -300,7 +299,12 @@ public class JFPontos extends javax.swing.JFrame {
 
         btnEditar.setText("Editar");
 
-        fDataCurso.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        try {
+            fDataCurso.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fDataCurso.setToolTipText("ddmmaa");
 
         jLabel4.setText("Data:");
 
@@ -496,7 +500,7 @@ public class JFPontos extends javax.swing.JFrame {
     private class TableModelProfessor extends AbstractTableModel {
         // Lista de professores a serem exibidos na tabela
         private List<Professor> linhas;
-        private String[] colunas = new String[] {"Matrícula", "Nome", "Pontos"};
+        private String[] colunas = new String[] {"CPF", "Nome", "Pontos"};
         private static final int MATRICULA = 0;
         private static final int NOME = 1;
         private static final int PONTOS = 2;
@@ -552,7 +556,7 @@ public class JFPontos extends javax.swing.JFrame {
             Professor prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:
-                    return prof.getMatricula();
+                    return prof.getCpf();
                 case NOME:
                     return prof.getNome();
                 case PONTOS:

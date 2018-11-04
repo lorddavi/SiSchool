@@ -26,8 +26,6 @@ public class Funcionario extends Pessoa {
     @Column
     private String cpf;
     @Column
-    private String matricula;
-    @Column
     private String cargo;
     @Column
     private boolean possuiDeficiencia;
@@ -57,15 +55,7 @@ public class Funcionario extends Pessoa {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
+    
     public String getCargo() {
         return cargo;
     }
@@ -111,47 +101,4 @@ public class Funcionario extends Pessoa {
         return this.getNome();
     }
     
-    public ProfessorPebI toPebI(ProfessorPebI p){
-        p.setId(this.getId());
-        p.setNome(this.getNome());
-        p.setDataNasc(this.getDataNasc());
-        p.setGenero(this.getGenero());
-        p.setEndereco(this.getEndereco());
-        p.setBairro(this.getBairro());
-        p.setCidade(this.getCidade());
-        p.setCep(this.getCep());
-        p.setTelefones(this.getTelefones());
-        p.setObservacoes(this.getObservacoes());
-        p.setCpf(this.getCpf());
-        p.setMatricula(this.getMatricula());
-        p.setCargo(this.getCargo());
-        p.setPossuiDeficiencia(this.isPossuiDeficiencia());
-        p.setAcesso(this.getAcesso());
-        p.setUsrName(this.getUsrName());
-        p.setSenha(this.getSenha());
-        
-        return p;
-    }
-    
-    public ProfessorPebII toPebII(ProfessorPebII p){
-        p.setId(this.getId());
-        p.setNome(this.getNome());
-        p.setDataNasc(this.getDataNasc());
-        p.setGenero(this.getGenero());
-        p.setEndereco(this.getEndereco());
-        p.setBairro(this.getBairro());
-        p.setCidade(this.getCidade());
-        p.setCep(this.getCep());
-        p.setTelefones(this.getTelefones());
-        p.setObservacoes(this.getObservacoes());
-        p.setCpf(this.getCpf());
-        p.setMatricula(this.getMatricula());
-        p.setCargo(this.getCargo());
-        p.setPossuiDeficiencia(this.isPossuiDeficiencia());
-        p.setAcesso(this.getAcesso());
-        p.setUsrName(this.getUsrName());
-        p.setSenha(this.getSenha());
-        
-        return p;
-    }
 }

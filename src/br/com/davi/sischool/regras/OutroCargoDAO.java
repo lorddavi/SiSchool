@@ -34,7 +34,8 @@ public class OutroCargoDAO {
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
         em.getTransaction().begin();
-        em.merge(func);
+        OutroCargo oc = func;
+        em.merge(oc);
         em.getTransaction().commit();
         em.close();
         cem.fecharEM();
@@ -44,7 +45,8 @@ public class OutroCargoDAO {
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
         em.getTransaction().begin();
-        em.remove(func);
+        OutroCargo oc = em.merge(func);
+        em.remove(oc);
         em.getTransaction().commit();
         em.close();
         cem.fecharEM();

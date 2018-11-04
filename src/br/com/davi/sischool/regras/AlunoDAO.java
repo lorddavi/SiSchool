@@ -7,6 +7,7 @@ package br.com.davi.sischool.regras;
 
 import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Turma;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -69,14 +70,14 @@ public class AlunoDAO {
         return alunos;
     }
     
-    public Aluno buscarUmPorRa(String ra){
+    public List<Aluno> buscarUmPorRa(String ra){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
+        List<Aluno> alunos = new ArrayList<>();
         try {
-            TypedQuery<Aluno> consulta = 
-                em.createQuery("SELECT a FROM Aluno a WHERE a.ra like :ra", Aluno.class);
+            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a WHERE a.ra like :ra", Aluno.class);
             consulta.setParameter("ra", ra);
-            aluno = consulta.getSingleResult();
+            alunos = consulta.getResultList();
         } catch(NoResultException ex) {
     		System.out.println("Aluno não encontrado");
         } catch(NonUniqueResultException ex) {
@@ -85,7 +86,15 @@ public class AlunoDAO {
         em.close();
         cem.fecharEM();    
         
-        return aluno;
+        return alunos;
+    }
+    
+    public List<Aluno> buscaPorIdade(String idade){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<Aluno> alunos = new ArrayList<>();
+        
+        return alunos;
     }
     
     public List<Aluno> buscaTodos(){

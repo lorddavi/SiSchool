@@ -60,7 +60,7 @@ public class ProfessorPebII extends Professor {
 
     @Override
     public String toString() {
-        return this.getMatricula() + " - " + this.getNome();
+        return this.getCpf()+ " - " + this.getNome();
     }
     
 }

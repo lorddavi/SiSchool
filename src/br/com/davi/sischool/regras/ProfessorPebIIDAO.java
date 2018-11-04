@@ -44,6 +44,17 @@ public class ProfessorPebIIDAO {
 	cem.fecharEM();
     }
     
+    public void excluir(ProfessorPebII prof){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+	em.getTransaction().begin();
+	ProfessorPebII p2 = em.merge(prof);
+        em.remove(p2);
+	em.getTransaction().commit();
+	em.close();
+	cem.fecharEM();
+    }
+    
     public List<ProfessorPebII> buscaTodos(){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();

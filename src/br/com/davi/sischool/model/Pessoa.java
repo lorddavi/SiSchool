@@ -29,7 +29,7 @@ public class Pessoa implements Serializable {
     private String bairro;
     private String cidade;
     private String cep;
-    @OneToMany(mappedBy = "pessoa", targetEntity = Telefone.class, fetch = FetchType.LAZY, 
+    @OneToMany(targetEntity = Telefone.class, fetch = FetchType.LAZY, 
             cascade = CascadeType.ALL)
     private List<Telefone> telefones;
     private String observacoes;

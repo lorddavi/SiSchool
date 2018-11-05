@@ -90,7 +90,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         btnEditar.addActionListener(oa);
         btnCancelarCadFunc.addActionListener(oa);
         btnExcluir.addActionListener(oa);
-        btnRelatorios.addActionListener(oa);
         btnNovo.addActionListener(oa);
         txtBuscaFunc.addKeyListener(okl);
         radioCargoProfCadFunc.addItemListener(oi);
@@ -99,20 +98,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         radioPebIICadFunc.addItemListener(oi);
         tabelaBuscaFuncionarios.getSelectionModel().addListSelectionListener(ols);
         txtCpf.addFocusListener(of);
-    }
-    
-    private void relatorio(){
-        try {
-	// Cria a fonte de dados
-            List<Funcionario> funcs = fdao.buscaTodos();
-	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(funcs);
-	// Preenche o relatório
-	    JasperPrint print = JasperFillManager.fillReport("relatorios/Funcionarios.jasper", null, ds);
-	// Exibe o relatório
-	    JasperViewer.viewReport(print, false);
-        } catch (JRException e) {
-                e.printStackTrace();
-        }
     }
     
     private String checaCargo() {
@@ -595,24 +580,31 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     
     private boolean camposEmBranco(){
         if (txtNome.getText().trim().equals("")) {
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtNome.requestFocus();
             return false;
         } else if (txtFDataNasc.getText().trim().equals("")){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtFDataNasc.requestFocus();
             return false;
         } else if (txtEndereco.getText().trim().equals("")){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtEndereco.requestFocus();
             return false;
         } else if (txtBairro.getText().trim().equals("")){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtBairro.requestFocus();
             return false;
         } else if (txtCidade.getText().trim().equals("")){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtCidade.requestFocus();
             return false;
         } else if (radioCargoOutrosCadFunc.isSelected() && txtCargo.getText().trim().equals("")){
+            tabbedCadastrarFuncionarios.setSelectedIndex(1);
             txtCargo.requestFocus();
             return false;
         } else if (radioPebICadFunc.isSelected() && (!radioHabilitaManha.isSelected() && !radioHabilitaTarde.isSelected())){
+            tabbedCadastrarFuncionarios.setSelectedIndex(1);
             radioHabilitaManha.requestFocus();
             return false;
         } else {
@@ -775,7 +767,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaBuscaFuncionarios = new javax.swing.JTable();
         txtBuscaFunc = new javax.swing.JTextField();
-        btnRelatorios = new javax.swing.JButton();
         btnCancelarCadFunc = new javax.swing.JButton();
         btnSalvarCadFunc = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -1330,8 +1321,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         tabelaBuscaFuncionarios.setModel(tmf);
         jScrollPane3.setViewportView(tabelaBuscaFuncionarios);
 
-        btnRelatorios.setText("Ver relatório");
-
         javax.swing.GroupLayout panelTabelaBuscaLayout = new javax.swing.GroupLayout(panelTabelaBusca);
         panelTabelaBusca.setLayout(panelTabelaBuscaLayout);
         panelTabelaBuscaLayout.setHorizontalGroup(
@@ -1343,14 +1332,10 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                         .addGroup(panelTabelaBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 3, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaBuscaLayout.createSequentialGroup()
                         .addComponent(txtBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaBuscaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRelatorios)
-                .addGap(112, 112, 112))
         );
         panelTabelaBuscaLayout.setVerticalGroup(
             panelTabelaBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1360,10 +1345,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRelatorios)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
@@ -1371,7 +1354,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelFundoLayout.setHorizontalGroup(
             panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFundoLayout.createSequentialGroup()
-                .addComponent(tabbedCadastrarFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                .addComponent(tabbedCadastrarFuncionarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTabelaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1468,7 +1451,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupPebIPebII;
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnNovo;
-    private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnRemoveTelefoneCadFunc;
     private javax.swing.JButton btnSalvarCadFunc;
     private javax.swing.JCheckBox checkDesligado;
@@ -1771,8 +1753,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 editar();
             } else if (ae.getSource() == btnExcluir){
                 excluir();
-            } else if (ae.getSource() == btnRelatorios){
-                relatorio();
             } else if (ae.getSource() == btnNovo){
                 novoFuncEnabled();
                 estadoBotoesNovo();

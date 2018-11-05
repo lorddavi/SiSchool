@@ -13,8 +13,10 @@ import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.NotasFaltas;
 import br.com.davi.sischool.model.OutroCargo;
+import br.com.davi.sischool.model.Telefone;
 import br.com.davi.sischool.regras.AlunoDAO;
 import br.com.davi.sischool.regras.EscolaDAO;
+import br.com.davi.sischool.regras.FuncionarioDAO;
 import br.com.davi.sischool.regras.OutroCargoDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,7 +69,6 @@ public class JFConsultas extends javax.swing.JFrame {
     private void setaListeners(){
         btnFechar.addActionListener(oa);
         btnMinimizar.addActionListener(oa);
-        btnConsultarAluno.addActionListener(oa);
         btnEditar.addActionListener(oa);
         btnExcluir.addActionListener(oa);
         btnHistorico.addActionListener(oa);
@@ -86,6 +87,21 @@ public class JFConsultas extends javax.swing.JFrame {
 	           JasperPrint print = JasperFillManager.fillReport("relatorios/Historico.jasper", null, ds);
 	// Exibe o relatório
 	           JasperViewer.viewReport(print, false);
+        } catch (JRException e) {
+                e.printStackTrace();
+        }
+    }
+    
+    private void relatorio(){
+        try {
+	// Cria a fonte de dados
+            FuncionarioDAO fdao = new FuncionarioDAO();
+            List<Funcionario> funcs = fdao.buscaTodos();
+	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(funcs);
+	// Preenche o relatório
+	    JasperPrint print = JasperFillManager.fillReport("relatorios/Funcionarios.jasper", null, ds);
+	// Exibe o relatório
+	    JasperViewer.viewReport(print, false);
         } catch (JRException e) {
                 e.printStackTrace();
         }
@@ -191,13 +207,12 @@ public class JFConsultas extends javax.swing.JFrame {
         tabelaEscolas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtBuscarEscola = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListTelefone = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnConsultarAluno = new javax.swing.JButton();
         btnHistorico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -315,22 +330,24 @@ public class JFConsultas extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar escola:");
 
+        jScrollPane1.setViewportView(jListTelefone);
+
         javax.swing.GroupLayout tabConsultasEscolaLayout = new javax.swing.GroupLayout(tabConsultasEscola);
         tabConsultasEscola.setLayout(tabConsultasEscolaLayout);
         tabConsultasEscolaLayout.setHorizontalGroup(
             tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE))
-                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tabConsultasEscolaLayout.setVerticalGroup(
             tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +357,9 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -359,30 +378,13 @@ public class JFConsultas extends javax.swing.JFrame {
 
         tabbedConsultas.addTab("Funcionários", jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 694, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
-        );
-
-        tabbedConsultas.addTab("tab4", jPanel2);
-
-        jButton1.setText("jButton1");
-
         btnExcluir.setText("Excluir");
 
         jButton3.setText("Estatísticas");
 
         btnEditar.setText("Editar");
 
-        btnConsultarAluno.setText("Consultar");
-
-        btnHistorico.setText("Histórico");
+        btnHistorico.setText("Relatório");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -394,10 +396,8 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConsultarAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -410,16 +410,12 @@ public class JFConsultas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tabbedConsultas))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(55, 55, 55)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultarAluno)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnHistorico)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -443,18 +439,17 @@ public class JFConsultas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConsultarAluno;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.ButtonGroup btnGroupAluno;
     private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnMinimizar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<Telefone> jListTelefone;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelPrincipal;
@@ -488,8 +483,6 @@ public class JFConsultas extends javax.swing.JFrame {
             } else if (evt.getSource() == btnMinimizar){
                 setExtendedState(ICONIFIED);
             } else if (evt.getSource() == txtConsultaAluno){
-                
-            } else if (evt.getSource() == btnConsultarAluno){
                 
             } else if (evt.getSource() == btnEditar){
                 editar();

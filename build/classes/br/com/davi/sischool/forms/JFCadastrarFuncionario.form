@@ -184,7 +184,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tabbedCadastrarFuncionarios" pref="632" max="32767" attributes="0"/>
+                      <Component id="tabbedCadastrarFuncionarios" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="panelTabelaBusca" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -1120,18 +1120,13 @@
                                       <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jScrollPane3" alignment="0" min="-2" pref="315" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="txtBuscaFunc" min="-2" pref="206" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnRelatorios" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1143,10 +1138,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtBuscaFunc" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" pref="324" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="365" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnRelatorios" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1180,11 +1173,6 @@
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JTextField" name="txtBuscaFunc">
-                </Component>
-                <Component class="javax.swing.JButton" name="btnRelatorios">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Ver relat&#xf3;rio"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

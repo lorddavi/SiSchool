@@ -311,6 +311,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 nf[i] = new NotasFaltas();
                 nf[i].setAno(String.valueOf(ano));
                 nf[i].setMateria(materias[i]);
+                nf[i].setSituacao("Reprovado");
                 notasFaltas.add(nf[i]);
             }
             

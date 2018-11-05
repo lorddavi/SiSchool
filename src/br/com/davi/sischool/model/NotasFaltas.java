@@ -13,8 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -35,6 +33,7 @@ public class NotasFaltas implements Serializable {
     private String faltas;
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Aluno.class, fetch = FetchType.LAZY)
     private Aluno aluno;
+    private String situacao;
 
     public NotasFaltas() {
     }
@@ -104,6 +103,14 @@ public class NotasFaltas implements Serializable {
 
     public void setFaltas(String faltas) {
         this.faltas = faltas;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
 
 }

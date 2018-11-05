@@ -9,6 +9,7 @@ import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.Funcionario;
+import br.com.davi.sischool.model.NotasFaltas;
 import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Professor;
 import br.com.davi.sischool.model.ProfessorPebI;
@@ -19,11 +20,11 @@ import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.ProfessorDAO;
 import br.com.davi.sischool.regras.ProfessorPebIDAO;
 import br.com.davi.sischool.regras.ProfessorPebIIDAO;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -60,7 +61,8 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         tmnf.addListaDeNotasFaltas(listaAlunos());
         tblNotasFaltas.setModel(tmnf);
         txtMateria.setText("Matemática");
-        tblNotasFaltas.setDefaultRenderer(Aluno.class, cr);
+        tblNotasFaltas.setDefaultRenderer(Aluno.class, new CellRenderer());
+        tblNotasFaltas.getColumnModel().getColumn(0).setPreferredWidth(200);
     }
     
     private void setaListeners(){
@@ -77,7 +79,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     
     private List<Aluno> listaAlunos(){
         Turma t = (Turma) comboSerie.getSelectedItem();
-        if (t != null){
+        if (t.getAlunos() != null){
             return t.getAlunos();
         } else {
             return null;
@@ -212,14 +214,12 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         btnFechar = new javax.swing.JButton();
         lblTituloPrincipal = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JButton();
+        tabbedPaneNotasFaltas = new javax.swing.JTabbedPane();
+        paneTabNotasAtual = new javax.swing.JPanel();
         panTabela = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNotasFaltas = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         lblTurma = new javax.swing.JLabel();
         lblProf = new javax.swing.JLabel();
         jLabelM = new javax.swing.JLabel();
@@ -228,8 +228,9 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         comboSerie = new javax.swing.JComboBox<>();
         btnVoltaMateria = new javax.swing.JButton();
         txtMateria = new javax.swing.JTextField();
-        btnSalvar = new javax.swing.JButton();
         btnProximaMateria = new javax.swing.JButton();
+        paneTabPreencherHistórico = new javax.swing.JPanel();
+        btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -284,47 +285,24 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
 
         panTabela.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         tblNotasFaltas.setModel(tmnf);
         tblNotasFaltas.setSelectionBackground(new java.awt.Color(0, 102, 255));
         tblNotasFaltas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblNotasFaltas);
 
-        jLabel5.setText("1º Bimestre");
-
-        jLabel1.setText("2º Bimestre");
-
-        jLabel2.setText("3º Bimestre");
-
-        jLabel3.setText("4º Bimestre");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jLabel5)
-                .addGap(58, 58, 58)
-                .addComponent(jLabel1)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel2)
-                .addGap(68, 68, 68)
-                .addComponent(jLabel3)
-                .addContainerGap(189, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
         );
 
         lblTurma.setText("Série:");
@@ -338,8 +316,6 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
 
         txtMateria.setEditable(false);
 
-        btnSalvar.setText("Salvar Notas");
-
         btnProximaMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/setas.png"))); // NOI18N
         btnProximaMateria.setContentAreaFilled(false);
 
@@ -347,6 +323,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         panTabela.setLayout(panTabelaLayout);
         panTabelaLayout.setHorizontalGroup(
             panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panTabelaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +334,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                         .addComponent(btnVoltaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnProximaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -365,53 +342,88 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     .addComponent(lblTurma))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panTabelaLayout.createSequentialGroup()
-                        .addComponent(comboSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(comboProfs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panTabelaLayout.createSequentialGroup()
-                .addGap(325, 325, 325)
-                .addComponent(btnSalvar)
+                    .addComponent(comboSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboProfs, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panTabelaLayout.setVerticalGroup(
             panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panTabelaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProf)
                     .addComponent(comboProfs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVoltaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProximaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelM)
-                    .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblTurma)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalvar)
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(panTabelaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnProximaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVoltaMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelM, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panTabelaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(comboSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTurma))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        javax.swing.GroupLayout paneTabNotasAtualLayout = new javax.swing.GroupLayout(paneTabNotasAtual);
+        paneTabNotasAtual.setLayout(paneTabNotasAtualLayout);
+        paneTabNotasAtualLayout.setHorizontalGroup(
+            paneTabNotasAtualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneTabNotasAtualLayout.createSequentialGroup()
+                .addComponent(panTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        paneTabNotasAtualLayout.setVerticalGroup(
+            paneTabNotasAtualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        tabbedPaneNotasFaltas.addTab("Ano atual", paneTabNotasAtual);
+
+        javax.swing.GroupLayout paneTabPreencherHistóricoLayout = new javax.swing.GroupLayout(paneTabPreencherHistórico);
+        paneTabPreencherHistórico.setLayout(paneTabPreencherHistóricoLayout);
+        paneTabPreencherHistóricoLayout.setHorizontalGroup(
+            paneTabPreencherHistóricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 754, Short.MAX_VALUE)
+        );
+        paneTabPreencherHistóricoLayout.setVerticalGroup(
+            paneTabPreencherHistóricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 454, Short.MAX_VALUE)
+        );
+
+        tabbedPaneNotasFaltas.addTab("Preencher histórico", paneTabPreencherHistórico);
+
+        btnSalvar.setText("Salvar Notas");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panTabela, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(tabbedPaneNotasFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar)
+                .addGap(331, 331, 331))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabbedPaneNotasFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSalvar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -442,10 +454,6 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     private javax.swing.JComboBox<Escola> comboEscolas;
     private javax.swing.JComboBox<Professor> comboProfs;
     private javax.swing.JComboBox<Turma> comboSerie;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelM;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -453,8 +461,11 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JLabel lblTurma;
     private javax.swing.JPanel panTabela;
+    private javax.swing.JPanel paneTabNotasAtual;
+    private javax.swing.JPanel paneTabPreencherHistórico;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTabbedPane tabbedPaneNotasFaltas;
     private javax.swing.JTable tblNotasFaltas;
     private javax.swing.JTextField txtMateria;
     // End of variables declaration//GEN-END:variables
@@ -467,7 +478,6 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     private ProfessorPebIIDAO piidao = new ProfessorPebIIDAO();
     private ProfessorDAO pdao = new ProfessorDAO();
     private OuvintesAction oa = new OuvintesAction();
-    private CellRenderer cr = new CellRenderer();
     private int notasExibidas = 0;
     private TableModelNotasFaltas tmnf = new TableModelNotasFaltas();
     private static final int MATEMATICA = 0;
@@ -499,6 +509,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                 if (comboSerie.getItemCount()!=0){
                     tmnf = new TableModelNotasFaltas(listaAlunos(), 0);
                     tblNotasFaltas.setModel(tmnf);
+                    tblNotasFaltas.getColumnModel().getColumn(0).setPreferredWidth(200);
                 }
             } else if (ae.getSource() == btnProximaMateria){
                 if (notasExibidas<7){
@@ -507,6 +518,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     corDasSetas();
                     tmnf = new TableModelNotasFaltas(listaAlunos(), notasExibidas);
                     tblNotasFaltas.setModel(tmnf);
+                    tblNotasFaltas.getColumnModel().getColumn(0).setPreferredWidth(200);
                 }
             } else if (ae.getSource() == btnVoltaMateria){
                 if (notasExibidas > 0){
@@ -515,6 +527,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     preencheMateria();
                     tmnf = new TableModelNotasFaltas(listaAlunos(), notasExibidas);
                     tblNotasFaltas.setModel(tmnf);    
+                    tblNotasFaltas.getColumnModel().getColumn(0).setPreferredWidth(200);
                 }
 //            } else if (ae.getSource() == btnPreenche){
                 
@@ -525,13 +538,14 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
     private class TableModelNotasFaltas extends AbstractTableModel {
         // Lista de professores a serem exibidos na tabela
         private List<Aluno> linhas;
-        private String[] colunas = new String[] {"Nome do aluno", "Notas", "Notas", "Notas", "Notas", "Faltas"};
+        private String[] colunas = new String[] {"Nome do aluno", "Notas 1º Bim", "Notas 2º Bim", "Notas 3º Bim", "Notas 4º Bim", "Faltas", "Situação"};
         private static final int NOMEALUNO = 0;
         private static final int NOTAS1 = 1;
         private static final int NOTAS2 = 2;
         private static final int NOTAS3 = 3;
         private static final int NOTAS4 = 4;
         private static final int FALTAS = 5;
+        private static final int SITUACAO = 6;
         private int ne;
  
         // Cria um TableModel sem nenhuma linha
@@ -575,6 +589,8 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                 return String.class;
             case FALTAS:
                 return String.class;
+            case SITUACAO: 
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
             }
@@ -582,7 +598,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == NOMEALUNO){
+            if (columnIndex == NOMEALUNO) {
                 return false;
             } else {
                 return true;
@@ -592,6 +608,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             // Pega o objeto referente a linha especificada.
+            Collections.sort(linhas, (Aluno a1, Aluno a2) -> a1.getNome().compareTo(a2.getNome()));
             Aluno a = linhas.get(rowIndex);
             int m = -1;    
             
@@ -655,7 +672,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                 default:
                     throw new IndexOutOfBoundsException("columnIndex out of bounds"); 
             }   
-            
+            a.getNotasFaltas().get(m).setSituacao(calculaMedia(a.getNotasFaltas().get(m)));
             switch (columnIndex) {
                 case NOMEALUNO:
                     return a.getNome();
@@ -669,103 +686,140 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     return a.getNotasFaltas().get(m).getNota4();
                 case FALTAS:
                     return a.getNotasFaltas().get(m).getFaltas();
+                case SITUACAO:
+                    return a.getNotasFaltas().get(m).getSituacao();
                 default:
                     throw new IndexOutOfBoundsException("columnIndex out of bounds");
             }
         }
         
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        // Pega o objeto referente a linha especificada.
-        Aluno a = linhas.get(rowIndex);
-            int m = -1;    
+        private int converte(String nota){
+            try {
+                if (nota.equals("I")){
+                    return 3;
+                } else if (nota.equals("R")){
+                    return 5;
+                } else if (nota.equals("B")){
+                    return 8;
+                } else if (nota.equals("O")){
+                    return 10;
+                } 
+                return 0;
+            } catch(Exception e){
+                return 0;
+            }
+        }
+        
+        private String calculaMedia(NotasFaltas nf){
+            int n1 = converte(nf.getNota1());
+            int n2 = converte(nf.getNota2());
+            int n3 = converte(nf.getNota3());
+            int n4 = converte(nf.getNota4());
             
-            switch (ne) {
-                case MATEMATICA:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Matemática")){
-                            m = i;
+            double media = (n1 + n2 + n3 + n4) / 4;
+            
+            if (media>=5){
+                return "Aprovado";
+            } else {
+                return "Reprovado";
+            }
+        }
+        
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            // Pega o objeto referente a linha especificada.
+            Aluno a = linhas.get(rowIndex);
+                int m = -1;    
+
+                switch (ne) {
+                    case MATEMATICA:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Matemática")){
+                                m = i;
+                            }
                         }
-                    }
+                        break;
+                    case PORTUGUES:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Português")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case CIENCIAS:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Ciências")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case HISTORIA:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("História")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case GEOGRAFIA:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Geografia")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case ARTES:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Artes")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case INGLES:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                            if (a.getNotasFaltas().get(i).getMateria().equals("Inglês")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    case EDUCACAOFISICA:
+                        for (int i=0; i<a.getNotasFaltas().size(); i++){
+                                if (a.getNotasFaltas().get(i).getMateria().equals("Educação Física")){
+                                m = i;
+                            }
+                        }
+                        break;
+                    default:
+                        throw new IndexOutOfBoundsException("columnIndex out of bounds"); 
+                }   
+            a.getNotasFaltas().get(m).setSituacao(calculaMedia(a.getNotasFaltas().get(m)));
+            switch (columnIndex) {
+                case NOMEALUNO:
                     break;
-                case PORTUGUES:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Português")){
-                            m = i;
-                        }
-                    }
+                case NOTAS1:
+                    a.getNotasFaltas().get(m).setNota1((String) aValue);
                     break;
-                case CIENCIAS:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Ciências")){
-                            m = i;
-                        }
-                    }
+                case NOTAS2:
+                    a.getNotasFaltas().get(m).setNota2((String) aValue);
                     break;
-                case HISTORIA:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("História")){
-                            m = i;
-                        }
-                    }
+                case NOTAS3:
+                    a.getNotasFaltas().get(m).setNota3((String) aValue);
                     break;
-                case GEOGRAFIA:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Geografia")){
-                            m = i;
-                        }
-                    }
+                case NOTAS4: 
+                    a.getNotasFaltas().get(m).setNota4((String) aValue);
                     break;
-                case ARTES:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Artes")){
-                            m = i;
-                        }
-                    }
+                case FALTAS:
+                    a.getNotasFaltas().get(m).setFaltas((String) aValue);
                     break;
-                case INGLES:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                        if (a.getNotasFaltas().get(i).getMateria().equals("Inglês")){
-                            m = i;
-                        }
-                    }
-                    break;
-                case EDUCACAOFISICA:
-                    for (int i=0; i<a.getNotasFaltas().size(); i++){
-                            if (a.getNotasFaltas().get(i).getMateria().equals("Educação Física")){
-                            m = i;
-                        }
-                    }
+                case SITUACAO:
+                    
                     break;
                 default:
-                    throw new IndexOutOfBoundsException("columnIndex out of bounds"); 
-            }   
-        
-        switch (columnIndex) {
-            case NOMEALUNO:
-                break;
-            case NOTAS1:
-                a.getNotasFaltas().get(m).setNota1((String) aValue);
-                break;
-            case NOTAS2:
-                a.getNotasFaltas().get(m).setNota2((String) aValue);
-                break;
-            case NOTAS3:
-                a.getNotasFaltas().get(m).setNota3((String) aValue);
-                break;
-            case NOTAS4: 
-                a.getNotasFaltas().get(m).setNota4((String) aValue);
-                break;
-            case FALTAS:
-                a.getNotasFaltas().get(m).setFaltas((String) aValue);
-                break;
-            default:
-                // Não deve ocorrer, pois só existem 2 colunas
-                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+                    // Não deve ocorrer, pois só existem 2 colunas
+                    throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+             // Notifica a atualização da célula
+             fireTableCellUpdated(rowIndex, columnIndex);
         }
-         // Notifica a atualização da célula
-         fireTableCellUpdated(rowIndex, columnIndex);
-    }
     
         // Retorna o objeto NotasFaltas referente a linha especificada
         public Aluno getNotasFaltas(int indiceLinha) {
@@ -824,19 +878,13 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         }
     
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                            boolean isSelected, boolean hasFocus, int row, int column) {
-                    if (getText().equals("I")){
-                        setForeground(Color.red);
-                    } else if (getText().equals("R") || getText().equals("B") || getText().equals("O")) {
-                        setForeground(Color.black);
-                    } else {
-                        setText("");
-                        JOptionPane.showMessageDialog(this, "Nota inválida!");
-                    }
-                    return super.getTableCellRendererComponent(table, value, isSelected,
-                                    hasFocus, row, column);
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (column != 0){
+                this.setHorizontalAlignment(CENTER);
+            } else {
+                this.setHorizontalAlignment(LEFT);
+            }
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         }
-
     }
 }

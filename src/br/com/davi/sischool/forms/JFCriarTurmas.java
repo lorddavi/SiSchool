@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -669,6 +670,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Aluno a1, Aluno a2) -> a1.getNome().compareTo(a2.getNome()));
             Aluno a = linhas.get(rowIndex);
             ConverteData converteData = new ConverteData();
             switch (columnIndex) {
@@ -764,6 +766,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Turma t1, Turma t2) -> (t1.getTurma() + t1.getLetra()).compareTo(t2.getTurma() + t2.getLetra()));
             Turma t = linhas.get(rowIndex);
             switch (columnIndex) {
                 case TURMA:

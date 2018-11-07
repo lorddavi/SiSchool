@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -843,6 +844,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             // Pega o professor referente a linha especificada.
+            Collections.sort(linhas, (ProfessorPebI p1, ProfessorPebI p2) -> {
+                if (p1.getPontos() > p2.getPontos()) {
+                    return -1;
+                }
+                if (p1.getPontos() < p2.getPontos()) {
+                    return 1;
+                }
+                return 0;
+            });
             ProfessorPebI prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:
@@ -965,6 +975,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             // Pega o professor referente a linha especificada.
+            Collections.sort(linhas, (ProfessorPebII p1, ProfessorPebII p2) -> {
+                if (p1.getPontos() > p2.getPontos()) {
+                    return -1;
+                }
+                if (p1.getPontos() < p2.getPontos()) {
+                    return 1;
+                }
+                return 0;
+            });
             ProfessorPebII prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:

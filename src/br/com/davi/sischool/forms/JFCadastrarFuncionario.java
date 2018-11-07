@@ -29,6 +29,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.InputVerifier;
@@ -1574,6 +1575,13 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     
                     throw new IllegalArgumentException();
 		}
+                
+                for (Funcionario f: fdao.buscaTodos()){
+                    if (f.getCpf().equals(texto)){
+                        JOptionPane.showMessageDialog(null, "Esse CPF já está cadastrado!");
+                        return false;
+                    }
+                }
 
 		char dig10, dig11;
 		int sm, i, r, num, peso;
@@ -1619,7 +1627,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             } catch (IllegalArgumentException ex) {
 		JOptionPane.showMessageDialog(null, "CPF Inválido!");
 		return (false);
-            }
+            } 
 	}
     }    
     
@@ -1862,6 +1870,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Funcionario f1, Funcionario f2) -> f1.getNome().compareTo(f2.getNome()));
             Funcionario f = linhas.get(rowIndex);
             switch (columnIndex) {
                 case CPF:

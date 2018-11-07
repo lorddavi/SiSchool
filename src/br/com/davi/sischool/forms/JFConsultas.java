@@ -6,6 +6,7 @@
 package br.com.davi.sischool.forms;
 
 import br.com.davi.sischool.funcoes.AbrirTelas;
+import br.com.davi.sischool.funcoes.CamposDeTelefone;
 import br.com.davi.sischool.funcoes.ConverteData;
 import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Escola;
@@ -23,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -73,6 +75,7 @@ public class JFConsultas extends javax.swing.JFrame {
         btnExcluir.addActionListener(oa);
         btnHistorico.addActionListener(oa);
         tblConsultaAluno.getSelectionModel().addListSelectionListener(ols);
+        tabelaEscolas.getSelectionModel().addListSelectionListener(ols);
         txtConsultaAluno.addKeyListener(okl);
         txtBuscarEscola.addKeyListener(okl);
     }
@@ -114,6 +117,11 @@ public class JFConsultas extends javax.swing.JFrame {
     public List<Escola> listaEscolas(){
         EscolaDAO edao = new EscolaDAO();
         return edao.buscaTodas();
+    }
+    
+    private void preencheLista(Escola e){ 
+        CamposDeTelefone cdt = new CamposDeTelefone();
+        cdt.exibeTelefonesNoJList(jListTelefone, e.getTelefones());
     }
 
     private void buscarAluno() {
@@ -209,6 +217,7 @@ public class JFConsultas extends javax.swing.JFrame {
         txtBuscarEscola = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTelefone = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnExcluir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -332,6 +341,8 @@ public class JFConsultas extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jListTelefone);
 
+        jLabel2.setText("Telefones:");
+
         javax.swing.GroupLayout tabConsultasEscolaLayout = new javax.swing.GroupLayout(tabConsultasEscola);
         tabConsultasEscola.setLayout(tabConsultasEscolaLayout);
         tabConsultasEscolaLayout.setHorizontalGroup(
@@ -340,7 +351,9 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addContainerGap())
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
                 .addGap(85, 85, 85)
@@ -359,7 +372,10 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -447,6 +463,7 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<Telefone> jListTelefone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -497,7 +514,11 @@ public class JFConsultas extends javax.swing.JFrame {
     class OuvintesListSelection implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent lse) {
-  
+            if (lse.getSource() == tabelaEscolas.getSelectionModel()){
+                int linha = tabelaEscolas.getSelectedRow();
+                Escola e = tme.getEscola(linha);
+                preencheLista(e);
+            }
         }
     }
     
@@ -581,6 +602,7 @@ public class JFConsultas extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Aluno a1, Aluno a2) -> a1.getNome().compareTo(a2.getNome()));
             Aluno a = linhas.get(rowIndex);
             switch (columnIndex) {
                 case NOME:
@@ -618,9 +640,8 @@ public class JFConsultas extends javax.swing.JFrame {
     
     private class TableModelEscola extends AbstractTableModel {
         private List<Escola> linhas;
-        private String[] colunas = new String[] {"Nome", "Telefones"};
+        private String[] colunas = new String[] {"Nome"};
         private static final int NOME = 0;
-        private static final int TELEFONES = 1;
  
         public TableModelEscola() {
             linhas = new ArrayList<>();
@@ -650,8 +671,6 @@ public class JFConsultas extends javax.swing.JFrame {
             switch (columnIndex) {
             case NOME:
                 return String.class;
-            case TELEFONES:
-                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
             }
@@ -664,13 +683,12 @@ public class JFConsultas extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Escola e1, Escola e2) -> e1.getNome().compareTo(e2.getNome()));
             Escola e = linhas.get(rowIndex);
             
             switch (columnIndex) {
                 case NOME:
                     return e.getNome();
-                case TELEFONES:
-                    return e.getTelefones();
                 default:
                         throw new IndexOutOfBoundsException("columnIndex out of bounds");
                 }

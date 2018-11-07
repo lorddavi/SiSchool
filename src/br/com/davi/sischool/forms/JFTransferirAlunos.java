@@ -17,15 +17,21 @@ import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.TransferenciaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Davi
  */
-public class JFTransferirAlunos extends javax.swing.JFrame implements ActionListener {
+public class JFTransferirAlunos extends javax.swing.JFrame {
 
     /**
      * Creates new form JFPrincipal
@@ -39,7 +45,70 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         initComponents();
         iniciarComponentes();
     }
-
+    
+    private void iniciarComponentes(){
+        setaListeners();
+        preencheEscolas();
+        preencheTurmas();
+    }
+    
+    private void setaListeners(){
+        OuvintesAction oa = new OuvintesAction();
+        OuvintesItems oi = new OuvintesItems();
+        OuvintesKey ok = new OuvintesKey();
+        
+        btnMinimizar.addActionListener(oa);
+        btnFechar.addActionListener(oa);
+        btnTransferir.addActionListener(oa);
+        comboEscolas.addItemListener(oi);
+        txtBusca.addKeyListener(ok);
+    }
+    
+    private void pegaDados(){
+        Escola escola = (Escola) comboEscolas.getSelectedItem();
+        Turma turma = (Turma) comboSerie.getSelectedItem();
+        transf.setFuncionario(func);
+        transf.setAluno(selecionaAluno());
+        transf.setEscola(escola);
+        transf.setTurma(turma);
+    }
+        
+    private Aluno selecionaAluno(){
+        int linha = tabelaAlunos.getSelectedRow();
+        return tma.getAluno(linha);
+    }
+    
+    private void atualizaTabela(List<Aluno> alunos){
+        tma = new TableModelAluno(alunos);
+        tabelaAlunos.setModel(tma);
+    }
+        
+    private void buscaAluno(){
+        busca = "%" + txtBusca.getText() + "%";
+        alunos = adao.buscarPorNome("%" + busca + "%");
+        atualizaTabela(alunos);
+    }
+    
+    private void preencheTurmas(){
+        Escola escola = (Escola) comboEscolas.getSelectedItem();
+        if (escola != null){
+            for (Turma t: escola.getTurmas()){
+                    comboSerie.addItem(t);
+            }
+        }
+    }
+    
+    private void preencheEscolas(){
+            for (Escola e: edao.buscaTodas()){
+                    comboEscolas.addItem(e);
+            }   
+    }
+    
+    private void salvarTransferencia(){
+        pegaDados();
+        tDao.inserir(transf);
+        JOptionPane.showMessageDialog(null, "Solicitação enviada. Aguardando confirmação!");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,10 +129,9 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         paneCriterioBusca = new javax.swing.JPanel();
         radioNome = new javax.swing.JRadioButton();
         radioRa = new javax.swing.JRadioButton();
-        radioSerie = new javax.swing.JRadioButton();
         txtBusca = new javax.swing.JTextField();
         scrollPaneTabela = new javax.swing.JScrollPane();
-        tblBusca = new javax.swing.JTable();
+        tabelaAlunos = new javax.swing.JTable();
         paneTransfere = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         comboEscolas = new javax.swing.JComboBox<>();
@@ -90,22 +158,12 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/red.png"))); // NOI18N
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
-        btnFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharActionPerformed(evt);
-            }
-        });
 
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Transferir Alunos");
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/green.png"))); // NOI18N
         btnMinimizar.setContentAreaFilled(false);
-        btnMinimizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMinimizarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelBarraDeTituloLayout = new javax.swing.GroupLayout(panelBarraDeTitulo);
         panelBarraDeTitulo.setLayout(panelBarraDeTituloLayout);
@@ -113,7 +171,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 752, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,9 +203,6 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         btnGroupCriterioBusca.add(radioRa);
         radioRa.setText("RA");
 
-        btnGroupCriterioBusca.add(radioSerie);
-        radioSerie.setText("Série");
-
         javax.swing.GroupLayout paneCriterioBuscaLayout = new javax.swing.GroupLayout(paneCriterioBusca);
         paneCriterioBusca.setLayout(paneCriterioBuscaLayout);
         paneCriterioBuscaLayout.setHorizontalGroup(
@@ -156,47 +211,17 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
                 .addComponent(radioNome)
                 .addGap(18, 18, 18)
                 .addComponent(radioRa)
-                .addGap(31, 31, 31)
-                .addComponent(radioSerie)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneCriterioBuscaLayout.setVerticalGroup(
             paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(radioNome)
-                .addComponent(radioRa)
-                .addComponent(radioSerie))
+                .addComponent(radioRa))
         );
 
-        tblBusca.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nome", "RA", "Série"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scrollPaneTabela.setViewportView(tblBusca);
-        if (tblBusca.getColumnModel().getColumnCount() > 0) {
-            tblBusca.getColumnModel().getColumn(0).setResizable(false);
-            tblBusca.getColumnModel().getColumn(1).setResizable(false);
-            tblBusca.getColumnModel().getColumn(2).setResizable(false);
-        }
+        tabelaAlunos.setModel(tma);
+        scrollPaneTabela.setViewportView(tabelaAlunos);
 
         paneTransfere.setBackground(new java.awt.Color(204, 204, 204));
         paneTransfere.setBorder(javax.swing.BorderFactory.createTitledBorder("Transferir para:"));
@@ -232,21 +257,31 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnTransferir.setText("Transferir");
+
         javax.swing.GroupLayout paneBuscaETransfereLayout = new javax.swing.GroupLayout(paneBuscaETransfere);
         paneBuscaETransfere.setLayout(paneBuscaETransfereLayout);
         paneBuscaETransfereLayout.setHorizontalGroup(
             paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paneCriterioBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtBusca)
-                            .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneTransfere, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(paneTransfere, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                                .addGap(144, 144, 144)
+                                .addComponent(btnTransferir)
+                                .addGap(0, 143, Short.MAX_VALUE))))
+                    .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                        .addComponent(paneCriterioBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         paneBuscaETransfereLayout.setVerticalGroup(
             paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,14 +290,14 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-            .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
-                .addComponent(paneTransfere, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(paneBuscaETransfereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(paneBuscaETransfereLayout.createSequentialGroup()
+                        .addComponent(paneTransfere, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTransferir)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        btnTransferir.setText("Transferir");
 
         javax.swing.GroupLayout paneFundoLayout = new javax.swing.GroupLayout(paneFundo);
         paneFundo.setLayout(paneFundoLayout);
@@ -271,18 +306,12 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
             .addGroup(paneFundoLayout.createSequentialGroup()
                 .addComponent(paneBuscaETransfere, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(paneFundoLayout.createSequentialGroup()
-                .addGap(322, 322, 322)
-                .addComponent(btnTransferir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneFundoLayout.setVerticalGroup(
             paneFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneFundoLayout.createSequentialGroup()
                 .addComponent(paneBuscaETransfere, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnTransferir)
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
@@ -290,9 +319,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(paneFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(paneFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,27 +335,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void iniciarComponentes(){
-        preencheEscolas();
-        preencheTurmas();
-        comboEscolas.addActionListener(this);
-        txtBusca.addActionListener(this);
-        txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                preencheTabela();
-            }
-        });
-        btnTransferir.addActionListener(this);
-    }
     
-    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnFecharActionPerformed
-
-    private void btnMinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarActionPerformed
-        setExtendedState(NORMAL);
-    }//GEN-LAST:event_btnMinimizarActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -382,67 +389,147 @@ public class JFTransferirAlunos extends javax.swing.JFrame implements ActionList
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JRadioButton radioNome;
     private javax.swing.JRadioButton radioRa;
-    private javax.swing.JRadioButton radioSerie;
     private javax.swing.JScrollPane scrollPaneTabela;
-    private javax.swing.JTable tblBusca;
+    private javax.swing.JTable tabelaAlunos;
     private javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables
     private Funcionario func = new Funcionario();
     private EscolaDAO edao = new EscolaDAO();
     private AlunoDAO adao = new AlunoDAO();
-    private Tabela tabela = new Tabela();
+    private TableModelAluno tma = new TableModelAluno();
     private String busca = new String();
     private Transferencia transf = new Transferencia();
     private List<Aluno> alunos = new ArrayList<>();
     private TransferenciaDAO tDao = new TransferenciaDAO();
-    
-    private void pegaDados(){
-        int index = tblBusca.getSelectedRow();
-        Escola escola = (Escola) comboEscolas.getSelectedItem();
-        Turma turma = (Turma) comboSerie.getSelectedItem();
-        transf.setFuncionario(func);
-        transf.setAluno(alunos.get(index));
-        transf.setEscola(escola);
-        transf.setTurma(turma);
-    }
-    
-    private void preencheTabela(){
-        busca = txtBusca.getText();
-        tabela.preencheTabelaTransferirAlunos(tblBusca, adao.buscarPorNome("%" + busca + "%"));
-        alunos = adao.buscarPorNome("%" + busca + "%");
-    }
-    
-    private void preencheTurmas(){
-        Escola escola = (Escola) comboEscolas.getSelectedItem();
-        if (escola != null){
-            for (Turma t: escola.getTurmas()){
-                    comboSerie.addItem(t);
+   
+    class OuvintesAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            if (evt.getSource() == btnFechar){
+                dispose();
+            } else if (evt.getSource() == btnMinimizar){
+                setExtendedState(ICONIFIED);
+            } else if (evt.getSource() == btnTransferir){
+                salvarTransferencia();
             }
         }
     }
     
-    private void preencheEscolas(){
-            for (Escola e: edao.buscaTodas()){
-                    comboEscolas.addItem(e);
-            }   
+    class OuvintesItems implements ItemListener{
+
+        @Override
+        public void itemStateChanged(ItemEvent ie) {
+            if (ie.getSource() == comboEscolas){
+                comboSerie.removeAllItems();
+                preencheTurmas();
+            }
+        }
+        
     }
     
-    private void salvarTransferencia(){
-        pegaDados();
-        tDao.inserir(transf);
-        JOptionPane.showMessageDialog(null, "Solicitação enviada. Aguardando confirmação!");
+    class OuvintesKey implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent ke) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+            
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            buscaAluno();
+        }
+        
     }
-   
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == comboEscolas){
-            comboSerie.removeAllItems();
-            preencheTurmas();
-        } else if (evt.getSource() == txtBusca){
-            preencheTabela();
-        } else if (evt.getSource() == btnTransferir){
-            salvarTransferencia();
+    
+    private class TableModelAluno extends AbstractTableModel {
+        private List<Aluno> linhas;
+        private String[] colunas = new String[] {"RA", "Nome", "Escola", "Turma"};
+        private static final int RA = 0;
+        private static final int NOME = 1;
+        private static final int ESCOLA = 2;
+        private static final int TURMA = 3;
+ 
+        public TableModelAluno() {
+            linhas = new ArrayList<>();
+        }
+ 
+        public TableModelAluno(List<Aluno> lista) {
+            linhas = new ArrayList<>(lista);
+        }
+        
+        @Override
+        public int getRowCount() {
+            return linhas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+        
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        };
+        
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+            case RA:
+                return String.class;
+            case NOME:
+                return String.class;
+            case ESCOLA:
+                return String.class;
+            case TURMA:
+                return String.class;
+            default:
+                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Aluno a1, Aluno a2) -> a1.getNome().compareTo(a2.getNome()));
+            Aluno a = linhas.get(rowIndex);
+            switch (columnIndex) {
+                case RA:
+                    return a.getRa();
+                case NOME:
+                    return a.getNome();
+                case ESCOLA:
+                    return a.getEscola().getNome();
+                case TURMA:
+                    return a.getSerie();
+                default:
+                        throw new IndexOutOfBoundsException("columnIndex out of bounds");
+                }
+        }
+        
+        public Aluno getAluno(int indiceLinha) {
+            return linhas.get(indiceLinha);
+        }
+
+        public void removeAluno(int indiceLinha) {
+            linhas.remove(indiceLinha);
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+ 
+        public void addListaDeAlunos(List<Aluno> alunos) {
+            int indice = getRowCount();
+            linhas.addAll(alunos);
+
+            fireTableRowsInserted(indice, indice + alunos.size());
         }
     }
-
 }

@@ -16,8 +16,10 @@ import br.com.davi.sischool.regras.OutroCargoDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -40,7 +42,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     
     public void iniciarComponentes(){
         escolas = edao.buscaTodas();
-        tabela.preencheTabelaCadEscolas(tabelaEscolas, escolas);
+        atualizaTabelaEscolas(escolas);
         setaListeners();
     }
     
@@ -60,13 +62,17 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private void buscaEscola(){
         String busca = "%" + txtBuscar.getText() + "%";
         escolas = edao.buscaPorNome(busca);
-        tabela.preencheTabelaCadEscolas(tabelaEscolas, escolas);
+        atualizaTabelaEscolas(escolas);
+    }
+    
+    private void atualizaTabelaEscolas(List<Escola> escolas){
+        tme = new TableModelEscola(escolas);
+        tabelaEscolas.setModel(tme);
     }
     
     private Escola selecionaEscola(){
         int linha = tabelaEscolas.getSelectedRow();
-        int index = (int) tabelaEscolas.getValueAt(linha, 0);
-        return edao.buscaPorId(index);
+        return tme.getEscola(linha);
     }
     
     private void editarEscola(Escola esc){
@@ -134,11 +140,14 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                     edao.editar(escola);
                     JOptionPane.showMessageDialog(this, "Dados alterados!");
                     edicao = false;
+                    tabelaEscolas.clearSelection();
                 } else {
                     edao.inserir(escola);
                     JOptionPane.showMessageDialog(this, "Sucesso!"); //PROCURAR FUTURAMENTE UM OPTION PANE ADEQUADO PRA MENSAGENS DE SUCESSO
                 }
             }
+            escolas = edao.buscaTodas();
+            atualizaTabelaEscolas(escolas);
         } catch  (Exception e) {
 
         }
@@ -317,37 +326,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
 
         panelTabela.setBackground(new java.awt.Color(204, 204, 204));
 
-        tabelaEscolas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Id", "Escola"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tabelaEscolas.setModel(tme);
         jScrollPane2.setViewportView(tabelaEscolas);
-        if (tabelaEscolas.getColumnModel().getColumnCount() > 0) {
-            tabelaEscolas.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tabelaEscolas.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         jLabel5.setText("Buscar Escola:");
 
@@ -527,8 +507,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private EscolaDAO edao = new EscolaDAO();
     private List<Telefone> telef = new ArrayList<>();
     private CamposDeTelefone camposTelef = new CamposDeTelefone();
-    private Tabela tabela = new Tabela();
     private List<Escola> escolas = new ArrayList<>();
+    private TableModelEscola tme = new TableModelEscola();
     private String nome, endereco, bairro, cnpj;
     private boolean edicao = false;
     
@@ -560,4 +540,78 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             }
         } 
     }    
+    
+    private class TableModelEscola extends AbstractTableModel {
+        private List<Escola> linhas;
+        private String[] colunas = new String[] {"Nome"};
+        private static final int NOME = 0;
+ 
+        public TableModelEscola() {
+            linhas = new ArrayList<>();
+        }
+ 
+        public TableModelEscola(List<Escola> lista) {
+            linhas = new ArrayList<>(lista);
+        }
+        
+        @Override
+        public int getRowCount() {
+            return linhas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+        
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        };
+        
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+            case NOME:
+                return String.class;
+            default:
+                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Escola e1, Escola e2) -> e1.getNome().compareTo(e2.getNome()));
+            Escola e = linhas.get(rowIndex);
+            
+            switch (columnIndex) {
+                case NOME:
+                    return e.getNome();
+                default:
+                        throw new IndexOutOfBoundsException("columnIndex out of bounds");
+                }
+        }
+        
+        public Escola getEscola(int indiceLinha) {
+            return linhas.get(indiceLinha);
+        }
+ 
+        public void removeEscola(int indiceLinha) {
+            linhas.remove(indiceLinha);
+
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+ 
+        public void addListaDeEscolas(List<Escola> escolas) {
+            int indice = getRowCount();
+            linhas.addAll(escolas);
+
+            fireTableRowsInserted(indice, indice + escolas.size());
+        }
+    }
 }

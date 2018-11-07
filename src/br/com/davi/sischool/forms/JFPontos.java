@@ -16,6 +16,7 @@ import br.com.davi.sischool.regras.ProfessorDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -553,6 +554,7 @@ public class JFPontos extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             // Pega o professor referente a linha especificada.
+            Collections.sort(linhas, (Professor p1, Professor p2) -> p1.getNome().compareTo(p2.getNome()));
             Professor prof = linhas.get(rowIndex);
             switch (columnIndex) {
                 case MATRICULA:
@@ -672,6 +674,7 @@ public class JFPontos extends javax.swing.JFrame {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             // Pega o professor referente a linha especificada.
+            Collections.sort(linhas, (Certificado c1, Certificado c2) -> c1.getNomeCurso().compareTo(c2.getNomeCurso()));
             Certificado certificado = linhas.get(rowIndex);
             switch (columnIndex) {
                 case CURSO:

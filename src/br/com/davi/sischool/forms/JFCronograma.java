@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -513,6 +514,7 @@ public class JFCronograma extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Professor p1, Professor p2) -> p1.getNome().compareTo(p2.getNome()));
             Professor prof = linhas.get(rowIndex);
             ProfessorPebII p2 = new ProfessorPebII();
             ProfessorPebIIDAO piidao = new ProfessorPebIIDAO();

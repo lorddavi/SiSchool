@@ -6,8 +6,6 @@
 package br.com.davi.sischool.forms;
 
 import br.com.davi.sischool.model.Aluno;
-import br.com.davi.sischool.model.Escola;
-import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Transferencia;
@@ -83,32 +81,12 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/red.png"))); // NOI18N
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
-        btnFechar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                btnFecharMouseMoved(evt);
-            }
-        });
-        btnFechar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnFecharMouseReleased(evt);
-            }
-        });
-        btnFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharActionPerformed(evt);
-            }
-        });
 
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Avisos e Notificações");
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/green.png"))); // NOI18N
         btnMinimizar.setContentAreaFilled(false);
-        btnMinimizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMinimizarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelBarraDeTituloLayout = new javax.swing.GroupLayout(panelBarraDeTitulo);
         panelBarraDeTitulo.setLayout(panelBarraDeTituloLayout);
@@ -145,11 +123,6 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
         jScrollPane3.setViewportView(jTextArea1);
 
         btnConfirmarTransferencia.setText("Confirmar");
-        btnConfirmarTransferencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarTransferenciaActionPerformed(evt);
-            }
-        });
 
         btnCancelarTransferencia.setText("Cancelar");
 
@@ -214,30 +187,20 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
 
     private void iniciarComponentes(){
         preencheLista();
+        setaListeners();
         listaSeleciona();
         jList1.setSelectedIndex(0);
     }
     
-    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnFecharActionPerformed
-
-    private void btnMinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarActionPerformed
-        setExtendedState(ICONIFIED);
-    }//GEN-LAST:event_btnMinimizarActionPerformed
-
-    private void btnFecharMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharMouseMoved
-    
-    }//GEN-LAST:event_btnFecharMouseMoved
-
-    private void btnFecharMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFecharMouseReleased
-
-    private void btnConfirmarTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarTransferenciaActionPerformed
-        aceitarTransferecia();
-    }//GEN-LAST:event_btnConfirmarTransferenciaActionPerformed
-    
+    private void  setaListeners(){
+        OuvintesAction oa = new OuvintesAction();
+        
+        btnMinimizar.addActionListener(oa);
+        btnFechar.addActionListener(oa);
+        btnConfirmarTransferencia.addActionListener(oa);
+        btnCancelarTransferencia.addActionListener(oa);
+    }
+        
     private void preencheLista(){
         DefaultListModel<Transferencia> model = new DefaultListModel<>();
         jList1.setModel(model);
@@ -260,7 +223,7 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
             String escolaVelha = transf.getAluno().getEscola().getNome();
             String turma = transf.getTurma().getTurma() + " " + transf.getTurma().getLetra();
             String texto = nome + " deseja transferir o aluno " 
-                    + nomeAluno + "da escola " + escolaVelha + " para a turma " +  turma +
+                    + nomeAluno + " da escola " + escolaVelha + " para a turma " +  turma +
                     " da escola " + transf.getEscola().getNome();
            jTextArea1.setText(texto);
         }
@@ -349,5 +312,18 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
     private Transferencia transf = new Transferencia();
     private TransferenciaDAO transDao = new TransferenciaDAO();
     private AlunoDAO alunoDao = new AlunoDAO();
-    
+  
+    class OuvintesAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            if (ae.getSource() == btnMinimizar){
+                setExtendedState(ICONIFIED);
+            } else if (ae.getSource() == btnFechar){
+                dispose();
+            } else if (ae.getSource() == btnConfirmarTransferencia){
+                aceitarTransferecia();
+            }
+        }
+        
+    }
 }

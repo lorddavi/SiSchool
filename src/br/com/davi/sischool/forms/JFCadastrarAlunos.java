@@ -296,7 +296,6 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     * os dados.
     */
     private void salvar() {
-        AlunoDAO adao = new AlunoDAO();
        defineAluno();
         if (edicao){
             adao.editar(aluno);
@@ -341,6 +340,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                     JDConfirmaCadastroAluno cc = new JDConfirmaCadastroAluno(this, rootPaneCheckingEnabled);
                     cc.setVisible(true);
                 }
+                
+                aluno = null;
+                //FAZER LIMPAR TODAS AS VARIAVEIS
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -487,6 +489,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
         jLabel10.setLabelFor(txtRa);
         jLabel10.setText("RA:");
+
+        txtRa.setInputVerifier(new VerificadorDeRA());
 
         jLabel11.setText("Data de nascimento:");
 
@@ -1050,6 +1054,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private List<NotasFaltas> notasFaltas = new ArrayList<>();
     private boolean edicao = false;
     private Aluno aluno = new Aluno();
+    private AlunoDAO adao = new AlunoDAO();
     //Fim da declaração das variáveis declaradas por mim.
     
     class VerificadorDeData extends InputVerifier {
@@ -1162,6 +1167,38 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             }
         }
     }    
+    
+    class VerificadorDeRA extends InputVerifier {
+	public VerificadorDeRA() {
+        }
+        
+        @Override
+	public boolean verify(JComponent jc) {
+            txtRa = (javax.swing.JTextField) jc;
+            String texto = txtRa.getText();
+            
+
+            try {
+                
+            for (Aluno a: adao.buscaTodos()){
+                if (a.getRa().equals(texto)){
+                    JOptionPane.showMessageDialog(null, "Esse RA já está cadastrado!");
+                    return false;
+                }
+            }
+            
+            if (texto.trim().length() < 5){
+                return(true);
+            } else {
+                throw new IllegalArgumentException();
+            }
+                
+            } catch (IllegalArgumentException ex) {
+		JOptionPane.showMessageDialog(null, "Telefone inválido");
+		return (false);
+            }
+        }
+    }  
     
     private class OuvintesAction implements ActionListener {
 

@@ -159,6 +159,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Transferir Alunos");
 
@@ -170,8 +171,9 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         panelBarraDeTituloLayout.setHorizontalGroup(
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 752, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +184,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTituloPrincipal)
                     .addGroup(panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnMinimizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -194,13 +196,15 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         paneBuscaETransfere.setBackground(new java.awt.Color(204, 204, 204));
 
         paneCriterioBusca.setBackground(new java.awt.Color(204, 204, 204));
-        paneCriterioBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Critério de Busca"));
+        paneCriterioBusca.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Critério de Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         btnGroupCriterioBusca.add(radioNome);
+        radioNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioNome.setSelected(true);
         radioNome.setText("Nome");
 
         btnGroupCriterioBusca.add(radioRa);
+        radioRa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioRa.setText("RA");
 
         javax.swing.GroupLayout paneCriterioBuscaLayout = new javax.swing.GroupLayout(paneCriterioBusca);
@@ -208,27 +212,40 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         paneCriterioBuscaLayout.setHorizontalGroup(
             paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneCriterioBuscaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(radioNome)
                 .addGap(18, 18, 18)
                 .addComponent(radioRa)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         paneCriterioBuscaLayout.setVerticalGroup(
             paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(radioNome)
-                .addComponent(radioRa))
+            .addGroup(paneCriterioBuscaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paneCriterioBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioNome)
+                    .addComponent(radioRa))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
+        txtBusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        tabelaAlunos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaAlunos.setModel(tma);
         scrollPaneTabela.setViewportView(tabelaAlunos);
 
         paneTransfere.setBackground(new java.awt.Color(204, 204, 204));
-        paneTransfere.setBorder(javax.swing.BorderFactory.createTitledBorder("Transferir para:"));
+        paneTransfere.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transferir para:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Escola");
 
+        comboEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Série:");
+
+        comboSerie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout paneTransfereLayout = new javax.swing.GroupLayout(paneTransfere);
         paneTransfere.setLayout(paneTransfereLayout);
@@ -257,6 +274,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnTransferir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTransferir.setText("Transferir");
 
         javax.swing.GroupLayout paneBuscaETransfereLayout = new javax.swing.GroupLayout(paneBuscaETransfere);
@@ -311,7 +329,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
             paneFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneFundoLayout.createSequentialGroup()
                 .addComponent(paneBuscaETransfere, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);

@@ -73,21 +73,23 @@ public class JFConsultas extends javax.swing.JFrame {
         btnMinimizar.addActionListener(oa);
         btnEditar.addActionListener(oa);
         btnExcluir.addActionListener(oa);
-        btnHistorico.addActionListener(oa);
+        btnRelatorio.addActionListener(oa);
         tblConsultaAluno.getSelectionModel().addListSelectionListener(ols);
         tabelaEscolas.getSelectionModel().addListSelectionListener(ols);
         txtConsultaAluno.addKeyListener(okl);
         txtBuscarEscola.addKeyListener(okl);
     }
     
-    private void historico(){
+    private void relatorioFichaAluno(){
         try {
 	// Cria a fonte de dados
             int linha = tblConsultaAluno.getSelectedRow();
-            List<NotasFaltas> nf = tma.getAluno(linha).getNotasFaltas();
-	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(nf);
+            Aluno a = tma.getAluno(linha);
+            List<Aluno> alunos = new ArrayList<>();
+            alunos.add(a);
+	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(alunos);
 	// Preenche o relatório
-	           JasperPrint print = JasperFillManager.fillReport("relatorios/Historico.jasper", null, ds);
+	           JasperPrint print = JasperFillManager.fillReport("relatorios/FichaAluno.jasper", null, ds);
 	// Exibe o relatório
 	           JasperViewer.viewReport(print, false);
         } catch (JRException e) {
@@ -95,7 +97,7 @@ public class JFConsultas extends javax.swing.JFrame {
         }
     }
     
-    private void relatorio(){
+    private void relatorioFuncionarios(){
         try {
 	// Cria a fonte de dados
             FuncionarioDAO fdao = new FuncionarioDAO();
@@ -107,6 +109,22 @@ public class JFConsultas extends javax.swing.JFrame {
 	    JasperViewer.viewReport(print, false);
         } catch (JRException e) {
                 e.printStackTrace();
+        }
+    }
+    
+    private void relatorios(){
+        switch (tabbedConsultas.getSelectedIndex()){
+            case 0:
+                relatorioFichaAluno();
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                relatorioFuncionarios();
+                break;
+            default:
+                break;
         }
     }
     
@@ -222,7 +240,7 @@ public class JFConsultas extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnHistorico = new javax.swing.JButton();
+        btnRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -244,6 +262,7 @@ public class JFConsultas extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Consultas");
 
@@ -276,22 +295,29 @@ public class JFConsultas extends javax.swing.JFrame {
         );
 
         tabbedConsultas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tabbedConsultas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabAlunoConsultas.setBackground(new java.awt.Color(204, 204, 204));
 
         radioNomeConsultaAluno.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupAluno.add(radioNomeConsultaAluno);
+        radioNomeConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioNomeConsultaAluno.setSelected(true);
         radioNomeConsultaAluno.setText("Nome");
 
         radioRaConsultaAluno.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupAluno.add(radioRaConsultaAluno);
+        radioRaConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioRaConsultaAluno.setText("RA");
 
         radioDataNascConsultaAluno.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupAluno.add(radioDataNascConsultaAluno);
+        radioDataNascConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioDataNascConsultaAluno.setText("Idade");
 
+        txtConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        tblConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblConsultaAluno.setModel(tma);
         scrolltabelaalunos.setViewportView(tblConsultaAluno);
 
@@ -326,7 +352,7 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtConsultaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -334,13 +360,19 @@ public class JFConsultas extends javax.swing.JFrame {
 
         tabConsultasEscola.setBackground(new java.awt.Color(204, 204, 204));
 
+        tabelaEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaEscolas.setModel(tme);
         scrollTabelaEscolas.setViewportView(tabelaEscolas);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Buscar escola:");
 
+        txtBuscarEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jListTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(jListTelefone);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Telefones:");
 
         javax.swing.GroupLayout tabConsultasEscolaLayout = new javax.swing.GroupLayout(tabConsultasEscola);
@@ -389,18 +421,22 @@ public class JFConsultas extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
+            .addGap(0, 374, Short.MAX_VALUE)
         );
 
         tabbedConsultas.addTab("Funcionários", jPanel1);
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("Excluir");
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setText("Estatísticas");
 
+        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
 
-        btnHistorico.setText("Relatório");
+        btnRelatorio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRelatorio.setText("Relatório");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -414,7 +450,7 @@ public class JFConsultas extends javax.swing.JFrame {
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -433,7 +469,7 @@ public class JFConsultas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHistorico)
+                        .addComponent(btnRelatorio)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -459,8 +495,8 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.ButtonGroup btnGroupAluno;
-    private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnMinimizar;
+    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -505,8 +541,8 @@ public class JFConsultas extends javax.swing.JFrame {
                 editar();
             } else if (evt.getSource() == btnExcluir){
                 excluirAluno(alunoSelecionado());
-            } else if (evt.getSource() == btnHistorico){
-                historico();
+            } else if (evt.getSource() == btnRelatorio){
+                relatorios();
             }
         }
     }

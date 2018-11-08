@@ -448,6 +448,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Cadastrar Alunos");
 
@@ -460,7 +461,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -483,25 +484,33 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
         paneCadastroAlunoAluno.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setLabelFor(txtNome);
         jLabel9.setText("Nome:");
         jLabel9.setName(""); // NOI18N
 
+        txtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setLabelFor(txtRa);
         jLabel10.setText("RA:");
 
+        txtRa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtRa.setInputVerifier(new VerificadorDeRA());
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Data de nascimento:");
 
         paneGeneroCadastroAluno.setBackground(new java.awt.Color(204, 204, 204));
-        paneGeneroCadastroAluno.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
+        paneGeneroCadastroAluno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gênero", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         buttonGroup1.add(radioMasculinoCadastroAluno);
+        radioMasculinoCadastroAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioMasculinoCadastroAluno.setSelected(true);
         radioMasculinoCadastroAluno.setText("Masculino");
 
         buttonGroup1.add(radioFemininoCadastroAluno);
+        radioFemininoCadastroAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioFemininoCadastroAluno.setText("Feminino");
 
         javax.swing.GroupLayout paneGeneroCadastroAlunoLayout = new javax.swing.GroupLayout(paneGeneroCadastroAluno);
@@ -525,15 +534,23 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setLabelFor(txtEndereco);
         jLabel12.setText("Endereço:");
 
+        txtEndereco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setLabelFor(txtBairro);
         jLabel13.setText("Bairro:");
 
+        txtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setLabelFor(lblComprovanteResidenciaCadAluno);
         jLabel14.setText("Comprovante de residência:");
 
+        lblComprovanteResidenciaCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblComprovanteResidenciaCadAluno.setText("Nenhum arquivo selecionado...");
         lblComprovanteResidenciaCadAluno.setToolTipText("Nenhum arquivo selecionado...");
 
@@ -543,15 +560,19 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         panelCheckBoxCadastroAluno.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         checkTransporteEscolarCadastroAluno.setBackground(new java.awt.Color(204, 204, 204));
+        checkTransporteEscolarCadastroAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkTransporteEscolarCadastroAluno.setText("Utiliza transporte público escolar.");
 
         checkNecessidadesEspeciaisAcompCadAluno.setBackground(new java.awt.Color(204, 204, 204));
+        checkNecessidadesEspeciaisAcompCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkNecessidadesEspeciaisAcompCadAluno.setText("Necessita de Acompanhante.");
 
         checkNecessidadesEspeciaisCadastroAluno.setBackground(new java.awt.Color(204, 204, 204));
+        checkNecessidadesEspeciaisCadastroAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkNecessidadesEspeciaisCadastroAluno.setText("Portador de necessidades especiais.");
 
         jCheckBox1.setBackground(new java.awt.Color(204, 204, 204));
+        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jCheckBox1.setText("Recebe Auxílio");
 
         javax.swing.GroupLayout panelCheckBoxCadastroAlunoLayout = new javax.swing.GroupLayout(panelCheckBoxCadastroAluno);
@@ -590,20 +611,29 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        ftxtDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ftxtDataNasc.setInputVerifier(new VerificadorDeData());
 
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("CEP:");
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setText("Escola:");
 
+        comboEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setLabelFor(comboBoxSerie);
         jLabel7.setText("Turma:");
+
+        comboBoxSerie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         try {
             txtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCep.setInputVerifier(new VerificadorCEP());
 
         javax.swing.GroupLayout paneCadastroAlunoAlunoLayout = new javax.swing.GroupLayout(paneCadastroAlunoAluno);
@@ -698,7 +728,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboBoxSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(panelCheckBoxCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -712,27 +742,39 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
         paneCadastroAlunoResponsavel.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setLabelFor(txtNomePai);
         jLabel1.setText("Nome do pai:");
 
+        txtNomePai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         checkPaiResponsavelCadAluno.setBackground(new java.awt.Color(204, 204, 204));
+        checkPaiResponsavelCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkPaiResponsavelCadAluno.setText("Marcar como responsável");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setLabelFor(txtNomeMae);
         jLabel2.setText("Nome da mãe:");
 
         checkMaeResponsavelCadAluno.setBackground(new java.awt.Color(204, 204, 204));
+        checkMaeResponsavelCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkMaeResponsavelCadAluno.setText("Marcar como responsável");
 
+        txtNomeMae.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         radioOutroResponsavelCadAluno.setBackground(new java.awt.Color(204, 204, 204));
+        radioOutroResponsavelCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioOutroResponsavelCadAluno.setText("Outro responsável.");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Telefones:");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setLabelFor(txtAObservacoes);
         jLabel6.setText("Observações:");
 
         txtAObservacoes.setColumns(20);
+        txtAObservacoes.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtAObservacoes.setLineWrap(true);
         txtAObservacoes.setRows(5);
         txtAObservacoes.setWrapStyleWord(true);
@@ -740,18 +782,21 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
         paneFotoAluno.setBackground(new java.awt.Color(204, 204, 204));
 
+        btnFotoAlunoCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFotoAlunoCadAluno.setText("foto 3x4");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setLabelFor(btnFotoAlunoCadAluno);
         jLabel8.setText("Foto 3x4 do aluno.");
 
+        btnProcurarFotoCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnProcurarFotoCadAluno.setText("Procurar");
 
         javax.swing.GroupLayout paneFotoAlunoLayout = new javax.swing.GroupLayout(paneFotoAluno);
         paneFotoAluno.setLayout(paneFotoAlunoLayout);
         paneFotoAlunoLayout.setHorizontalGroup(
             paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+            .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -767,16 +812,18 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btnProcurarFotoCadAluno))
         );
 
         btnAddTelefCadAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
         btnAddTelefCadAluno.setContentAreaFilled(false);
 
+        jListTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jListTelefones.setAutoscrolls(false);
         jScrollPane1.setViewportView(jListTelefones);
 
+        txtTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTelefones.setToolTipText("Digite um telefone para adicioná-lo.");
         txtTelefones.setInputVerifier(new VerificadorDeTelefone());
         txtTelefones.setName(""); // NOI18N
@@ -787,14 +834,18 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         panelOutroResponsavel.setBackground(new java.awt.Color(204, 204, 204));
         panelOutroResponsavel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setLabelFor(txtNomeResponsavel);
         jLabel3.setText("Nome do responsável:");
 
+        txtNomeResponsavel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNomeResponsavel.setEnabled(false);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setLabelFor(txtParentescoResponsavel);
         jLabel4.setText("Parentesco:");
 
+        txtParentescoResponsavel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtParentescoResponsavel.setEnabled(false);
 
         javax.swing.GroupLayout panelOutroResponsavelLayout = new javax.swing.GroupLayout(panelOutroResponsavel);
@@ -844,13 +895,13 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                     .addGroup(paneCadastroAlunoResponsavelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(79, 79, 79)
-                        .addComponent(checkMaeResponsavelCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                        .addComponent(checkMaeResponsavelCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                         .addGap(187, 187, 187))
                     .addGroup(paneCadastroAlunoResponsavelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(85, 85, 85)
+                        .addGap(66, 66, 66)
                         .addComponent(checkPaiResponsavelCadAluno)
-                        .addGap(0, 264, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(paneCadastroAlunoResponsavelLayout.createSequentialGroup()
                         .addGroup(paneCadastroAlunoResponsavelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -910,15 +961,17 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                                 .addComponent(btnRemoveTelefoneCadAluno))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(scrollPaneObservacoesCadAluno))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         scrollPaneCadastroAlunoResponsavel.setViewportView(paneCadastroAlunoResponsavel);
 
         tabbedPaneCadastroAluno.addTab("Responsável", scrollPaneCadastroAlunoResponsavel);
 
+        btnSalvarCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvarCadAluno.setText("Salvar");
 
+        btnCancelarCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelarCadAluno.setText("Cancelar");
         btnCancelarCadAluno.setToolTipText("");
 

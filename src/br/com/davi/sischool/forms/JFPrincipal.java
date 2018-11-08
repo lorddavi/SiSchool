@@ -112,8 +112,8 @@ public final class JFPrincipal extends javax.swing.JFrame {
         paneTabProfessores = new javax.swing.JPanel();
         paneIconesTelaProfessores = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        btnAtribuirProf = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        btnAtribuirProf = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnProfTurmasII = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -150,6 +150,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Tela Principal");
 
@@ -166,7 +167,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,6 +192,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         tabbedPaneUsuarios.setBackground(new java.awt.Color(204, 204, 204));
         tabbedPaneUsuarios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tabbedPaneUsuarios.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabbedPaneUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabbedPaneUsuarios.setName("tabbedPaneUsuarios"); // NOI18N
 
         paneTabGeral.setBackground(new java.awt.Color(204, 204, 204));
@@ -204,6 +206,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/consulta.png"))); // NOI18N
         btnConsultar.setContentAreaFilled(false);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setLabelFor(btnConsultar);
         jLabel2.setText("Consultar");
 
@@ -213,7 +216,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
             panelBtnConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelBtnConsultarLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -230,6 +233,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnCronogramaDeAulas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/cronogramaDeAulas.png"))); // NOI18N
         btnCronogramaDeAulas.setContentAreaFilled(false);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setLabelFor(btnCronogramaDeAulas);
         jLabel3.setText("Cronograma de Aulas");
 
@@ -237,18 +241,19 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panelBtnCronogramaDeAulas.setLayout(panelBtnCronogramaDeAulasLayout);
         panelBtnCronogramaDeAulasLayout.setHorizontalGroup(
             panelBtnCronogramaDeAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCronogramaDeAulas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelBtnCronogramaDeAulasLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+            .addComponent(btnCronogramaDeAulas, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnCronogramaDeAulasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         panelBtnCronogramaDeAulasLayout.setVerticalGroup(
             panelBtnCronogramaDeAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBtnCronogramaDeAulasLayout.createSequentialGroup()
                 .addComponent(btnCronogramaDeAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelBtnCadastrarEscola.setBackground(new java.awt.Color(204, 204, 204));
@@ -257,6 +262,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnCadastrarEscola.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/cadastrarEscola.png"))); // NOI18N
         btnCadastrarEscola.setContentAreaFilled(false);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setLabelFor(btnCadastrarEscola);
         jLabel4.setText("Cadastrar Escola");
 
@@ -264,9 +270,9 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panelBtnCadastrarEscola.setLayout(panelBtnCadastrarEscolaLayout);
         panelBtnCadastrarEscolaLayout.setHorizontalGroup(
             panelBtnCadastrarEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCadastrarEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCadastrarEscola, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
             .addGroup(panelBtnCadastrarEscolaLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -275,13 +281,14 @@ public final class JFPrincipal extends javax.swing.JFrame {
             .addGroup(panelBtnCadastrarEscolaLayout.createSequentialGroup()
                 .addComponent(btnCadastrarEscola, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         paneBtnCadFunc.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setLabelFor(btnCadFunc);
-        jLabel7.setText("Cadastrar Funcionário");
+        jLabel7.setText(" Cadastrar Funcionário");
 
         btnCadFunc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/cadastroFunc.png"))); // NOI18N
         btnCadFunc.setContentAreaFilled(false);
@@ -291,12 +298,14 @@ public final class JFPrincipal extends javax.swing.JFrame {
         paneBtnCadFuncLayout.setHorizontalGroup(
             paneBtnCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneBtnCadFuncLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(paneBtnCadFuncLayout.createSequentialGroup()
-                .addComponent(btnCadFunc)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(paneBtnCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBtnCadFuncLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneBtnCadFuncLayout.createSequentialGroup()
+                        .addComponent(btnCadFunc)
+                        .addGap(20, 20, 20))))
         );
         paneBtnCadFuncLayout.setVerticalGroup(
             paneBtnCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,15 +320,15 @@ public final class JFPrincipal extends javax.swing.JFrame {
         paneIconesTelaGeralLayout.setHorizontalGroup(
             paneIconesTelaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneIconesTelaGeralLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(70, 70, 70)
                 .addComponent(panelBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
+                .addGap(79, 79, 79)
                 .addComponent(paneBtnCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106)
+                .addGap(99, 99, 99)
                 .addComponent(panelBtnCronogramaDeAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(panelBtnCadastrarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96))
+                .addGap(49, 49, 49))
         );
         paneIconesTelaGeralLayout.setVerticalGroup(
             paneIconesTelaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,10 +336,10 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(paneIconesTelaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelBtnCadastrarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelBtnCronogramaDeAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelBtnCronogramaDeAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(paneBtnCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelBtnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         paneTabGeral.add(paneIconesTelaGeral);
@@ -342,17 +351,20 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnCriarTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/turma.png"))); // NOI18N
         btnCriarTurmas.setContentAreaFilled(false);
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel12.setText("Gestão de Turmas");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCriarTurmas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(jLabel12)
-                .addGap(37, 37, 37))
+                .addGap(22, 22, 22))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnCriarTurmas))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,6 +405,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/estatisticas.png"))); // NOI18N
         btnEstatisticas.setContentAreaFilled(false);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setLabelFor(btnTransferirAluno);
         jLabel1.setText("Estatísticas");
 
@@ -401,10 +414,10 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panelBtnEstatisticasLayout.setHorizontalGroup(
             panelBtnEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnEstatisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelBtnEstatisticasLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnEstatisticasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
         panelBtnEstatisticasLayout.setVerticalGroup(
             panelBtnEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,27 +433,31 @@ public final class JFPrincipal extends javax.swing.JFrame {
         paneIconesTelaGeral2Layout.setHorizontalGroup(
             paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneIconesTelaGeral2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(62, 62, 62)
                 .addComponent(panelBtnEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addGap(71, 71, 71)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
+                .addGap(148, 148, 148)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         paneIconesTelaGeral2Layout.setVerticalGroup(
             paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneIconesTelaGeral2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelBtnEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(13, 13, 13))
+                .addGroup(paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneIconesTelaGeral2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelBtnEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(paneIconesTelaGeral2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(paneIconesTelaGeral2Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         paneTabGeral.add(paneIconesTelaGeral2);
@@ -458,19 +475,21 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnTransferirAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/transferirAlunos.png"))); // NOI18N
         btnTransferirAluno.setContentAreaFilled(false);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel10.setText("Transferir Aluno");
 
         javax.swing.GroupLayout panelBtnEstatisticasProfLayout = new javax.swing.GroupLayout(panelBtnEstatisticasProf);
         panelBtnEstatisticasProf.setLayout(panelBtnEstatisticasProfLayout);
         panelBtnEstatisticasProfLayout.setHorizontalGroup(
             panelBtnEstatisticasProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBtnEstatisticasProfLayout.createSequentialGroup()
-                .addComponent(btnTransferirAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(panelBtnEstatisticasProfLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnEstatisticasProfLayout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addGroup(panelBtnEstatisticasProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBtnEstatisticasProfLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel10))
+                    .addComponent(btnTransferirAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panelBtnEstatisticasProfLayout.setVerticalGroup(
             panelBtnEstatisticasProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,6 +505,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnNotasProf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/notas.png"))); // NOI18N
         btnNotasProf.setContentAreaFilled(false);
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel9.setText("Notas e Faltas");
 
         javax.swing.GroupLayout panelBtnNotasProfLayout = new javax.swing.GroupLayout(panelBtnNotasProf);
@@ -494,7 +514,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
             panelBtnNotasProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnNotasProf, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
             .addGroup(panelBtnNotasProfLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -512,17 +532,18 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnCadastrarAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/cadastrarAlunos.png"))); // NOI18N
         btnCadastrarAluno.setContentAreaFilled(false);
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel11.setText("Cadastrar Aluno");
 
         javax.swing.GroupLayout panelBtnCadastrarAlunoLayout = new javax.swing.GroupLayout(panelBtnCadastrarAluno);
         panelBtnCadastrarAluno.setLayout(panelBtnCadastrarAlunoLayout);
         panelBtnCadastrarAlunoLayout.setHorizontalGroup(
             panelBtnCadastrarAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnCadastrarAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelBtnCadastrarAlunoLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+            .addComponent(btnCadastrarAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnCadastrarAlunoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         panelBtnCadastrarAlunoLayout.setVerticalGroup(
             panelBtnCadastrarAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -540,11 +561,11 @@ public final class JFPrincipal extends javax.swing.JFrame {
             .addGroup(paneIconesTelaAlunosLayout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addComponent(panelBtnCadastrarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+                .addGap(191, 191, 191)
                 .addComponent(panelBtnEstatisticasProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addComponent(panelBtnNotasProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180))
+                .addGap(154, 154, 154))
         );
         paneIconesTelaAlunosLayout.setVerticalGroup(
             paneIconesTelaAlunosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -570,27 +591,29 @@ public final class JFPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel8.setText("Atribuição de Turmas");
+
         btnAtribuirProf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/cadastrarProf.png"))); // NOI18N
         btnAtribuirProf.setContentAreaFilled(false);
-
-        jLabel8.setText("Atribuição de Turmas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnAtribuirProf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addGap(21, 21, 21))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAtribuirProf, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnAtribuirProf, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -599,6 +622,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnProfTurmasII.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/certificado.png"))); // NOI18N
         btnProfTurmasII.setContentAreaFilled(false);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Cadastro de certificados");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -626,18 +650,18 @@ public final class JFPrincipal extends javax.swing.JFrame {
             .addGroup(paneIconesTelaProfessoresLayout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(184, 184, 184)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(642, Short.MAX_VALUE))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
         paneIconesTelaProfessoresLayout.setVerticalGroup(
             paneIconesTelaProfessoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneIconesTelaProfessoresLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(paneIconesTelaProfessoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         paneTabProfessores.add(paneIconesTelaProfessores);
@@ -655,6 +679,7 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnSeguranca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/Backup.png"))); // NOI18N
         btnSeguranca.setContentAreaFilled(false);
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel13.setText("Fazer Backup ou Restaurar Dados");
 
         javax.swing.GroupLayout panelBackupLayout = new javax.swing.GroupLayout(panelBackup);
@@ -662,12 +687,14 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panelBackupLayout.setHorizontalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13)
+                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13))
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnSeguranca, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelBackupLayout.createSequentialGroup()
-                .addComponent(btnSeguranca, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelBackupLayout.setVerticalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,17 +709,17 @@ public final class JFPrincipal extends javax.swing.JFrame {
         panePartedeCima.setLayout(panePartedeCimaLayout);
         panePartedeCimaLayout.setHorizontalGroup(
             panePartedeCimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePartedeCimaLayout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
+            .addGroup(panePartedeCimaLayout.createSequentialGroup()
+                .addGap(114, 114, 114)
                 .addComponent(panelBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(852, Short.MAX_VALUE))
+                .addContainerGap(726, Short.MAX_VALUE))
         );
         panePartedeCimaLayout.setVerticalGroup(
             panePartedeCimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panePartedeCimaLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addComponent(panelBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout paneTabSegurancaLayout = new javax.swing.GroupLayout(paneTabSeguranca);
@@ -742,14 +769,17 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Usuário:");
 
+        lblUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblUser.setText("Inserir Nome Aqui");
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/logout.png"))); // NOI18N
         btnLogout.setToolTipText("Sair");
         btnLogout.setContentAreaFilled(false);
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Sair");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
@@ -769,9 +799,10 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelMenuLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -786,12 +817,12 @@ public final class JFPrincipal extends javax.swing.JFrame {
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(lblUser)
-                            .addComponent(jLabel14))
-                        .addGap(4, 4, 4))
+                            .addComponent(jLabel14)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(panelMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(70, 70, 70)
-                        .addComponent(btnLogout))))
+                        .addGap(66, 66, 66)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(4, 4, 4))
         );
 
         tabbedPaneUsuarios.getAccessibleContext().setAccessibleName("tabbedPaneUsuarios");

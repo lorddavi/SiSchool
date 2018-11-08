@@ -123,26 +123,32 @@ public class JFBackup extends javax.swing.JFrame {
         panelFundo.setBackground(new java.awt.Color(204, 204, 204));
 
         panelBackup.setBackground(new java.awt.Color(204, 204, 204));
-        panelBackup.setBorder(javax.swing.BorderFactory.createTitledBorder("Fazer backup"));
+        panelBackup.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fazer backup", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
         radioBackupAlunos.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupBackup.add(radioBackupAlunos);
+        radioBackupAlunos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         radioBackupAlunos.setText("Alunos");
 
         radioBackupProfessores.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupBackup.add(radioBackupProfessores);
+        radioBackupProfessores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         radioBackupProfessores.setText("Professores");
 
         radioBackupFuncionarios.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupBackup.add(radioBackupFuncionarios);
+        radioBackupFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         radioBackupFuncionarios.setText("Funcionários");
 
         radioBackupEscolas.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupBackup.add(radioBackupEscolas);
+        radioBackupEscolas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         radioBackupEscolas.setText("Escolas");
 
+        btnBackup.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBackup.setText("Fazer Backup");
 
+        btnRestaura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnRestaura.setText("Restaurar Backup");
 
         javax.swing.GroupLayout panelBackupLayout = new javax.swing.GroupLayout(panelBackup);
@@ -168,7 +174,7 @@ public class JFBackup extends javax.swing.JFrame {
         panelBackupLayout.setVerticalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addContainerGap()
                 .addComponent(radioBackupAlunos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radioBackupProfessores)
@@ -176,7 +182,7 @@ public class JFBackup extends javax.swing.JFrame {
                 .addComponent(radioBackupFuncionarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radioBackupEscolas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBackup)
                     .addComponent(btnRestaura))
@@ -207,7 +213,7 @@ public class JFBackup extends javax.swing.JFrame {
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

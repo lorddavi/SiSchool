@@ -81,7 +81,7 @@ public class JFLogin extends javax.swing.JFrame {
         panePrincipal.setBackground(new java.awt.Color(204, 204, 204));
         panePrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblFechar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        lblFechar.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         lblFechar.setText("x");
         lblFechar.setToolTipText("Fechar");
         lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,7 +90,7 @@ public class JFLogin extends javax.swing.JFrame {
             }
         });
 
-        lblMinimizar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        lblMinimizar.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         lblMinimizar.setText("-");
         lblMinimizar.setToolTipText("Minimizar");
         lblMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -101,16 +101,22 @@ public class JFLogin extends javax.swing.JFrame {
 
         lblImagemApresentacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/lousa.png"))); // NOI18N
 
+        txtLoginLogin.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
+        txtSenhaLogin.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtSenhaLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSenhaLoginKeyPressed(evt);
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Login:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Senha:");
 
+        btnLogar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnLogar.setText("Entrar");
         btnLogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,30 +131,26 @@ public class JFLogin extends javax.swing.JFrame {
             .addGroup(panePrincipalLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(lblImagemApresentacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5)
                         .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createSequentialGroup()
-                                .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(panePrincipalLayout.createSequentialGroup()
-                                        .addGap(192, 192, 192)
-                                        .addComponent(lblMinimizar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblFechar)))
+                                .addComponent(lblMinimizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblFechar)
                                 .addGap(13, 13, 13))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createSequentialGroup()
-                                .addComponent(btnLogar)
-                                .addGap(92, 92, 92))))
+                                .addComponent(txtLoginLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createSequentialGroup()
+                                .addComponent(txtSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()))
+                        .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panePrincipalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtSenhaLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLoginLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addComponent(btnLogar)
+                        .addGap(69, 69, 69))))
         );
         panePrincipalLayout.setVerticalGroup(
             panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,11 +160,11 @@ public class JFLogin extends javax.swing.JFrame {
                         .addGroup(panePrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFechar)
                             .addComponent(lblMinimizar))
-                        .addGap(29, 29, 29)
+                        .addGap(17, 17, 17)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtLoginLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -252,6 +252,7 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Notas e Faltas");
 
@@ -283,10 +284,13 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                 .addGap(407, 407, 407))
         );
 
+        tabbedPaneNotasFaltas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         panTabela.setBackground(new java.awt.Color(204, 204, 204));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
+        tblNotasFaltas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblNotasFaltas.setModel(tmnf);
         tblNotasFaltas.setSelectionBackground(new java.awt.Color(0, 102, 255));
         tblNotasFaltas.getTableHeader().setReorderingAllowed(false);
@@ -305,16 +309,26 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
         );
 
+        lblTurma.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTurma.setText("Série:");
 
+        lblProf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblProf.setText("Professor(a):");
 
+        jLabelM.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelM.setText("Matéria:");
+
+        comboEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        comboProfs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        comboSerie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnVoltaMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/setas4.png"))); // NOI18N
         btnVoltaMateria.setContentAreaFilled(false);
 
         txtMateria.setEditable(false);
+        txtMateria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnProximaMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/setas.png"))); // NOI18N
         btnProximaMateria.setContentAreaFilled(false);
@@ -395,11 +409,12 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
         );
         paneTabPreencherHistóricoLayout.setVerticalGroup(
             paneTabPreencherHistóricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 454, Short.MAX_VALUE)
+            .addGap(0, 460, Short.MAX_VALUE)
         );
 
         tabbedPaneNotasFaltas.addTab("Preencher histórico", paneTabPreencherHistórico);
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvar.setText("Salvar Notas");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);

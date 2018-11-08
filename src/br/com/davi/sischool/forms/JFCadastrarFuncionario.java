@@ -677,7 +677,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     }
                     limpar();
                     estadoInicial();
-                    estadoBotoesNovo();
                 }
             } else {
                 throw new IllegalArgumentException();
@@ -794,6 +793,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Cadastrar Funcionário");
 
@@ -831,14 +831,19 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
 
         tabDadosPessoasCadFunc.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nome:");
 
+        txtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNome.setEnabled(false);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Endereço:");
 
+        txtEndereco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtEndereco.setEnabled(false);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Data de Nascimento:");
 
         try {
@@ -848,16 +853,19 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         }
         txtFDataNasc.setToolTipText("dd/mm/aa");
         txtFDataNasc.setEnabled(false);
+        txtFDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtFDataNasc.setInputVerifier(new VerificadorDeData());
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gênero", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         btnGroupGeneroCadFunc.add(radioMascCadFunc);
+        radioMascCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioMascCadFunc.setText("Masculino");
         radioMascCadFunc.setEnabled(false);
 
         btnGroupGeneroCadFunc.add(radioFemCadFunc);
+        radioFemCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioFemCadFunc.setSelected(true);
         radioFemCadFunc.setText("Feminino");
         radioFemCadFunc.setEnabled(false);
@@ -871,7 +879,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(radioFemCadFunc)
                     .addComponent(radioMascCadFunc))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -882,19 +890,26 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("CPF:");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Bairro:");
 
+        txtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBairro.setEnabled(false);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Cidade:");
 
+        txtCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCidade.setEnabled(false);
 
+        jListTelefonesCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jListTelefonesCadFunc.setEnabled(false);
         jScrollPane1.setViewportView(jListTelefonesCadFunc);
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Telefones:");
 
         btnAddTelefoneCadFunc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
@@ -908,6 +923,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         jLabel9.setText("CEP:");
 
         checkPossuiDeficiencia.setBackground(new java.awt.Color(204, 204, 204));
+        checkPossuiDeficiencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkPossuiDeficiencia.setText("Possui deficiência");
         checkPossuiDeficiencia.setEnabled(false);
 
@@ -917,12 +933,15 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtCpf.setEnabled(false);
+        txtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCpf.setInputVerifier(new VerificadorDeCpf());
 
         txtTelefonesCadFunc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         txtTelefonesCadFunc.setEnabled(false);
+        txtTelefonesCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTelefonesCadFunc.setInputVerifier(new VerificadorDeTelefone());
 
+        checkDesligado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkDesligado.setText("Funcionário desligado.");
         checkDesligado.setEnabled(false);
 
@@ -960,7 +979,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                                 .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9)
                             .addComponent(checkPossuiDeficiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -994,6 +1013,10 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
                         .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkPossuiDeficiencia))
+                            .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(1, 1, 1)
                                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1005,15 +1028,10 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                                 .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtFDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(11, 11, 11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2)
-                                .addGap(5, 5, 5))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabDadosPessoasCadFuncLayout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkPossuiDeficiencia))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1037,7 +1055,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                                 .addComponent(btnAddTelefoneCadFunc)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRemoveTelefoneCadFunc)))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         txtFDataNasc.getAccessibleContext().setAccessibleName("");
@@ -1047,6 +1065,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         tabCargoCadFunc.setBackground(new java.awt.Color(204, 204, 204));
 
         btnGroupCargo.add(radioCargoProfCadFunc);
+        radioCargoProfCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCargoProfCadFunc.setSelected(true);
         radioCargoProfCadFunc.setText("Professor(a)");
         radioCargoProfCadFunc.setEnabled(false);
@@ -1055,13 +1074,15 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelProf.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
 
         panelProf1PeriodoCargoCadFunc.setBackground(new java.awt.Color(204, 204, 204));
-        panelProf1PeriodoCargoCadFunc.setBorder(javax.swing.BorderFactory.createTitledBorder("Período"));
+        panelProf1PeriodoCargoCadFunc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Período", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         radioHabilitaTarde.setBackground(new java.awt.Color(204, 204, 204));
+        radioHabilitaTarde.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioHabilitaTarde.setText("Tarde:");
         radioHabilitaTarde.setEnabled(false);
 
         radioHabilitaManha.setBackground(new java.awt.Color(204, 204, 204));
+        radioHabilitaManha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioHabilitaManha.setText("Manhã:");
         radioHabilitaManha.setEnabled(false);
 
@@ -1085,15 +1106,17 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         );
 
         panelRadioPebIeIICadFunc.setBackground(new java.awt.Color(204, 204, 204));
-        panelRadioPebIeIICadFunc.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
+        panelRadioPebIeIICadFunc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         radioPebICadFunc.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupPebIPebII.add(radioPebICadFunc);
+        radioPebICadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPebICadFunc.setText("PEB I");
         radioPebICadFunc.setEnabled(false);
 
         radioPebIICadFunc.setBackground(new java.awt.Color(204, 204, 204));
         btnGroupPebIPebII.add(radioPebIICadFunc);
+        radioPebIICadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPebIICadFunc.setText("PEB II");
         radioPebIICadFunc.setEnabled(false);
 
@@ -1117,8 +1140,9 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         );
 
         jPanelEspecialidadePebII.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelEspecialidadePebII.setBorder(javax.swing.BorderFactory.createTitledBorder("Especialidade"));
+        jPanelEspecialidadePebII.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Especialidade", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        comboEspecialidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artes", "Inglês", "Educação Física" }));
         comboEspecialidade.setEnabled(false);
 
@@ -1150,7 +1174,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addComponent(panelProf1PeriodoCargoCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEspecialidadePebII, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         panelProfLayout.setVerticalGroup(
             panelProfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1167,21 +1191,27 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelOutrosCargos.setBackground(new java.awt.Color(205, 205, 205));
         panelOutrosCargos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("Cargo / Função:");
 
+        txtCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCargo.setEnabled(false);
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Observações:");
 
         txtAObservacoes.setColumns(20);
+        txtAObservacoes.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtAObservacoes.setLineWrap(true);
         txtAObservacoes.setRows(5);
         txtAObservacoes.setWrapStyleWord(true);
         txtAObservacoes.setEnabled(false);
         jScrollPane2.setViewportView(txtAObservacoes);
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setText("Escola:");
 
+        comboEscolaOutroCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboEscolaOutroCargo.setEnabled(false);
 
         javax.swing.GroupLayout panelOutrosCargosLayout = new javax.swing.GroupLayout(panelOutrosCargos);
@@ -1218,6 +1248,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         );
 
         btnGroupCargo.add(radioCargoOutrosCadFunc);
+        radioCargoOutrosCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCargoOutrosCadFunc.setText("Outro Cargo");
         radioCargoOutrosCadFunc.setEnabled(false);
 
@@ -1249,28 +1280,36 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addGroup(tabCargoCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(radioCargoOutrosCadFunc)
                     .addComponent(panelOutrosCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         tabbedCadastrarFuncionarios.addTab("Cargo", tabCargoCadFunc);
 
         panelTabUsuario.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setText("Nickname:");
 
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Senha:");
 
+        txtNickNameUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNickNameUsrCadFunc.setEnabled(false);
 
+        comboAcessoUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboAcessoUsrCadFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
         comboAcessoUsrCadFunc.setEnabled(false);
 
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("Nível de acesso:");
 
+        pswSenhaUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         pswSenhaUsrCadFunc.setEnabled(false);
 
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText("Digite a senha novamente:");
 
+        redPswSenhaUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         redPswSenhaUsrCadFunc.setEnabled(false);
 
         javax.swing.GroupLayout panelTabUsuarioLayout = new javax.swing.GroupLayout(panelTabUsuario);
@@ -1288,12 +1327,12 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     .addComponent(pswSenhaUsrCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
                     .addComponent(txtNickNameUsrCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 203, Short.MAX_VALUE))
+                .addGap(0, 213, Short.MAX_VALUE))
         );
         panelTabUsuarioLayout.setVerticalGroup(
             panelTabUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabUsuarioLayout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
+                .addContainerGap(143, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNickNameUsrCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1317,10 +1356,14 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelTabelaBusca.setBackground(new java.awt.Color(204, 204, 204));
         panelTabelaBusca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Busque um funcionário:");
 
+        tabelaBuscaFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaBuscaFuncionarios.setModel(tmf);
         jScrollPane3.setViewportView(tabelaBuscaFuncionarios);
+
+        txtBuscaFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTabelaBuscaLayout = new javax.swing.GroupLayout(panelTabelaBusca);
         panelTabelaBusca.setLayout(panelTabelaBuscaLayout);
@@ -1330,23 +1373,25 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelTabelaBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTabelaBuscaLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelTabelaBuscaLayout.createSequentialGroup()
                         .addGroup(panelTabelaBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 3, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaBuscaLayout.createSequentialGroup()
-                        .addComponent(txtBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaBuscaLayout.createSequentialGroup()
+                                .addComponent(txtBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 99, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         panelTabelaBuscaLayout.setVerticalGroup(
             panelTabelaBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabelaBuscaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscaFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
 
@@ -1369,18 +1414,23 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnCancelarCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelarCadFunc.setText("Cancelar");
         btnCancelarCadFunc.setEnabled(false);
 
+        btnSalvarCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvarCadFunc.setText("Salvar");
         btnSalvarCadFunc.setEnabled(false);
 
+        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setEnabled(false);
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
 
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNovo.setText("Novo Funcionário");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
@@ -1418,7 +1468,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnExcluir)
                     .addComponent(btnNovo))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);

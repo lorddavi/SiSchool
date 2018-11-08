@@ -152,6 +152,7 @@ public class JFCronograma extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Cronograma de aulas");
 
@@ -187,23 +188,36 @@ public class JFCronograma extends javax.swing.JFrame {
 
         panelAtribuicao.setBackground(new java.awt.Color(204, 204, 204));
 
+        tabelaProfs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaProfs.setModel(tmp);
         scroolPaneTabelaProfessor.setViewportView(tabelaProfs);
 
+        comboTurmas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtBusca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBusca.setToolTipText("Busque um Professor");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Selecione a turma:");
 
+        btnAtribuir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAtribuir.setText("Atribuir");
 
+        btnRemover.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRemover.setText("Remover");
 
+        comboDia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira" }));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Dia da Semana:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Aula:");
 
+        comboAula.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Busque um professor:");
 
         javax.swing.GroupLayout panelAtribuicaoLayout = new javax.swing.GroupLayout(panelAtribuicao);
@@ -231,9 +245,8 @@ public class JFCronograma extends javax.swing.JFrame {
                                     .addComponent(btnAtribuir)))
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
-                            .addGroup(panelAtribuicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(comboAula, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboDia, javax.swing.GroupLayout.Alignment.LEADING, 0, 113, Short.MAX_VALUE)))
+                            .addComponent(comboAula, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31))
                     .addGroup(panelAtribuicaoLayout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -249,19 +262,19 @@ public class JFCronograma extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAtribuicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAtribuicaoLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(40, 40, 40)
                         .addGroup(panelAtribuicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRemover)
                             .addComponent(btnAtribuir))
@@ -273,11 +286,14 @@ public class JFCronograma extends javax.swing.JFrame {
         panelVisualizarCronograma.setBackground(new java.awt.Color(204, 204, 204));
         panelVisualizarCronograma.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        tabelaCrono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaCrono.setModel(tmc);
         scrollPaneTabelaCrono.setViewportView(tabelaCrono);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Turma:");
 
+        lblNomeTurma.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblNomeTurma.setText("nome da turma");
 
         javax.swing.GroupLayout panelVisualizarCronogramaLayout = new javax.swing.GroupLayout(panelVisualizarCronograma);
@@ -307,8 +323,10 @@ public class JFCronograma extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvar.setText("Salvar");
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Cancelar");
 
         javax.swing.GroupLayout panelConteudoLayout = new javax.swing.GroupLayout(panelConteudo);

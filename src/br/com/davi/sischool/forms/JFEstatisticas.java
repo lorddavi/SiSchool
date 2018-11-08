@@ -191,6 +191,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         txtBuscaEscolaEstatisticas = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel28 = new javax.swing.JLabel();
         paneRedeEstatisticas = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -231,6 +232,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Estatísticas");
 
@@ -263,6 +265,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         tabbedPaneEstatisticas.setBackground(new java.awt.Color(204, 204, 204));
+        tabbedPaneEstatisticas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         paneAlunoEstatisticas.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -270,16 +273,22 @@ public class JFEstatisticas extends javax.swing.JFrame {
 
         paneLabels.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Média anos anteriores:");
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setText("Média este ano:");
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Progresso:");
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Média da turma:");
 
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Faltas:");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Presença (%):");
 
         javax.swing.GroupLayout paneLabelsLayout = new javax.swing.GroupLayout(paneLabels);
@@ -316,18 +325,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         paneMatematica.setBackground(new java.awt.Color(204, 204, 204));
-        paneMatematica.setBorder(javax.swing.BorderFactory.createTitledBorder("Matemática"));
+        paneMatematica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAnteMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAnteMatem.setText("jLabel1");
 
+        medAnoAtualMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualMatem.setText("jLabel2");
 
+        progressoMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoMatem.setText("jLabel3");
 
+        medTurmaMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaMatem.setText("jLabel4");
 
+        faltasMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasMatem.setText("jLabel5");
 
+        presencaMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaMatem.setText("jLabel2");
 
         javax.swing.GroupLayout paneMatematicaLayout = new javax.swing.GroupLayout(paneMatematica);
@@ -364,18 +379,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panePortugues.setBackground(new java.awt.Color(204, 204, 204));
-        panePortugues.setBorder(javax.swing.BorderFactory.createTitledBorder("Português"));
+        panePortugues.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAntPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntPortug.setText("jLabel6");
 
+        medAnoAtualPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualPortug.setText("jLabel7");
 
+        progressoPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoPortug.setText("jLabel8");
 
+        medTurmaPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaPortug.setText("jLabel9");
 
+        faltasPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasPortug.setText("jLabel10");
 
+        presencaPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaPortug.setText("jLabel2");
 
         javax.swing.GroupLayout panePortuguesLayout = new javax.swing.GroupLayout(panePortugues);
@@ -391,7 +412,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(medTurmaPortug)
                     .addComponent(faltasPortug)
                     .addComponent(presencaPortug))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panePortuguesLayout.setVerticalGroup(
             panePortuguesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -412,18 +433,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panelCiencias.setBackground(new java.awt.Color(204, 204, 204));
-        panelCiencias.setBorder(javax.swing.BorderFactory.createTitledBorder("Ciências"));
+        panelCiencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAntCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntCiencias.setText("jLabel16");
 
+        medAnoAtualCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualCiencias.setText("jLabel17");
 
+        progressoCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoCiencias.setText("jLabel18");
 
+        medTurmaCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaCiencias.setText("jLabel19");
 
+        faltasCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasCiencias.setText("jLabel20");
 
+        presencaCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaCiencias.setText("jLabel3");
 
         javax.swing.GroupLayout panelCienciasLayout = new javax.swing.GroupLayout(panelCiencias);
@@ -439,7 +466,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(medTurmaCiencias)
                     .addComponent(faltasCiencias)
                     .addComponent(presencaCiencias))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCienciasLayout.setVerticalGroup(
             panelCienciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,18 +487,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panelArtes.setBackground(new java.awt.Color(204, 204, 204));
-        panelArtes.setBorder(javax.swing.BorderFactory.createTitledBorder("Artes"));
+        panelArtes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAntArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntArtes.setText("jLabel21");
 
+        medAnoAtualArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualArtes.setText("jLabel22");
 
+        progressoArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoArtes.setText("jLabel23");
 
+        medTurmaArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaArtes.setText("jLabel24");
 
+        faltasArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasArtes.setText("jLabel25");
 
+        presencaArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaArtes.setText("jLabel4");
 
         javax.swing.GroupLayout panelArtesLayout = new javax.swing.GroupLayout(panelArtes);
@@ -487,7 +520,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(medTurmaArtes)
                     .addComponent(faltasArtes)
                     .addComponent(presencaArtes))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelArtesLayout.setVerticalGroup(
             panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,18 +541,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panelIngles.setBackground(new java.awt.Color(204, 204, 204));
-        panelIngles.setBorder(javax.swing.BorderFactory.createTitledBorder("Inglês"));
+        panelIngles.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAntIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntIngles.setText("jLabel26");
 
+        medAnoAtualIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualIngles.setText("jLabel27");
 
+        progressoIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoIngles.setText("jLabel28");
 
+        medTurmaIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaIngles.setText("jLabel29");
 
+        faltasIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasIngles.setText("jLabel30");
 
+        presencaIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaIngles.setText("jLabel5");
 
         javax.swing.GroupLayout panelInglesLayout = new javax.swing.GroupLayout(panelIngles);
@@ -535,7 +574,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(medTurmaIngles)
                     .addComponent(faltasIngles)
                     .addComponent(presencaIngles))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInglesLayout.setVerticalGroup(
             panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -556,18 +595,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panelFisica.setBackground(new java.awt.Color(204, 204, 204));
-        panelFisica.setBorder(javax.swing.BorderFactory.createTitledBorder("Ed. Física"));
+        panelFisica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        medAnosAntFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntFisica.setText("jLabel31");
 
+        medAnoAtualFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnoAtualFisica.setText("jLabel32");
 
+        progressoFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         progressoFisica.setText("jLabel33");
 
+        medTurmaFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmaFisica.setText("jLabel34");
 
+        faltasFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         faltasFisica.setText("jLabel35");
 
+        presencaFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaFisica.setText("jLabel36");
 
         javax.swing.GroupLayout panelFisicaLayout = new javax.swing.GroupLayout(panelFisica);
@@ -583,7 +628,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(medTurmaFisica)
                     .addComponent(faltasFisica)
                     .addComponent(presencaFisica))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelFisicaLayout.setVerticalGroup(
             panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,7 +667,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addComponent(panelIngles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelFisica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         paneNotasEFaltasLayout.setVerticalGroup(
             paneNotasEFaltasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -635,6 +680,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
             .addComponent(paneLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setText("Insira o número da matrícula do aluno:");
 
         javax.swing.GroupLayout paneAlunoEstatisticasLayout = new javax.swing.GroupLayout(paneAlunoEstatisticas);
@@ -642,14 +688,15 @@ public class JFEstatisticas extends javax.swing.JFrame {
         paneAlunoEstatisticasLayout.setHorizontalGroup(
             paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
-                .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscaAlunoEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(692, Short.MAX_VALUE))
+            .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         paneAlunoEstatisticasLayout.setVerticalGroup(
             paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,9 +705,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addGroup(paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscaAlunoEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(314, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         tabbedPaneEstatisticas.addTab("Aluno", paneAlunoEstatisticas);
@@ -669,8 +716,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
         paneEscolaEstatisticas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         panelMediaNotasFaltasTurma.setBackground(new java.awt.Color(204, 204, 204));
-        panelMediaNotasFaltasTurma.setBorder(javax.swing.BorderFactory.createTitledBorder("Média de notas/faltas por turma"));
+        panelMediaNotasFaltasTurma.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Média de notas/faltas por turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        jListTurmasDaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jListTurmasDaEscola.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -678,28 +726,40 @@ public class JFEstatisticas extends javax.swing.JFrame {
         });
         jScrollPaneListaTurmas.setViewportView(jListTurmasDaEscola);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Matemática:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Português:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Ciências:");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Artes:");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Inglês:");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Ed. Física:");
 
+        medTurmMatemEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmMatemEscola.setText("jLabel9");
 
+        medTurmPortugEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmPortugEscola.setText("jLabel10");
 
+        medTurmCienciasEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmCienciasEscola.setText("jLabel21");
 
+        medTurmArtesEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmArtesEscola.setText("jLabel22");
 
+        medTurmInglesEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmInglesEscola.setText("jLabel23");
 
+        medTurmFisicaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medTurmFisicaEscola.setText("jLabel24");
 
         javax.swing.GroupLayout panelMediaNotasFaltasTurmaLayout = new javax.swing.GroupLayout(panelMediaNotasFaltasTurma);
@@ -760,36 +820,52 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("Quantidade de alunos:");
 
+        numAlunosSala.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         numAlunosSala.setText("jLabel27");
 
+        JLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JLabel1.setText("Quantidade de alunos na escola:");
 
+        numAlunosEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         numAlunosEscola.setText("jLabel28");
 
+        JLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JLabel2.setText("Média de alunos por sala:");
 
+        medALunosSala.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medALunosSala.setText("jLabel29");
 
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel24.setText("Média de presença da sala:");
 
+        medPresencaSala.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medPresencaSala.setText("jLabel30");
 
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("Média de presença da escola:");
 
+        medPresencaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medPresencaEscola.setText("jLabel31");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Alunos portadores de necessidades especiais:");
 
+        numAlunosPortNeceEsp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         numAlunosPortNeceEsp.setText("jLabel32");
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Alunos que precisam de acompanhante:");
 
+        numAlunosPortNesseEspAcomp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         numAlunosPortNesseEspAcomp.setText("jLabel33");
 
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("Alunos que utilizam transporte público escolar:");
 
+        numAlunosTranspEscolar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         numAlunosTranspEscolar.setText("jLabel34");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -882,6 +958,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txtBuscaEscolaEstatisticas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -895,23 +974,32 @@ public class JFEstatisticas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel28.setText("Busque uma escola:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -944,36 +1032,52 @@ public class JFEstatisticas extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText("Funcionários administrativos na rede:");
 
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("Professores PEB II na rede:");
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setText("Professores PEB I na rede:");
 
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Escola com o menor número de alunos:");
 
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("Escola com o maior número de alunos:");
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setText("Média de Alunos por escola:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Quantidade de escolas:");
 
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Número de alunos na rede:");
 
+        lblNumAlunosRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNumAlunosRede.setText("0");
 
+        lblQntdEscolasRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblQntdEscolasRede.setText("0");
 
+        lblMediaAlunosPorEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblMediaAlunosPorEscola.setText("0");
 
+        lblEscolaMaisAlunos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEscolaMaisAlunos.setText("0");
 
+        lblEscolaMenosAlunos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEscolaMenosAlunos.setText("0");
 
+        lblProfPebIRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblProfPebIRede.setText("0");
 
+        lblProfPebIIRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblProfPebIIRede.setText("0");
 
+        lblFuncAdminRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFuncAdminRede.setText("0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -988,12 +1092,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(jLabel2)
                     .addComponent(jLabel20)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel23))
-                        .addGap(7, 7, 7)))
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel23))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNumAlunosRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1050,7 +1151,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 598, Short.MAX_VALUE))
+                .addGap(0, 618, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1071,7 +1172,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
             .addGroup(paneRedeEstatisticasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
 
         tabbedPaneEstatisticas.addTab("Rede Municipal", paneRedeEstatisticas);
@@ -1141,6 +1242,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

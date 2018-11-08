@@ -176,6 +176,7 @@ public class JFPontos extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Atribuição de Pontos e Certificados");
 
@@ -188,7 +189,7 @@ public class JFPontos extends javax.swing.JFrame {
             panelBarraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,11 +212,14 @@ public class JFPontos extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
 
+        tabelaProfessores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaProfessores.setModel(tmp);
         jScrollPane1.setViewportView(tabelaProfessores);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Professor(a)"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Professor(a)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        txtBuscaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -259,19 +263,31 @@ public class JFPontos extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
+        btnRemover.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRemover.setText("Remover Certificado");
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvar.setText("Salvar Certificado");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Curso:");
 
+        txtCurso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Instituição:");
 
+        txtInstituicao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Pontos:");
 
-        panelCertificados.setBackground(new java.awt.Color(204, 204, 204));
-        panelCertificados.setBorder(javax.swing.BorderFactory.createTitledBorder("Certificados "));
+        txtPontos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        panelCertificados.setBackground(new java.awt.Color(204, 204, 204));
+        panelCertificados.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Certificados ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        tabelaCertificados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaCertificados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -298,6 +314,7 @@ public class JFPontos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
 
         try {
@@ -306,7 +323,9 @@ public class JFPontos extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         fDataCurso.setToolTipText("ddmmaa");
+        fDataCurso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Data:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -328,13 +347,14 @@ public class JFPontos extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(74, 74, 74)
-                                        .addComponent(jLabel4)))
+                                        .addComponent(jLabel4))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(122, 122, 122)
+                                        .addComponent(fDataCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(fDataCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addGap(18, 18, 18))))

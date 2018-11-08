@@ -191,6 +191,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnSalvarCadEscola = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -212,6 +213,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Cadastrar nova escola");
 
@@ -248,23 +250,39 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         panelCadastro.setBackground(new java.awt.Color(204, 204, 204));
         panelCadastro.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nome:");
 
+        txtNomeCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Endereço:");
 
+        txtEnderecoCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Telefones:");
 
+        txtTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        listTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listTelefone);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("CNPJ:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Bairro:");
 
-        btnAddTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/add.png"))); // NOI18N
+        txtBairroCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnAddTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
         btnAddTel.setContentAreaFilled(false);
 
-        btnRemoveTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/delete.png"))); // NOI18N
+        btnRemoveTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/minus.png"))); // NOI18N
         btnRemoveTel.setContentAreaFilled(false);
+
+        txtCnpjCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelCadastroLayout = new javax.swing.GroupLayout(panelCadastro);
         panelCadastro.setLayout(panelCadastroLayout);
@@ -322,15 +340,21 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnCancelCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelCadEscola.setText("Cancelar");
 
         panelTabela.setBackground(new java.awt.Color(204, 204, 204));
 
+        tabelaEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaEscolas.setModel(tme);
         jScrollPane2.setViewportView(tabelaEscolas);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Buscar Escola:");
 
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
 
         javax.swing.GroupLayout panelTabelaLayout = new javax.swing.GroupLayout(panelTabela);
@@ -364,11 +388,17 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("Excluir");
 
+        btnSalvarCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvarCadEscola.setText("Salvar");
 
+        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Nova Escola");
 
         javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
         panelFundo.setLayout(panelFundoLayout);
@@ -377,6 +407,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             .addGroup(panelFundoLayout.createSequentialGroup()
                 .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelFundoLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
                         .addComponent(btnExcluir)
                         .addGap(26, 26, 26)
                         .addComponent(btnCancelCadEscola))
@@ -402,7 +434,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                     .addComponent(btnExcluir)
                     .addComponent(btnCancelCadEscola)
                     .addComponent(btnSalvarCadEscola)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(jButton1))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -421,7 +454,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -477,6 +510,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnRemoveTel;
     private javax.swing.JButton btnSalvarCadEscola;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

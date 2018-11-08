@@ -247,6 +247,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         btnFechar.setContentAreaFilled(false);
         btnFechar.setName("btnFechar"); // NOI18N
 
+        lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPrincipal.setText("SiSchool - Atribuição de turmas - PEB I");
 
@@ -278,10 +279,13 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addGap(407, 407, 407))
         );
 
+        tabbedFundo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         panelPebI.setBackground(new java.awt.Color(204, 204, 204));
 
         panelTabelaProfPebI.setBackground(new java.awt.Color(204, 204, 204));
 
+        tabelaPebI.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaPebI.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -295,7 +299,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelaPebI);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Buscar professor(a)");
+
+        txtBusca1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTabelaProfPebILayout = new javax.swing.GroupLayout(panelTabelaProfPebI);
         panelTabelaProfPebI.setLayout(panelTabelaProfPebILayout);
@@ -327,7 +334,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelComponentesPebI.setBackground(new java.awt.Color(204, 204, 204));
 
         PanelEscola.setBackground(new java.awt.Color(204, 204, 204));
-        PanelEscola.setBorder(javax.swing.BorderFactory.createTitledBorder("Escola"));
+        PanelEscola.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        comboEscola1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout PanelEscolaLayout = new javax.swing.GroupLayout(PanelEscola);
         PanelEscola.setLayout(PanelEscolaLayout);
@@ -347,7 +356,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
         );
 
         panelTurma.setBackground(new java.awt.Color(204, 204, 204));
-        panelTurma.setBorder(javax.swing.BorderFactory.createTitledBorder("Turma"));
+        panelTurma.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        comboTurma1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTurmaLayout = new javax.swing.GroupLayout(panelTurma);
         panelTurma.setLayout(panelTurmaLayout);
@@ -366,8 +377,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        btnCancelar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar1.setText("Cancelar");
 
+        btnSalvar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvar1.setText("Salvar");
 
         javax.swing.GroupLayout panelComponentesPebILayout = new javax.swing.GroupLayout(panelComponentesPebI);
@@ -434,36 +447,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
 
         panelTabelaProfPebII.setBackground(new java.awt.Color(204, 204, 204));
 
-        tabelaPebII.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Matrícula", "Nome", "Pontos", "Especialidade"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tabelaPebII.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaPebII.setModel(tmp2);
         jScrollPane2.setViewportView(tabelaPebII);
-        if (tabelaPebII.getColumnModel().getColumnCount() > 0) {
-            tabelaPebII.getColumnModel().getColumn(0).setPreferredWidth(15);
-            tabelaPebII.getColumnModel().getColumn(0).setHeaderValue("Matrícula");
-            tabelaPebII.getColumnModel().getColumn(1).setResizable(false);
-            tabelaPebII.getColumnModel().getColumn(1).setHeaderValue("Nome");
-            tabelaPebII.getColumnModel().getColumn(2).setResizable(false);
-            tabelaPebII.getColumnModel().getColumn(2).setHeaderValue("Pontos");
-            tabelaPebII.getColumnModel().getColumn(3).setResizable(false);
-        }
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Buscar professor(a)");
 
         javax.swing.GroupLayout panelTabelaProfPebIILayout = new javax.swing.GroupLayout(panelTabelaProfPebII);
@@ -496,7 +484,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelComponentesPebI1.setBackground(new java.awt.Color(204, 204, 204));
 
         PanelEscola1.setBackground(new java.awt.Color(204, 204, 204));
-        PanelEscola1.setBorder(javax.swing.BorderFactory.createTitledBorder("Escola"));
+        PanelEscola1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         javax.swing.GroupLayout PanelEscola1Layout = new javax.swing.GroupLayout(PanelEscola1);
         PanelEscola1.setLayout(PanelEscola1Layout);
@@ -515,22 +503,30 @@ public class JFProfTurmas extends javax.swing.JFrame {
         );
 
         panelTurma1.setBackground(new java.awt.Color(204, 204, 204));
-        panelTurma1.setBorder(javax.swing.BorderFactory.createTitledBorder("Turma"));
+        panelTurma1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Professor PEB I:");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Artes:");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Inglês:");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Educação Física: ");
 
+        lblPebI.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblPebI.setText("jLabel9");
 
+        lblArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblArtes.setText("jLabel10");
 
+        lblIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblIngles.setText("jLabel11");
 
+        lblEducacaoFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEducacaoFisica.setText("jLabel12");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -554,8 +550,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addComponent(lblArtes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblIngles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblEducacaoFisica))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEducacaoFisica)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelTurma1Layout = new javax.swing.GroupLayout(panelTurma1);
@@ -572,9 +569,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         panelTurma1Layout.setVerticalGroup(
             panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,12 +589,14 @@ public class JFProfTurmas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
+        btnCancelar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar2.setText("Cancelar");
 
+        btnSalvar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvar2.setText("Salvar");
 
         javax.swing.GroupLayout panelComponentesPebI1Layout = new javax.swing.GroupLayout(panelComponentesPebI1);

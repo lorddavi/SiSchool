@@ -5,12 +5,15 @@
  */
 package br.com.davi.sischool.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,6 +30,8 @@ public class Funcionario extends Pessoa {
     private String cpf;
     @Column
     private String cargo;
+    @Temporal(TemporalType.DATE)
+    private Date dataAdmissao;
     @Column
     private boolean possuiDeficiencia;
     @Column
@@ -62,6 +67,14 @@ public class Funcionario extends Pessoa {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public Date getDataAdmissao() {
+        return dataAdmissao;
+    }
+
+    public void setDataAdmissao(Date dataAdmissao) {
+        this.dataAdmissao = dataAdmissao;
     }
 
     public boolean isPossuiDeficiencia() {

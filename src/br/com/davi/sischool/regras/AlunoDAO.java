@@ -5,9 +5,11 @@
  */
 package br.com.davi.sischool.regras;
 
+import br.com.davi.sischool.funcoes.ConverteData;
 import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Turma;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -89,14 +91,6 @@ public class AlunoDAO {
         return alunos;
     }
     
-    public List<Aluno> buscaPorIdade(String idade){
-        CriaEntityManager cem = new CriaEntityManager();
-        EntityManager em = cem.criarEM();
-        List<Aluno> alunos = new ArrayList<>();
-        
-        return alunos;
-    }
-    
     public List<Aluno> buscaTodos(){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
@@ -109,25 +103,6 @@ public class AlunoDAO {
         }
         em.close();
         cem.fecharEM();    
-        
-        return alunos;
-    }
-    
-    public List<Aluno> buscaPorTurma(Turma turma){
-            CriaEntityManager cem = new CriaEntityManager();
-    EntityManager em = cem.criarEM();
-        List<Aluno> alunos = null;
-        try {
-            TypedQuery<Aluno> consulta = em.createQuery(
-                "SELECT a FROM Aluno a, Turma t WHERE t = :turma AND a.serie = t", Aluno.class);
-            consulta.setParameter("turma", turma);
-            alunos = consulta.getResultList();
-        } catch (NoResultException ex) {
-            System.out.println("Alunos não encontrados.");
-        } 
-        
-        em.close();
-        cem.fecharEM();
         
         return alunos;
     }

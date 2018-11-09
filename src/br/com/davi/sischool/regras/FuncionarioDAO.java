@@ -67,6 +67,33 @@ public class FuncionarioDAO {
         return funcionarios;
     }
     
+    public List<Funcionario> buscarPorCargo(String busca){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        TypedQuery<Funcionario> consulta = em.createQuery("SELECT f FROM Funcionario f WHERE f.cargo LIKE :busca", Funcionario.class);
+        consulta.setParameter("busca", busca);
+        List<Funcionario> funcionarios = consulta.getResultList();
+        em.close();
+        cem.fecharEM();
+        return funcionarios;
+    }
+    
+    public List<Funcionario> buscarPorCPF(String busca){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<Funcionario> funcionarios = new ArrayList<>();
+        try {
+            TypedQuery<Funcionario> consulta = em.createQuery("SELECT f FROM Funcionario f WHERE f.cpf LIKE :busca", Funcionario.class);
+            consulta.setParameter("busca", busca);
+            funcionarios = consulta.getResultList();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+        em.close();
+        cem.fecharEM();
+        return funcionarios;
+    }
+    
     public List<Funcionario> buscaTodos(){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();

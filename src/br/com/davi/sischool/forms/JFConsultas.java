@@ -12,19 +12,21 @@ import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
-import br.com.davi.sischool.model.NotasFaltas;
 import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Telefone;
+import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.regras.AlunoDAO;
 import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.FuncionarioDAO;
 import br.com.davi.sischool.regras.OutroCargoDAO;
+import br.com.davi.sischool.regras.TurmaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -66,6 +68,8 @@ public class JFConsultas extends javax.swing.JFrame {
         tblConsultaAluno.setModel(tma);
         tme = new TableModelEscola(listaEscolas());
         tabelaEscolas.setModel(tme);
+        tmf = new TableModelFuncionario(listaFuncionarios());
+        tabelaFuncionarios.setModel(tmf);
     }
     
     private void setaListeners(){
@@ -78,6 +82,7 @@ public class JFConsultas extends javax.swing.JFrame {
         tabelaEscolas.getSelectionModel().addListSelectionListener(ols);
         txtConsultaAluno.addKeyListener(okl);
         txtBuscarEscola.addKeyListener(okl);
+        txtBuscaFuncionarios.addKeyListener(okl);
     }
     
     private void relatorioFichaAluno(){
@@ -102,6 +107,7 @@ public class JFConsultas extends javax.swing.JFrame {
 	// Cria a fonte de dados
             FuncionarioDAO fdao = new FuncionarioDAO();
             List<Funcionario> funcs = fdao.buscaTodos();
+            Collections.sort(funcs, (Funcionario f1, Funcionario f2) -> f1.getNome().compareTo(f2.getNome()));
 	    JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(funcs);
 	// Preenche o relatório
 	    JasperPrint print = JasperFillManager.fillReport("relatorios/Funcionarios.jasper", null, ds);
@@ -137,6 +143,11 @@ public class JFConsultas extends javax.swing.JFrame {
         return edao.buscaTodas();
     }
     
+    public List<Funcionario> listaFuncionarios(){
+        FuncionarioDAO fdao = new FuncionarioDAO();
+        return fdao.buscaTodos();
+    }
+    
     private void preencheLista(Escola e){ 
         CamposDeTelefone cdt = new CamposDeTelefone();
         cdt.exibeTelefonesNoJList(jListTelefone, e.getTelefones());
@@ -150,9 +161,7 @@ public class JFConsultas extends javax.swing.JFrame {
                 alunos = adao.buscarPorNome(busca);
             } else if (radioRaConsultaAluno.isSelected()){
                 alunos = adao.buscarUmPorRa(busca);
-            } else if (radioDataNascConsultaAluno.isSelected()){
-                
-            }
+            } 
             tma = new TableModelAluno(alunos);
             tblConsultaAluno.setModel(tma);
         } catch (Exception ex) {
@@ -162,12 +171,29 @@ public class JFConsultas extends javax.swing.JFrame {
     
     private void buscarEscola(){
         try {
-            EscolaDAO edao = new EscolaDAO();
             List<Escola> escolas = edao.buscaPorNome('%' + txtBuscarEscola.getText() + '%');
             tme = new TableModelEscola(escolas);
             tabelaEscolas.setModel(tme);
         } catch (Exception e) {
             System.out.println("Erro ao buscar escola");
+        }
+    }
+    
+    private void buscarFuncionario(){
+        try {
+            String busca = "%" + txtBuscaFuncionarios.getText() + "%";
+            List<Funcionario> funcs = new ArrayList<>();
+            if (radioNomeFunc.isSelected()){
+                funcs = fdao.buscarPorNome(busca);
+            } else if (radioCPFFunc.isSelected()) {
+                funcs = fdao.buscarPorCPF(busca);
+            } else if (radioCargoFunc.isSelected()){
+                funcs = fdao.buscarPorCargo(busca);
+            } 
+            tmf = new TableModelFuncionario(funcs);
+            tabelaFuncionarios.setModel(tmf);
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar funcionário");
         }
     }
     
@@ -215,6 +241,7 @@ public class JFConsultas extends javax.swing.JFrame {
     private void initComponents() {
 
         btnGroupAluno = new javax.swing.ButtonGroup();
+        btnGroupFuncionario = new javax.swing.ButtonGroup();
         panelPrincipal = new javax.swing.JPanel();
         panelBarraDeTitulo = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
@@ -224,7 +251,6 @@ public class JFConsultas extends javax.swing.JFrame {
         tabAlunoConsultas = new javax.swing.JPanel();
         radioNomeConsultaAluno = new javax.swing.JRadioButton();
         radioRaConsultaAluno = new javax.swing.JRadioButton();
-        radioDataNascConsultaAluno = new javax.swing.JRadioButton();
         txtConsultaAluno = new javax.swing.JTextField();
         scrolltabelaalunos = new javax.swing.JScrollPane();
         tblConsultaAluno = new javax.swing.JTable();
@@ -237,6 +263,12 @@ public class JFConsultas extends javax.swing.JFrame {
         jListTelefone = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaFuncionarios = new javax.swing.JTable();
+        txtBuscaFuncionarios = new javax.swing.JTextField();
+        radioNomeFunc = new javax.swing.JRadioButton();
+        radioCPFFunc = new javax.swing.JRadioButton();
+        radioCargoFunc = new javax.swing.JRadioButton();
         btnExcluir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -310,11 +342,6 @@ public class JFConsultas extends javax.swing.JFrame {
         radioRaConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioRaConsultaAluno.setText("RA");
 
-        radioDataNascConsultaAluno.setBackground(new java.awt.Color(204, 204, 204));
-        btnGroupAluno.add(radioDataNascConsultaAluno);
-        radioDataNascConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioDataNascConsultaAluno.setText("Idade");
-
         txtConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tblConsultaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -326,19 +353,17 @@ public class JFConsultas extends javax.swing.JFrame {
         tabAlunoConsultasLayout.setHorizontalGroup(
             tabAlunoConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabAlunoConsultasLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(tabAlunoConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabAlunoConsultasLayout.createSequentialGroup()
-                        .addComponent(radioNomeConsultaAluno)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioRaConsultaAluno)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioDataNascConsultaAluno))
-                    .addComponent(txtConsultaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(188, Short.MAX_VALUE))
-            .addGroup(tabAlunoConsultasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrolltabelaalunos)
+                .addGroup(tabAlunoConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+                    .addGroup(tabAlunoConsultasLayout.createSequentialGroup()
+                        .addGroup(tabAlunoConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabAlunoConsultasLayout.createSequentialGroup()
+                                .addComponent(radioNomeConsultaAluno)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioRaConsultaAluno))
+                            .addComponent(txtConsultaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tabAlunoConsultasLayout.setVerticalGroup(
@@ -347,12 +372,11 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(tabAlunoConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioNomeConsultaAluno)
-                    .addComponent(radioRaConsultaAluno)
-                    .addComponent(radioDataNascConsultaAluno))
+                    .addComponent(radioRaConsultaAluno))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtConsultaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -380,48 +404,95 @@ public class JFConsultas extends javax.swing.JFrame {
         tabConsultasEscolaLayout.setHorizontalGroup(
             tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tabConsultasEscolaLayout.setVerticalGroup(
             tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(7, 7, 7)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 179, Short.MAX_VALUE))
+                    .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tabbedConsultas.addTab("Escolas", tabConsultasEscola);
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        tabelaFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaFuncionarios.setModel(tmf);
+        jScrollPane2.setViewportView(tabelaFuncionarios);
+
+        txtBuscaFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnGroupFuncionario.add(radioNomeFunc);
+        radioNomeFunc.setSelected(true);
+        radioNomeFunc.setText("Nome");
+
+        btnGroupFuncionario.add(radioCPFFunc);
+        radioCPFFunc.setText("CPF");
+
+        btnGroupFuncionario.add(radioCargoFunc);
+        radioCargoFunc.setText("Cargo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 694, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(radioNomeFunc)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioCPFFunc)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioCargoFunc))
+                            .addComponent(txtBuscaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 374, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioNomeFunc)
+                    .addComponent(radioCPFFunc)
+                    .addComponent(radioCargoFunc))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtBuscaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         tabbedConsultas.addTab("Funcionários", jPanel1);
@@ -444,8 +515,9 @@ public class JFConsultas extends javax.swing.JFrame {
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(tabbedConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -495,6 +567,7 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.ButtonGroup btnGroupAluno;
+    private javax.swing.ButtonGroup btnGroupFuncionario;
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton jButton3;
@@ -503,11 +576,14 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JList<Telefone> jListTelefone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JRadioButton radioDataNascConsultaAluno;
+    private javax.swing.JRadioButton radioCPFFunc;
+    private javax.swing.JRadioButton radioCargoFunc;
     private javax.swing.JRadioButton radioNomeConsultaAluno;
+    private javax.swing.JRadioButton radioNomeFunc;
     private javax.swing.JRadioButton radioRaConsultaAluno;
     private javax.swing.JScrollPane scrollTabelaEscolas;
     private javax.swing.JScrollPane scrolltabelaalunos;
@@ -515,7 +591,9 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JPanel tabConsultasEscola;
     private javax.swing.JTabbedPane tabbedConsultas;
     private javax.swing.JTable tabelaEscolas;
+    private javax.swing.JTable tabelaFuncionarios;
     private javax.swing.JTable tblConsultaAluno;
+    private javax.swing.JTextField txtBuscaFuncionarios;
     private javax.swing.JTextField txtBuscarEscola;
     private javax.swing.JTextField txtConsultaAluno;
     // End of variables declaration//GEN-END:variables
@@ -525,7 +603,10 @@ public class JFConsultas extends javax.swing.JFrame {
     private OuvintesKeyListener okl = new OuvintesKeyListener();
     private TableModelAluno tma = new TableModelAluno();
     private TableModelEscola tme = new TableModelEscola();
+    private TableModelFuncionario tmf = new TableModelFuncionario();
     private AlunoDAO adao = new AlunoDAO();
+    private EscolaDAO edao = new EscolaDAO();
+    private FuncionarioDAO fdao = new FuncionarioDAO();
     private ConverteData converteData = new ConverteData();
 
     class OuvintesAction implements ActionListener{
@@ -576,7 +657,9 @@ public class JFConsultas extends javax.swing.JFrame {
                 buscarEscola();
             } else if (ke.getSource()==txtConsultaAluno){
                 buscarAluno();
-            }        
+            } else if (ke.getSource()==txtBuscaFuncionarios){
+                buscarFuncionario();
+            }       
         }
         
     }
@@ -638,6 +721,11 @@ public class JFConsultas extends javax.swing.JFrame {
         
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            tblConsultaAluno.getColumnModel().getColumn(0).setPreferredWidth(180);
+            tblConsultaAluno.getColumnModel().getColumn(1).setPreferredWidth(90);
+            tblConsultaAluno.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblConsultaAluno.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblConsultaAluno.getColumnModel().getColumn(4).setPreferredWidth(100);
             Collections.sort(linhas, (Aluno a1, Aluno a2) -> a1.getNome().compareTo(a2.getNome()));
             Aluno a = linhas.get(rowIndex);
             switch (columnIndex) {
@@ -748,5 +836,105 @@ public class JFConsultas extends javax.swing.JFrame {
         }
     }
     
+    private class TableModelFuncionario extends AbstractTableModel {
+        private List<Funcionario> linhas;
+        private String[] colunas = new String[] {"CPF", "Nome", "Cargo", "Data de Admissão"};
+        private static final int CPF = 0;
+        private static final int NOME = 1;
+        private static final int CARGO = 2;
+        private static final int DATAADMIS = 3;
 
+ 
+        public TableModelFuncionario() {
+            linhas = new ArrayList<>();
+        }
+ 
+        public TableModelFuncionario(List<Funcionario> lista) {
+            linhas = new ArrayList<>(lista);
+        }
+        
+        @Override
+        public int getRowCount() {
+            return linhas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+        
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        };
+        
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+            case CPF:
+                return String.class;
+            case NOME:
+                return String.class;
+            case CARGO:
+                return String.class;
+            case DATAADMIS:
+                return Date.class;
+            default:
+                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            
+            Collections.sort(linhas, (Funcionario f1, Funcionario f2) -> f1.getNome().compareTo(f2.getNome()));
+            Funcionario f = linhas.get(rowIndex);
+            switch (columnIndex) {
+                case CPF:
+                    return f.getCpf();
+                case NOME:
+                    return f.getNome();
+                case CARGO:
+                    return f.getCargo();
+                case DATAADMIS:
+                    return f.getDataAdmissao();
+                default:
+                    throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        public Funcionario getFuncionario(int indiceLinha) {
+            return linhas.get(indiceLinha);
+        }
+
+        public void addFuncionario(Funcionario f) {
+            linhas.add(f);
+            int ultimoIndice = getRowCount() - 1;
+
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+ 
+        public void removeFuncionario(int indiceLinha) {
+            linhas.remove(indiceLinha);
+
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+ 
+        public void addListaDeCertificados(List<Funcionario> funcionarios) {
+            int indice = getRowCount();
+            linhas.addAll(funcionarios);
+
+            fireTableRowsInserted(indice, indice + funcionarios.size());
+        }
+ 
+        public void limpar() {
+            linhas.clear();
+            fireTableDataChanged();
+        }
+    }
 }

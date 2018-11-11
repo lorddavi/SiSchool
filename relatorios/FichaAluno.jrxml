@@ -97,9 +97,9 @@
 		<band height="106" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
 			<staticText>
-				<reportElement x="19" y="60" width="140" height="30" uuid="29ad8ccf-3dd4-4c0a-aba9-b976a422b41f"/>
+				<reportElement x="19" y="60" width="161" height="30" uuid="29ad8ccf-3dd4-4c0a-aba9-b976a422b41f"/>
 				<textElement>
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
 				<text><![CDATA[    PREFEITURA MUNICIPAL DA ESTÂNCIA TURÍSTICA DE AVARÉ]]></text>
 			</staticText>
@@ -108,13 +108,16 @@
 				<imageExpression><![CDATA["brgrande.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="180" y="10" width="340" height="20" uuid="4e03c34d-e7d3-4352-a598-3aec25ed4166"/>
+				<reportElement x="198" y="10" width="350" height="20" uuid="4e03c34d-e7d3-4352-a598-3aec25ed4166"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[SECRETARIA MUNICIPAL DE EDUCAÇÃO - DIRETORIA DE AVARÉ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="80" width="166" height="20" forecolor="#F7CDF7" uuid="0d3671ef-86ed-48d0-88f7-ac2f1115cdf2"/>
+				<reportElement x="5" y="86" width="205" height="20" forecolor="#FF2BD8" uuid="0d3671ef-86ed-48d0-88f7-ac2f1115cdf2"/>
 				<textElement>
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
 				<text><![CDATA[SECRETARIA MUNICIPAL DE EDUCAÇÃO]]></text>
 			</staticText>
@@ -132,38 +135,31 @@
 			</line>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="22" splitType="Stretch">
-			<staticText>
-				<reportElement x="10" y="1" width="100" height="19" uuid="08bd2a69-fbf0-4dbe-8ab1-d282df6e48be">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9835764e-6336-4021-be45-aea2c505dfd8"/>
-				</reportElement>
-				<text><![CDATA[Nome do Aluno:]]></text>
-			</staticText>
-			<line>
-				<reportElement x="0" y="0" width="1" height="20" uuid="165a2cb9-27b3-44eb-bfcc-c2c8ae3046e0"/>
-			</line>
-			<line>
-				<reportElement x="555" y="0" width="1" height="20" uuid="c76e8539-8c1e-4e8c-a456-3527b4ce9a7d"/>
-			</line>
-		</band>
-	</columnHeader>
 	<detail>
 		<band height="206" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="0" width="180" height="20" uuid="6ac96b3c-bfba-450b-a2c3-b06388458d4c">
+				<reportElement x="121" y="1" width="359" height="19" uuid="6ac96b3c-bfba-450b-a2c3-b06388458d4c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9835764e-6336-4021-be45-aea2c505dfd8"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="10" y="50" width="179" height="20" uuid="08e9bbd8-b306-48e0-b6a7-7d333bb270a2">
+				<reportElement x="120" y="29" width="360" height="20" uuid="08e9bbd8-b306-48e0-b6a7-7d333bb270a2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4037cde9-9630-43cb-bbbf-f86643e7f8d4"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nomePai}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="30" width="100" height="20" uuid="e1117b7c-3390-41cb-9e67-ee7580108acc"/>
+				<reportElement x="6" y="30" width="100" height="20" uuid="e1117b7c-3390-41cb-9e67-ee7580108acc"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<text><![CDATA[Nome do Pai:]]></text>
 			</staticText>
 			<line>
@@ -173,15 +169,21 @@
 				<reportElement x="555" y="-2" width="1" height="207" uuid="30522654-899d-4d7f-b470-572a57d50ffa"/>
 			</line>
 			<textField>
-				<reportElement x="10" y="100" width="179" height="20" uuid="ac1db35e-617b-49f7-bf05-4b3cbaf67fb2">
+				<reportElement x="122" y="58" width="358" height="26" uuid="ac1db35e-617b-49f7-bf05-4b3cbaf67fb2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b63d368-5442-4649-9e00-9f2094b25e8c"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeMae}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="78" width="100" height="22" uuid="22297466-c9d9-4021-8908-ee64d16bd2ff">
+				<reportElement x="6" y="60" width="100" height="22" uuid="22297466-c9d9-4021-8908-ee64d16bd2ff">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b63d368-5442-4649-9e00-9f2094b25e8c"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<text><![CDATA[Nome da Mãe:]]></text>
 			</staticText>
 			<line>
@@ -211,6 +213,24 @@
 				</reportElement>
 				<text><![CDATA[telefones]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="5" y="1" width="109" height="19" uuid="08bd2a69-fbf0-4dbe-8ab1-d282df6e48be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9835764e-6336-4021-be45-aea2c505dfd8"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nome do Aluno:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="7760f8b5-7672-44c1-893c-8b1b4ca79426"/>
+			</line>
+			<line>
+				<reportElement x="0" y="48" width="555" height="1" uuid="4777287f-2b91-4d01-8aa3-2ba7ef047eeb"/>
+			</line>
+			<line>
+				<reportElement x="0" y="78" width="555" height="1" uuid="c2fbd02c-c69f-4d74-b835-a23ef0415a49"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

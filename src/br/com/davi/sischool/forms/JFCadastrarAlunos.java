@@ -22,11 +22,13 @@ import br.com.davi.sischool.regras.AlunoDAO;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.swing.DefaultListModel;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -79,6 +81,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         btnRemoveTelefoneCadAluno.addActionListener(oa);
         btnAddTelefCadAluno.addActionListener(oa);
         radioOutroResponsavelCadAluno.addActionListener(oa);
+        btnProcurarFoto.addActionListener(oa);
     }
     
     public void iniciarEdicao(Aluno a){
@@ -273,6 +276,21 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
     }
     
+    private void procurarFoto(){
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == fileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();
+        try {
+          // What to do with the file, e.g. display it in a TextArea
+          txtAObservacoes.read( new FileReader( file.getAbsolutePath() ), null );
+        } catch (IOException ex) {
+          System.out.println("problem accessing file"+file.getAbsolutePath());
+        }
+    } else {
+        System.out.println("File access cancelled by user.");
+    }
+    }
+    
     private void adicionaTelefone(){
         if (txtTelefones.getText().trim().length() != 0){
             camposTelef.colocaTelefoneNaLista(telef, txtTelefones);
@@ -358,6 +376,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        fileChooser = new javax.swing.JFileChooser();
         panelPrincipal = new javax.swing.JPanel();
         panelBarraDeTitulo = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
@@ -409,7 +428,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         paneFotoAluno = new javax.swing.JPanel();
         btnFotoAlunoCadAluno = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        btnProcurarFotoCadAluno = new javax.swing.JButton();
+        btnProcurarFoto = new javax.swing.JButton();
         btnAddTelefCadAluno = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTelefones = new javax.swing.JList<>();
@@ -422,6 +441,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         txtParentescoResponsavel = new javax.swing.JTextField();
         btnSalvarCadAluno = new javax.swing.JButton();
         btnCancelarCadAluno = new javax.swing.JButton();
+
+        fileChooser.setDialogTitle("Selecione uma imagem");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -789,8 +810,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         jLabel8.setLabelFor(btnFotoAlunoCadAluno);
         jLabel8.setText("Foto 3x4 do aluno.");
 
-        btnProcurarFotoCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnProcurarFotoCadAluno.setText("Procurar");
+        btnProcurarFoto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnProcurarFoto.setText("Procurar");
 
         javax.swing.GroupLayout paneFotoAlunoLayout = new javax.swing.GroupLayout(paneFotoAluno);
         paneFotoAluno.setLayout(paneFotoAlunoLayout);
@@ -800,11 +821,12 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paneFotoAlunoLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnProcurarFotoCadAluno))
-                    .addComponent(jLabel8))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
+                        .addComponent(btnProcurarFoto)
+                        .addGap(21, 21, 21))))
         );
         paneFotoAlunoLayout.setVerticalGroup(
             paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -812,8 +834,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btnProcurarFotoCadAluno))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProcurarFoto)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         btnAddTelefCadAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
@@ -1027,7 +1050,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private javax.swing.JButton btnFotoAlunoCadAluno;
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnProcurarComprovResidenciaCadAluno;
-    private javax.swing.JButton btnProcurarFotoCadAluno;
+    private javax.swing.JButton btnProcurarFoto;
     private javax.swing.JButton btnRemoveTelefoneCadAluno;
     private javax.swing.JButton btnSalvarCadAluno;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1038,6 +1061,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkTransporteEscolarCadastroAluno;
     private javax.swing.JComboBox<Turma> comboBoxSerie;
     private javax.swing.JComboBox<Escola> comboEscolas;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JFormattedTextField ftxtDataNasc;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
@@ -1273,6 +1297,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 removeTelefone();
             } else if (evt.getSource() == btnAddTelefCadAluno){
                 adicionaTelefone();
+            }  else if (evt.getSource() == btnProcurarFoto){
+                procurarFoto();
             }
         }
     }

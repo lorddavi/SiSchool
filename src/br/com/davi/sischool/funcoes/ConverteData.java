@@ -25,7 +25,7 @@ public class ConverteData {
     * do tipo Date.
     */
     public Date converteDataParaUtilDate(JFormattedTextField ftxt){
-        SimpleDateFormat formato = new SimpleDateFormat( "dd/MM/yy" );
+        SimpleDateFormat formato = new SimpleDateFormat( "dd/MM/yyyy" );
         formato.setLenient(false);
         Date data = null;
         try {
@@ -38,7 +38,7 @@ public class ConverteData {
     }
     
     public String converteDateParaString(Date data){
-        DateFormat df = new SimpleDateFormat("dd/MM/yy");  
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
         df.setLenient(false);
         String dataConvertida = df.format(data);
         return dataConvertida;

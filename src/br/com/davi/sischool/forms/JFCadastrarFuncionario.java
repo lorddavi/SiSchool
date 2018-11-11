@@ -155,6 +155,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         
         radioCargoOutrosCadFunc.setEnabled(true);
         radioPebICadFunc.setEnabled(true);
+        radioHabilitaManha.setEnabled(true);
+        radioHabilitaTarde.setEnabled(true);
         radioPebIICadFunc.setEnabled(true);
         radioMascCadFunc.setEnabled(true);
         radioFemCadFunc.setEnabled(true);
@@ -299,6 +301,18 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtTelefonesCadFunc.setText("");
         camposTelef.exibeTelefonesNoJList(jListTelefonesCadFunc, telef);
         checkDesligado.setSelected(false);
+        
+        nome = null; genero = null; endereco = null; bairro = null; cidade = null;
+        cep = null; observacoes = null; cargo = null; cpf = null; especialidade = null;
+        periodo = null; usrName = null; senha = null;
+        
+        dataNasc = null; dataAdmissao = null;
+        
+        deficiencia = false; edicao = false; exclusao = false; ativo = false;
+        
+        escolaOutroCargo = null; funcs = null; telef = null;
+         
+        acesso = 0;
     }
     
     public void defineCampos(){
@@ -502,10 +516,12 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         if (cargo.equals("Professor PEB I")){
             setaFuncFalseEnabled();
             radioPebICadFunc.setSelected(true);
+            radioCargoProfCadFunc.setSelected(true);
         } else if (cargo.equals("Professor PEB II")){
             setaFuncFalseEnabled();
             verificaCargoEnabled();
             radioPebIICadFunc.setSelected(true);
+            radioCargoProfCadFunc.setSelected(true);
         } else {
             setaProfFalseEnabled();
             radioCargoOutrosCadFunc.setSelected(true);
@@ -549,7 +565,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
        return fdao.buscaTodos();
     }
     
-    private void atualizaTabela(List<Funcionario> func){
+    private void atualizaTabela(List<Funcionario> funcs){
         tmf = new TableModelFuncionario(funcs);
         tabelaBuscaFuncionarios.setModel(tmf);
     }
@@ -591,9 +607,21 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtNome.requestFocus();
             return false;
-        } else if (txtFDataNasc.getText().trim().equals("")){
+        } else if (txtCep.getText().trim().length()<7){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
+            txtCep.requestFocus();
+            return false;
+        } else if (txtFDataNasc.getText().trim().length()<8){
             tabbedCadastrarFuncionarios.setSelectedIndex(0);
             txtFDataNasc.requestFocus();
+            return false;
+        } else if (txtCpf.getText().trim().length()<11){
+            tabbedCadastrarFuncionarios.setSelectedIndex(0);
+            txtCpf.requestFocus();
+            return false;
+        } else if (txtFDataAdmissao.getText().trim().length()<8){
+            tabbedCadastrarFuncionarios.setSelectedIndex(1);
+            txtFDataAdmissao.requestFocus();
             return false;
         } else if (txtEndereco.getText().trim().equals("")){
             tabbedCadastrarFuncionarios.setSelectedIndex(0);
@@ -675,13 +703,18 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             if (camposEmBranco()){
                 defineCampos();
                 if (redigiteSenha()){
-                    if (checaCargo().equals("Professor PEB I")){
-                        salvarPebI();
-                    } else if (checaCargo().equals("Professor PEB II")){
-                        salvarPebII();
-                    } else {
-                        salvarOutroCargo();
+                    switch (checaCargo()) {
+                        case "Professor PEB I":
+                            salvarPebI();
+                            break;
+                        case "Professor PEB II":
+                            salvarPebII();
+                            break;
+                        default:
+                            salvarOutroCargo();
+                            break;
                     }
+                    atualizaTabela(fdao.buscaTodos());
                     tabelaBuscaFuncionarios.clearSelection();
                     limpar();
                     estadoInicial();
@@ -858,11 +891,11 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         jLabel3.setText("Data de Nascimento:");
 
         try {
-            txtFDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            txtFDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtFDataNasc.setToolTipText("dd/mm/aa");
+        txtFDataNasc.setToolTipText("dd/mm/aaaa");
         txtFDataNasc.setEnabled(false);
         txtFDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtFDataNasc.setInputVerifier(new VerificadorDeData());
@@ -1269,12 +1302,13 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelDataAdmissao.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data de Admissão", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         try {
-            txtFDataAdmissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            txtFDataAdmissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txtFDataAdmissao.setEnabled(false);
         txtFDataAdmissao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtFDataAdmissao.setInputVerifier(new VerificadorDataAdmissao());
 
         javax.swing.GroupLayout panelDataAdmissaoLayout = new javax.swing.GroupLayout(panelDataAdmissao);
         panelDataAdmissao.setLayout(panelDataAdmissaoLayout);
@@ -1669,13 +1703,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     
                     throw new IllegalArgumentException();
 		}
-                
-                for (Funcionario f: fdao.buscaTodos()){
-                    if (f.getCpf().equals(texto)){
-                        JOptionPane.showMessageDialog(null, "Esse CPF já está cadastrado!");
-                        return false;
-                    }
-                }
 
 		char dig10, dig11;
 		int sm, i, r, num, peso;
@@ -1735,17 +1762,17 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             txtFDataNasc = (JFormattedTextField) jc;
             String texto = txtFDataNasc.getText();
             String data = texto.substring(0, 2) + texto.substring(3, 5)
-                    + texto.substring(6, 8);
+                    + texto.substring(6, 10);
 
             try {
                 if (data.trim().length() == 0){
                     return(true);
 		}
                 
-                if (data.length() != 6) {
+                if (data.length() != 8) {
                     throw new IllegalArgumentException();
 		}
-                
+
                 int idade = 0;
                 try {
                     Date dataN = converteData.converteDataParaUtilDate(txtFDataNasc);
@@ -1757,6 +1784,36 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 if (idade < 18){
                     throw new IllegalArgumentException();
                 } else {
+                    return true;
+                }
+                
+            } catch (IllegalArgumentException ex) {
+		JOptionPane.showMessageDialog(null, "Data inválida!");
+		return (false);
+            }
+        }
+    }    
+    
+    class VerificadorDataAdmissao extends InputVerifier {
+	public VerificadorDataAdmissao() {
+        
+        }
+        
+        @Override
+	public boolean verify(JComponent jc) {
+            txtFDataAdmissao = (JFormattedTextField) jc;
+            String texto = txtFDataAdmissao.getText();
+            String data = texto.substring(0, 2) + texto.substring(3, 5)
+                    + texto.substring(6, 10);
+
+            try {
+                if (data.trim().length() == 0){
+                    return(true);
+		}
+                
+                if (data.length() != 8) {
+                    throw new IllegalArgumentException();
+		} else {
                     return true;
                 }
                 

@@ -248,7 +248,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtBuscaEscola" min="-2" pref="242" max="-2" attributes="0"/>
+                              <Component id="txtBuscaProfessor" min="-2" pref="242" max="-2" attributes="0"/>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -257,14 +257,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtBuscaEscola" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtBuscaProfessor" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="19" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtBuscaEscola">
+                    <Component class="javax.swing.JTextField" name="txtBuscaProfessor">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="14" style="0"/>

@@ -53,8 +53,12 @@ public final class PreencheCombo {
     * cadastradas na escola passada como parâmetro.
     */
     public void preencheTurmas(JComboBox<Turma> combo, Escola e){
-        for (Turma t: e.getTurmas()){
-            combo.addItem(t);
+        try { 
+            for (Turma t: e.getTurmas()){
+               combo.addItem(t);
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
     }
     

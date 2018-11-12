@@ -9,6 +9,7 @@ import br.com.davi.sischool.funcoes.PreencheCombo;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.Funcionario;
+import br.com.davi.sischool.model.Professor;
 import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.model.ProfessorPebI;
 import br.com.davi.sischool.model.ProfessorPebII;
@@ -19,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,12 +67,17 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private void setaListeners(){
         btnFechar.addActionListener(oa);
         btnMinimizar.addActionListener(oa);
-        btnSalvar1.addActionListener(oa);
-        btnSalvar2.addActionListener(oa);
+        btnAtribuir1.addActionListener(oa);
+        btnAtribuir2.addActionListener(oa);
+        btnRemover1.addActionListener(oa);
+        btnRemover2.addActionListener(oa);
         comboEscola1.addItemListener(oi);
         comboEscola2.addItemListener(oi);
         comboTurma1.addItemListener(oi);
         comboTurma2.addItemListener(oi);
+        checkEscola.addItemListener(oi);
+        txtBusca1.addKeyListener(new OuvintesKey());
+        txtBusca2.addKeyListener(new OuvintesKey());
     }
  
     private void setaTabelas(){
@@ -85,39 +93,126 @@ public class JFProfTurmas extends javax.swing.JFrame {
         return piidao.buscaTodos();
     }
     
+    private void atualizaTabelaPebI(List<ProfessorPebI> prof){
+        tmp1 = new TableModelPeb1(prof);
+        tabelaPebI.setModel(tmp1);
+    }
+    
+    private void atualizaTabelaPebII(List<ProfessorPebII> prof){
+        tmp2 = new TableModelPeb2(prof);
+        tabelaPebII.setModel(tmp2);
+    }
+    
+    private boolean verificaTurmas(ProfessorPebI p, Turma turma){
+        for (Turma t: p.getTurma()){
+            if (t.getPeriodo().equals(turma.getPeriodo())){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private void salvarPebI(){
         int linha = tabelaPebI.getSelectedRow();
-        TurmaDAO tdao = new TurmaDAO();
         ProfessorPebI prof = tmp1.getProf(linha);
-        Escola esc = (Escola) comboEscola1.getSelectedItem();
-        Turma t = (Turma) comboTurma1.getSelectedItem();
-        escolas.add(esc);
-        turmas.add(t);
-        prof.setEscola(escolas);
-        t.setProfPebI(prof);
         
-        pidao.editar(prof);
-        tdao.editar(t);
-        JOptionPane.showMessageDialog(this, "Turma atribuída com sucesso!");
+        try {
+            Escola esc = (Escola) comboEscola1.getSelectedItem();
+            Turma t = (Turma) comboTurma1.getSelectedItem();
+            String periodo = prof.getPeriodo();
+            boolean mesmaEscola = false;
+            
+            for (Escola e: prof.getEscola()){
+                if (e.getId() == esc.getId()){
+                    mesmaEscola = true;
+                }
+            }
+            
+            if (prof.getTurma().size() == 2){
+                JOptionPane.showMessageDialog(this, "Este professor já atingiu o limite de turmas às quais poderia ser designado.");
+            } else {
+                if (t.getProfPebI() == null){
+                    if (t.getPeriodo().equals(periodo) || periodo.equals("Duplo")) {
+                        if (verificaTurmas(prof, t)){
+                            if (!mesmaEscola){
+                                prof.getEscola().add(esc);
+                            }
+                            t.setProfPebI(prof);
+                            preencheLabels(t);
+                            pidao.editar(prof);
+                            tdao.editar(t);
+                            JOptionPane.showMessageDialog(this, "Turma atribuída com sucesso!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "O professor já possui uma turma no período designado!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "A turma selecionada não é no período designado para o professor!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Essa turma já tem um professor PEB I atribuído.");
+                }
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Um erro ocorreu! Não foi possível atribuir.");
+            e.printStackTrace();
+        }
     }
     
     private void salvarPebII(){
         int linha = tabelaPebII.getSelectedRow();
         ProfessorPebII prof = tmp2.getProf(linha);
         Escola esc = (Escola) comboEscola2.getSelectedItem();
-        Turma t = (Turma) comboTurma2.getSelectedItem();
-        escolas = prof.getEscola();
+        Turma turma = (Turma) comboTurma2.getSelectedItem();
+        boolean mesmaEscola = false;
+        boolean mesmaTurma = false;
+        boolean mesmaMateria = false;
+        
         turmas = prof.getTurmas();
-        escolas.add(esc);
-        turmas.add(t);
+        
         int aulas = prof.getAulasAtribuidas();
-        aulas++;
-        prof.setAulasAtribuidas(aulas);
-        prof.setEscola(escolas);
-        prof.setTurmas(turmas);
-        piidao.editar(prof);
-
-        JOptionPane.showMessageDialog(this, "Turma atribuída com sucesso!");
+        
+        try {
+            for (Escola e: prof.getEscola()){
+                if (e.getId() == esc.getId()){
+                    mesmaEscola = true;
+                }
+            }
+            
+            for (Turma t: prof.getTurmas()){
+                if (t == turma){
+                    mesmaTurma = true;
+                }
+            }
+            
+            for (ProfessorPebII p: turma.getProfPebII()){
+                if (p.getEspecialidade().equals(prof.getEspecialidade())){
+                    mesmaMateria = true;
+                }
+            }
+            
+            if (mesmaMateria){
+                JOptionPane.showMessageDialog(this, "Essa turma já possui um professor atribuído para essa matéria.");
+            } else if (mesmaTurma){
+                JOptionPane.showMessageDialog(this, "Esse professor já dá aula para essa turma.");
+            } else if (aulas==36){
+                JOptionPane.showMessageDialog(this, "Esse professor já possui 36 turmas.");
+            } else {                   
+                aulas++;
+                prof.setAulasAtribuidas(aulas);
+                if (!mesmaEscola){
+                  prof.getEscola().add(esc);
+                }
+                turma.getProfPebII().add(prof);
+                prof.getTurmas().add(turma);
+                preencheLabels(turma);
+                piidao.editar(prof);
+                JOptionPane.showMessageDialog(this, "Turma atribuída com sucesso!");
+            }
+                   
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Um erro ocorreu! Não foi possível atribuir.");
+            e.printStackTrace();
+        }
     }
     
     public void verificaEscola(List<Escola> escola, Escola e){
@@ -141,15 +236,24 @@ public class JFProfTurmas extends javax.swing.JFrame {
         ProfessorPebII pingles = new ProfessorPebII();
         ProfessorPebII ped = new ProfessorPebII();
         
-        for (ProfessorPebII p: t.getProfPebII()){
-            if (p.getEspecialidade().equals("Artes")){
-                partes = p;
-            } else if (p.getEspecialidade().equals("Inglês")){
-                pingles = p;
-            } else {
-                ped = p;
+        try{
+            for (ProfessorPebII p: t.getProfPebII()){
+                switch (p.getEspecialidade()) {
+                    case "Artes":
+                        partes = p;
+                        break;
+                    case "Inglês":
+                        pingles = p;
+                        break;
+                    default:
+                        ped = p;
+                        break;
+                }
             }
+        } catch (NullPointerException e){
+            
         }
+        
         try {
             lblPebI.setText(t.getProfPebI().getNome());
         } catch(Exception e) {
@@ -196,13 +300,14 @@ public class JFProfTurmas extends javax.swing.JFrame {
         tabelaPebI = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtBusca1 = new javax.swing.JTextField();
+        checkEscola = new javax.swing.JCheckBox();
         panelComponentesPebI = new javax.swing.JPanel();
         PanelEscola = new javax.swing.JPanel();
         comboEscola1 = new javax.swing.JComboBox<>();
         panelTurma = new javax.swing.JPanel();
         comboTurma1 = new javax.swing.JComboBox<>();
-        btnCancelar1 = new javax.swing.JButton();
-        btnSalvar1 = new javax.swing.JButton();
+        btnAtribuir1 = new javax.swing.JButton();
+        btnRemover1 = new javax.swing.JButton();
         panelPebII = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         panelTabelaProfPebII = new javax.swing.JPanel();
@@ -215,17 +320,24 @@ public class JFProfTurmas extends javax.swing.JFrame {
         comboEscola2 = new javax.swing.JComboBox<>();
         panelTurma1 = new javax.swing.JPanel();
         comboTurma2 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         lblPebI = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         lblArtes = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
         lblIngles = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
         lblEducacaoFisica = new javax.swing.JLabel();
-        btnCancelar2 = new javax.swing.JButton();
-        btnSalvar2 = new javax.swing.JButton();
+        btnRemover2 = new javax.swing.JButton();
+        btnAtribuir2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -249,7 +361,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
 
         lblTituloPrincipal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloPrincipal.setText("SiSchool - Atribuição de turmas - PEB I");
+        lblTituloPrincipal.setText("SiSchool - Atribuição de turmas - PEB I e II");
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/green.png"))); // NOI18N
         btnMinimizar.setContentAreaFilled(false);
@@ -261,7 +373,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 597, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,6 +416,8 @@ public class JFProfTurmas extends javax.swing.JFrame {
 
         txtBusca1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        checkEscola.setText("Mostrar apenas professores da escola selecionada.");
+
         javax.swing.GroupLayout panelTabelaProfPebILayout = new javax.swing.GroupLayout(panelTabelaProfPebI);
         panelTabelaProfPebI.setLayout(panelTabelaProfPebILayout);
         panelTabelaProfPebILayout.setHorizontalGroup(
@@ -311,11 +425,12 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelTabelaProfPebILayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTabelaProfPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                     .addGroup(panelTabelaProfPebILayout.createSequentialGroup()
                         .addGroup(panelTabelaProfPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkEscola)
                             .addComponent(jLabel1)
-                            .addComponent(txtBusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtBusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -326,8 +441,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(5, 5, 5)
                 .addComponent(txtBusca1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkEscola)
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -356,7 +473,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         );
 
         panelTurma.setBackground(new java.awt.Color(204, 204, 204));
-        panelTurma.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panelTurma.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         comboTurma1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -377,30 +494,27 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        btnCancelar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCancelar1.setText("Cancelar");
+        btnAtribuir1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAtribuir1.setText("Atribuir");
 
-        btnSalvar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnSalvar1.setText("Salvar");
+        btnRemover1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRemover1.setText("Remover Atribuição");
 
         javax.swing.GroupLayout panelComponentesPebILayout = new javax.swing.GroupLayout(panelComponentesPebI);
         panelComponentesPebI.setLayout(panelComponentesPebILayout);
         panelComponentesPebILayout.setHorizontalGroup(
             panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelComponentesPebILayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PanelEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelComponentesPebILayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(PanelEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelComponentesPebILayout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(btnCancelar1)
-                        .addGap(63, 63, 63)
-                        .addComponent(btnSalvar1))
-                    .addGroup(panelComponentesPebILayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(btnRemover1)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnAtribuir1))
+                    .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         panelComponentesPebILayout.setVerticalGroup(
             panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,9 +524,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalvar1)
-                    .addComponent(btnCancelar1))
+                .addGroup(panelComponentesPebILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAtribuir1)
+                    .addComponent(btnRemover1))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
 
@@ -423,9 +537,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelPebILayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelComponentesPebI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelTabelaProfPebI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -461,11 +575,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelTabelaProfPebIILayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTabelaProfPebIILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
                     .addGroup(panelTabelaProfPebIILayout.createSequentialGroup()
                         .addGroup(panelTabelaProfPebIILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtBusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtBusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -476,15 +590,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(5, 5, 5)
                 .addComponent(txtBusca2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelComponentesPebI1.setBackground(new java.awt.Color(204, 204, 204));
 
         PanelEscola1.setBackground(new java.awt.Color(204, 204, 204));
-        PanelEscola1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        PanelEscola1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         javax.swing.GroupLayout PanelEscola1Layout = new javax.swing.GroupLayout(PanelEscola1);
         PanelEscola1.setLayout(PanelEscola1Layout);
@@ -493,7 +607,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(PanelEscola1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(comboEscola2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelEscola1Layout.setVerticalGroup(
             PanelEscola1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,29 +619,31 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelTurma1.setBackground(new java.awt.Color(204, 204, 204));
         panelTurma1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Professor PEB I:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Artes:");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Inglês:");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("Educação Física: ");
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
 
         lblPebI.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblPebI.setText("jLabel9");
 
-        lblArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblArtes.setText("jLabel10");
-
-        lblIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblIngles.setText("jLabel11");
-
-        lblEducacaoFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblEducacaoFisica.setText("jLabel12");
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPebI, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblPebI))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -535,24 +651,144 @@ public class JFProfTurmas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPebI)
-                    .addComponent(lblArtes)
-                    .addComponent(lblIngles)
-                    .addComponent(lblEducacaoFisica))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblPebI)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblArtes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblIngles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEducacaoFisica)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Artes:");
+
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setPreferredSize(new java.awt.Dimension(84, 17));
+
+        lblArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblArtes.setText("jLabel10");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblArtes, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblArtes))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel6)
+        );
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Inglês:");
+
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel7.setPreferredSize(new java.awt.Dimension(84, 17));
+
+        lblIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblIngles.setText("jLabel11");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblIngles, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblIngles))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel7)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Educação Física: ");
+
+        jPanel8.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel8.setPreferredSize(new java.awt.Dimension(84, 17));
+
+        lblEducacaoFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEducacaoFisica.setText("jLabel12");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEducacaoFisica, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblEducacaoFisica))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel8)
         );
 
         javax.swing.GroupLayout panelTurma1Layout = new javax.swing.GroupLayout(panelTurma1);
@@ -562,16 +798,14 @@ public class JFProfTurmas extends javax.swing.JFrame {
             .addGroup(panelTurma1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboTurma2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelTurma1Layout.createSequentialGroup()
-                        .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                        .addComponent(comboTurma2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelTurma1Layout.setVerticalGroup(
             panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,25 +813,21 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(comboTurma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelTurma1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTurma1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnCancelar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCancelar2.setText("Cancelar");
+        btnRemover2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRemover2.setText("Remover Atribuição");
 
-        btnSalvar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnSalvar2.setText("Salvar");
+        btnAtribuir2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAtribuir2.setText("Atribuir");
 
         javax.swing.GroupLayout panelComponentesPebI1Layout = new javax.swing.GroupLayout(panelComponentesPebI1);
         panelComponentesPebI1.setLayout(panelComponentesPebI1Layout);
@@ -611,11 +841,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
                             .addComponent(PanelEscola1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panelTurma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(panelComponentesPebI1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(btnCancelar2)
-                        .addGap(66, 66, 66)
-                        .addComponent(btnSalvar2)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addGap(73, 73, 73)
+                        .addComponent(btnRemover2)
+                        .addGap(76, 76, 76)
+                        .addComponent(btnAtribuir2)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         panelComponentesPebI1Layout.setVerticalGroup(
             panelComponentesPebI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,11 +854,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addComponent(PanelEscola1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTurma1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelComponentesPebI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar2)
-                    .addComponent(btnSalvar2))
-                .addGap(0, 32, Short.MAX_VALUE))
+                    .addComponent(btnRemover2)
+                    .addComponent(btnAtribuir2))
+                .addGap(0, 160, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPebIILayout = new javax.swing.GroupLayout(panelPebII);
@@ -640,9 +870,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addComponent(panelComponentesPebI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTabelaProfPebII, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(276, 276, 276)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelPebIILayout.setVerticalGroup(
             panelPebIILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -666,9 +896,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(tabbedFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+            .addComponent(tabbedFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -701,13 +929,14 @@ public class JFProfTurmas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelEscola;
     private javax.swing.JPanel PanelEscola1;
-    private javax.swing.JButton btnCancelar1;
-    private javax.swing.JButton btnCancelar2;
+    private javax.swing.JButton btnAtribuir1;
+    private javax.swing.JButton btnAtribuir2;
     private javax.swing.JButton btnFechar;
     private javax.swing.ButtonGroup btnGroupProfPeb;
     private javax.swing.JButton btnMinimizar;
-    private javax.swing.JButton btnSalvar1;
-    private javax.swing.JButton btnSalvar2;
+    private javax.swing.JButton btnRemover1;
+    private javax.swing.JButton btnRemover2;
+    private javax.swing.JCheckBox checkEscola;
     private javax.swing.JComboBox<Escola> comboEscola1;
     private javax.swing.JComboBox<Escola> comboEscola2;
     private javax.swing.JComboBox<Turma> comboTurma1;
@@ -721,6 +950,13 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblArtes;
@@ -763,10 +999,14 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 dispose();
             } else if (ae.getSource() == btnMinimizar){
                 setExtendedState(ICONIFIED);
-            } else if (ae.getSource() == btnSalvar1){
+            } else if (ae.getSource() == btnAtribuir1){
                 salvarPebI();
-            } else if (ae.getSource() == btnSalvar2){
+            } else if (ae.getSource() == btnAtribuir2){
                 salvarPebII();
+            } else if (ae.getSource() == btnRemover1){
+                
+            } else if (ae.getSource() == btnRemover2){
+                
             }
         }
     }
@@ -775,6 +1015,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         @Override
         public void itemStateChanged(ItemEvent ie) {
             if (ie.getSource() == comboEscola1){
+                checkEscola.setSelected(false);
                 comboTurma1.removeAllItems();
                 preencheCombos.preencheTurmas(comboTurma1, (Escola) comboEscola1.getSelectedItem());
             } else if (ie.getSource() == comboEscola2){
@@ -783,8 +1024,47 @@ public class JFProfTurmas extends javax.swing.JFrame {
             } else if (ie.getSource() == comboTurma2){
                 setaTabelas();
                 preencheLabels((Turma) comboTurma2.getSelectedItem());
+            } else if (ie.getSource()==checkEscola){
+                if(ie.getStateChange()==ItemEvent.SELECTED){
+                    txtBusca1.setEnabled(false);
+                    Escola e = (Escola) comboEscola1.getSelectedItem();
+                    List<ProfessorPebI> profs = new ArrayList<>();
+                    for (Professor p: e.getProfessor()){
+                        if (p.getCargo().equals("Professor PEB I")){
+                            ProfessorPebI pi = pidao.buscarId(p.getId());
+                            profs.add(pi);
+                        }
+                    }
+                    atualizaTabelaPebI(profs);
+                } else {
+                    txtBusca1.setEnabled(true);
+                    atualizaTabelaPebI(pidao.buscaTodos());
+                }
             }
         }
+    }
+    
+    private class OuvintesKey implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            if (ke.getSource()==txtBusca1){
+                String busca = "%" + txtBusca1.getText() + "%";
+                atualizaTabelaPebI(pidao.buscaPorNome(busca));
+            } else if (ke.getSource() == txtBusca2){
+                String busca = "%" + txtBusca2.getText() + "%";
+                atualizaTabelaPebII(piidao.buscaPorNome(busca));
+            }
+        }
+    
     }
     
     private class TableModelPeb1 extends AbstractTableModel{

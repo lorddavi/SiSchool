@@ -15,6 +15,8 @@ import br.com.davi.sischool.regras.OutroCargoDAO;
 import br.com.davi.sischool.regras.ProfessorDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,6 +61,12 @@ public class JFPontos extends javax.swing.JFrame {
         btnSalvar.addActionListener(oa);
         btnRemover.addActionListener(oa);
         tabelaProfessores.getSelectionModel().addListSelectionListener(ols);
+        txtBuscaProfessor.addKeyListener(new OuvintesKeyListener());
+    }
+    
+    private void atualizaTabela(List<Professor> lista){
+        tmp = new TableModelProfessor(lista);
+        tabelaProfessores.setModel(tmp);
     }
     
     public List<Professor> listaProfs(){
@@ -75,20 +83,6 @@ public class JFPontos extends javax.swing.JFrame {
         int linha = tabelaProfessores.getSelectedRow();
         return tmp.getProf(linha);
     }
-    
-    private static void ordenaPorPontos(List<Professor> listaProf) {  
-        listaProf.sort(new Comparator<Professor>() {  
-            @Override  
-            public int compare(Professor p1, Professor p2) {
-                if (p1.getPontos() > p2.getPontos()){
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }  
-
-     });  
-    }  
     
     public void atribuiCamposSalvar(){
         nomeCurso = txtCurso.getText();
@@ -139,7 +133,7 @@ public class JFPontos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProfessores = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        txtBuscaEscola = new javax.swing.JTextField();
+        txtBuscaProfessor = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnRemover = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -219,7 +213,7 @@ public class JFPontos extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Professor(a)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        txtBuscaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBuscaProfessor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -227,14 +221,14 @@ public class JFPontos extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBuscaEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscaProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBuscaEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscaProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -467,7 +461,7 @@ public class JFPontos extends javax.swing.JFrame {
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTable tabelaCertificados;
     private javax.swing.JTable tabelaProfessores;
-    private javax.swing.JTextField txtBuscaEscola;
+    private javax.swing.JTextField txtBuscaProfessor;
     private javax.swing.JTextField txtCurso;
     private javax.swing.JTextField txtInstituicao;
     private javax.swing.JTextField txtPontos;
@@ -518,6 +512,22 @@ public class JFPontos extends javax.swing.JFrame {
         }
     }
     
+    class OuvintesKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            String busca = "%" + txtBuscaProfessor.getText() + "%";
+            atualizaTabela(pdao.buscarPorNome(busca));
+        }
+    }
+    
     private class TableModelProfessor extends AbstractTableModel {
         // Lista de professores a serem exibidos na tabela
         private List<Professor> linhas;
@@ -533,7 +543,6 @@ public class JFPontos extends javax.swing.JFrame {
  
         // Cria um SocioTableModel contendo a lista recebida por parâmetro
         public TableModelProfessor(List<Professor> listaProfs) {
-            ordenaPorPontos(listaProfs);
             linhas = new ArrayList<>(listaProfs);
         }
         

@@ -311,7 +311,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         deficiencia = false; edicao = false; exclusao = false; ativo = false;
         
         escolaOutroCargo = null; funcs = null; telef = null;
-         
+        
         acesso = 0;
     }
     

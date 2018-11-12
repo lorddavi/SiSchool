@@ -71,6 +71,23 @@ public class ProfessorPebIIDAO {
         return professores;
     } 
     
+    public List<ProfessorPebII> buscaPorNome(String busca){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<ProfessorPebII> professores = null;
+        try {
+            TypedQuery<ProfessorPebII> consulta = em.createQuery("SELECT p FROM ProfessorPebII p WHERE p.nome LIKE :busca", ProfessorPebII.class);
+            consulta.setParameter("busca", busca);
+            professores = consulta.getResultList();
+        } catch(NoResultException ex) {
+            System.out.println("Não foi possível encontrar nenhum professor com esse nome");
+        }
+        em.close();
+        cem.fecharEM();    
+        
+        return professores;
+    } 
+    
     public List<ProfessorPebII> buscaEscola(Escola e){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();

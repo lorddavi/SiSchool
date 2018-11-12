@@ -420,7 +420,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
     private List<Aluno> alunos = new ArrayList<>();
     private TransferenciaDAO tDao = new TransferenciaDAO();
    
-    class OuvintesAction implements ActionListener{
+    private class OuvintesAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (evt.getSource() == btnFechar){
@@ -433,7 +433,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         }
     }
     
-    class OuvintesItems implements ItemListener{
+    private class OuvintesItems implements ItemListener{
 
         @Override
         public void itemStateChanged(ItemEvent ie) {
@@ -445,7 +445,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         
     }
     
-    class OuvintesKey implements KeyListener {
+    private class OuvintesKey implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent ke) {

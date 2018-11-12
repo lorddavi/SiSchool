@@ -47,6 +47,7 @@ public class JFCronograma extends javax.swing.JFrame {
     
     public void iniciarComponentes(){
         Escola e = oc.getEscola();
+        System.out.println(e.getNome());
         preencheCombo.preencheTurmas(comboTurmas, e);
         t = (Turma) comboTurmas.getSelectedItem();
         lblNomeTurma.setText(t.toString());

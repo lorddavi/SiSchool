@@ -146,4 +146,17 @@ public class TurmaDAO {
         return turmas;
     }
    
+    public Turma buscarId(int id){
+        Turma turma;
+        try {
+            CriaEntityManager cem = new CriaEntityManager();
+            EntityManager em = cem.criarEM();
+            TypedQuery<Turma> consulta = em.createQuery("SELECT t FROM Turma t WHERE t.id = :id", Turma.class);
+            consulta.setParameter("id", id);
+            turma = consulta.getSingleResult();
+            return turma;
+        } catch (Exception e){
+            return null;
+        }
+    }
 }

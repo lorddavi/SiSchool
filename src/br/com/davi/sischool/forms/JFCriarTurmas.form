@@ -285,11 +285,13 @@
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtVagas" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnAddTurma" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="btnRemoverTurma" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtVagas" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="278" max="-2" attributes="0"/>

@@ -64,7 +64,7 @@ public class AlunoDAO {
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
         TypedQuery<Aluno> consulta = em.createQuery(
-            "SELECT a FROM Pessoa p, Aluno a WHERE p.id = a.id AND p.nome LIKE :busca", Aluno.class);
+            "SELECT a FROM Aluno a WHERE a.nome LIKE :busca", Aluno.class);
         consulta.setParameter("busca", busca);
         List<Aluno> alunos = consulta.getResultList();
         em.close();

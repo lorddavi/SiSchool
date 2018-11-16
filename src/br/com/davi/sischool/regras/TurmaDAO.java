@@ -94,11 +94,11 @@ public class TurmaDAO {
         EntityManager em = cem.criarEM();
         List<Turma> turmas = null;
         try {
-            TypedQuery<Turma> consulta = em.createQuery("SELECT t FROM Turma t WHERE escolas_id = :escolaId", Turma.class);
+            TypedQuery<Turma> consulta = em.createQuery("SELECT t FROM Turma t WHERE t.escola.id = :escolaId", Turma.class);
             consulta.setParameter("escolaId", e.getId());
             turmas = consulta.getResultList();
         } catch(NoResultException ex) {
-    		System.out.println("Aluno não encontrado");
+    		System.out.println("Turma não encontrada");
         } catch(NonUniqueResultException ex) {
     		System.out.println("Mais que um resultado encontrado");
         }

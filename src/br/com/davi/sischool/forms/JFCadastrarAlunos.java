@@ -628,7 +628,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         );
 
         try {
-            ftxtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            ftxtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -1144,14 +1144,14 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             ftxtDataNasc = (JFormattedTextField) jc;
             String texto = ftxtDataNasc.getText();
             String data = texto.substring(0, 2) + texto.substring(3, 5)
-                    + texto.substring(6, 8);
+                    + texto.substring(6, 10);
 
             try {
                 if (data.trim().length() == 0){
                     return(true);
 		}
                 
-                if (data.length() != 6) {
+                if (data.length() != 8) {
                     throw new IllegalArgumentException();
 		}
                 
@@ -1163,7 +1163,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                     throw new IllegalArgumentException();
                 }
                 
-                if (idade < 4 || idade > 12){
+                if (idade < 0 || idade > 12){
                     throw new IllegalArgumentException();
                 } else {
                     return true;
@@ -1264,14 +1264,14 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 }
             }
             
-            if (texto.trim().length() < 5){
+            if (texto.trim().length() > 5){
                 return(true);
             } else {
                 throw new IllegalArgumentException();
             }
                 
             } catch (IllegalArgumentException ex) {
-		JOptionPane.showMessageDialog(null, "Telefone inválido");
+		JOptionPane.showMessageDialog(null, "RA inválido");
 		return (false);
             }
         }

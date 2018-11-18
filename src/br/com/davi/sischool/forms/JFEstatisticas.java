@@ -7,11 +7,16 @@ package br.com.davi.sischool.forms;
 
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
+import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.EstatisticasDAO;
 import static java.awt.Frame.ICONIFIED;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -35,37 +40,50 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private void iniciarComponentes(){
         setaStats();
         setaListeners();
+        
+        atualizaTabelaEscolas(edao.buscaTodas());
     }
     
     private void setaListeners(){
+        OuvintesAction oa = new OuvintesAction();
+        
         btnFechar.addActionListener(oa);
         btnMinimizar.addActionListener(oa);
     }
     
+    private void atualizaTabelaEscolas(List<Escola> escolas){
+        tme = new TableModelEscola(escolas);
+        tabelaEscolas.setModel(tme);
+    }
+    
     private void setaStats(){
-        int numAlunosRede = statsDao.numAlunos();
-        int numEscolasRede = statsDao.numEscolas();
-        double mediaAlunosPorEscola = ((double) numAlunosRede / (double) numEscolasRede);
-        Escola escolaMaisAlunos = escolaMaisALunos();
-        Escola escolaMenosAlunos = escolaMenosALunos();
-        int pebiRede = statsDao.numProfPebI();
-        int pebiiRede = statsDao.numProfPebII();
-        int funcsRede = statsDao.numOutroCargo();
-        
-        lblNumAlunosRede.setText(String.valueOf(numAlunosRede));
-        lblQntdEscolasRede.setText(String.valueOf(numEscolasRede));
-        lblMediaAlunosPorEscola.setText(String.valueOf(mediaAlunosPorEscola));
-        lblEscolaMaisAlunos.setText(escolaMaisAlunos.getNome() + " com " + escolaMaisAlunos.getAlunos().size() + " alunos");
-        lblEscolaMenosAlunos.setText(escolaMenosAlunos.getNome() + " com " + escolaMenosAlunos.getAlunos().size() + " alunos");
-        lblProfPebIRede.setText(String.valueOf(pebiRede));
-        lblProfPebIIRede.setText(String.valueOf(pebiiRede));
-        lblFuncAdminRede.setText(String.valueOf(funcsRede));
+        try{
+            int numAlunosRede = statsDao.numAlunos();
+            int numEscolasRede = statsDao.numEscolas();
+            double mediaAlunosPorEscola = ((double) numAlunosRede / (double) numEscolasRede);
+            Escola escolaMaisAlunos = escolaMaisALunos();
+            Escola escolaMenosAlunos = escolaMenosALunos();
+            int pebiRede = statsDao.numProfPebI();
+            int pebiiRede = statsDao.numProfPebII();
+            int funcsRede = statsDao.numOutroCargo();
+
+            lblNumAlunosRede.setText(String.valueOf(numAlunosRede));
+            lblQntdEscolasRede.setText(String.valueOf(numEscolasRede));
+            lblMediaAlunosPorEscola.setText(String.valueOf(mediaAlunosPorEscola));
+            lblEscolaMaisAlunos.setText(escolaMaisAlunos.getNome() + " com " + escolaMaisAlunos.getAlunos().size() + " alunos");
+            lblEscolaMenosAlunos.setText(escolaMenosAlunos.getNome() + " com " + escolaMenosAlunos.getAlunos().size() + " alunos");
+            lblProfPebIRede.setText(String.valueOf(pebiRede));
+            lblProfPebIIRede.setText(String.valueOf(pebiiRede));
+            lblFuncAdminRede.setText(String.valueOf(funcsRede));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
     
     private Escola escolaMaisALunos(){
         int num = 0;
         Escola esc = new Escola();
-        for(Escola e: eDao.buscaTodas()){
+        for(Escola e: edao.buscaTodas()){
             if (e.getAlunos().size()>num){
                 num = e.getAlunos().size();
                 esc = e;
@@ -77,7 +95,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private Escola escolaMenosALunos(){
         int num = 1000000;
         Escola esc = new Escola();
-        for(Escola e: eDao.buscaTodas()){
+        for(Escola e: edao.buscaTodas()){
             if (e.getAlunos().size()<num){
                 num = e.getAlunos().size();
                 esc = e;
@@ -102,7 +120,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         btnMinimizar = new javax.swing.JButton();
         tabbedPaneEstatisticas = new javax.swing.JTabbedPane();
         paneAlunoEstatisticas = new javax.swing.JPanel();
-        txtBuscaAlunoEstatisticas = new javax.swing.JTextField();
+        txtBuscaAluno = new javax.swing.JTextField();
         paneNotasEFaltas = new javax.swing.JPanel();
         paneLabels = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -132,28 +150,49 @@ public class JFEstatisticas extends javax.swing.JFrame {
         medTurmaCiencias = new javax.swing.JLabel();
         faltasCiencias = new javax.swing.JLabel();
         presencaCiencias = new javax.swing.JLabel();
-        panelArtes = new javax.swing.JPanel();
+        panelHistoria = new javax.swing.JPanel();
         medAnosAntArtes = new javax.swing.JLabel();
         medAnoAtualArtes = new javax.swing.JLabel();
         progressoArtes = new javax.swing.JLabel();
         medTurmaArtes = new javax.swing.JLabel();
         faltasArtes = new javax.swing.JLabel();
         presencaArtes = new javax.swing.JLabel();
-        panelIngles = new javax.swing.JPanel();
+        panelGeografia = new javax.swing.JPanel();
         medAnosAntIngles = new javax.swing.JLabel();
         medAnoAtualIngles = new javax.swing.JLabel();
         progressoIngles = new javax.swing.JLabel();
         medTurmaIngles = new javax.swing.JLabel();
         faltasIngles = new javax.swing.JLabel();
         presencaIngles = new javax.swing.JLabel();
-        panelFisica = new javax.swing.JPanel();
+        panelArtes = new javax.swing.JPanel();
         medAnosAntFisica = new javax.swing.JLabel();
         medAnoAtualFisica = new javax.swing.JLabel();
         progressoFisica = new javax.swing.JLabel();
         medTurmaFisica = new javax.swing.JLabel();
         faltasFisica = new javax.swing.JLabel();
         presencaFisica = new javax.swing.JLabel();
+        panelIngles = new javax.swing.JPanel();
+        medAnosAntFisica3 = new javax.swing.JLabel();
+        medAnoAtualFisica3 = new javax.swing.JLabel();
+        progressoFisica3 = new javax.swing.JLabel();
+        medTurmaFisica3 = new javax.swing.JLabel();
+        faltasFisica3 = new javax.swing.JLabel();
+        presencaFisica3 = new javax.swing.JLabel();
+        panelFisica = new javax.swing.JPanel();
+        medAnosAntFisica4 = new javax.swing.JLabel();
+        medAnoAtualFisica4 = new javax.swing.JLabel();
+        progressoFisica4 = new javax.swing.JLabel();
+        medTurmaFisica4 = new javax.swing.JLabel();
+        faltasFisica4 = new javax.swing.JLabel();
+        presencaFisica4 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaAluno = new javax.swing.JTable();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
         paneEscolaEstatisticas = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         panelMediaNotasFaltasTurma = new javax.swing.JPanel();
@@ -190,7 +229,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         txtBuscaEscolaEstatisticas = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaEscolas = new javax.swing.JTable();
         jLabel28 = new javax.swing.JLabel();
         paneRedeEstatisticas = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -211,6 +250,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
         lblProfPebIRede = new javax.swing.JLabel();
         lblProfPebIIRede = new javax.swing.JLabel();
         lblFuncAdminRede = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -269,6 +310,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
 
         paneAlunoEstatisticas.setBackground(new java.awt.Color(204, 204, 204));
 
+        txtBuscaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         paneNotasEFaltas.setBackground(new java.awt.Color(204, 204, 204));
 
         paneLabels.setBackground(new java.awt.Color(204, 204, 204));
@@ -321,11 +364,11 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         paneMatematica.setBackground(new java.awt.Color(204, 204, 204));
-        paneMatematica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        paneMatematica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matemática", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13))); // NOI18N
 
         medAnosAnteMatem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAnteMatem.setText("jLabel1");
@@ -379,7 +422,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panePortugues.setBackground(new java.awt.Color(204, 204, 204));
-        panePortugues.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panePortugues.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Português", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         medAnosAntPortug.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntPortug.setText("jLabel6");
@@ -433,7 +476,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
         );
 
         panelCiencias.setBackground(new java.awt.Color(204, 204, 204));
-        panelCiencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panelCiencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ciências", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         medAnosAntCiencias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntCiencias.setText("jLabel16");
@@ -486,8 +529,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelArtes.setBackground(new java.awt.Color(204, 204, 204));
-        panelArtes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panelHistoria.setBackground(new java.awt.Color(204, 204, 204));
+        panelHistoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "História", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         medAnosAntArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntArtes.setText("jLabel21");
@@ -507,13 +550,13 @@ public class JFEstatisticas extends javax.swing.JFrame {
         presencaArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaArtes.setText("jLabel4");
 
-        javax.swing.GroupLayout panelArtesLayout = new javax.swing.GroupLayout(panelArtes);
-        panelArtes.setLayout(panelArtesLayout);
-        panelArtesLayout.setHorizontalGroup(
-            panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelArtesLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelHistoriaLayout = new javax.swing.GroupLayout(panelHistoria);
+        panelHistoria.setLayout(panelHistoriaLayout);
+        panelHistoriaLayout.setHorizontalGroup(
+            panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHistoriaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(medAnosAntArtes)
                     .addComponent(medAnoAtualArtes)
                     .addComponent(progressoArtes)
@@ -522,9 +565,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(presencaArtes))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panelArtesLayout.setVerticalGroup(
-            panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelArtesLayout.createSequentialGroup()
+        panelHistoriaLayout.setVerticalGroup(
+            panelHistoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHistoriaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(medAnosAntArtes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -540,8 +583,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelIngles.setBackground(new java.awt.Color(204, 204, 204));
-        panelIngles.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panelGeografia.setBackground(new java.awt.Color(204, 204, 204));
+        panelGeografia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Geografia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         medAnosAntIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntIngles.setText("jLabel26");
@@ -561,13 +604,13 @@ public class JFEstatisticas extends javax.swing.JFrame {
         presencaIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaIngles.setText("jLabel5");
 
-        javax.swing.GroupLayout panelInglesLayout = new javax.swing.GroupLayout(panelIngles);
-        panelIngles.setLayout(panelInglesLayout);
-        panelInglesLayout.setHorizontalGroup(
-            panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInglesLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelGeografiaLayout = new javax.swing.GroupLayout(panelGeografia);
+        panelGeografia.setLayout(panelGeografiaLayout);
+        panelGeografiaLayout.setHorizontalGroup(
+            panelGeografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGeografiaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelGeografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(medAnosAntIngles)
                     .addComponent(medAnoAtualIngles)
                     .addComponent(progressoIngles)
@@ -576,9 +619,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(presencaIngles))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panelInglesLayout.setVerticalGroup(
-            panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInglesLayout.createSequentialGroup()
+        panelGeografiaLayout.setVerticalGroup(
+            panelGeografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGeografiaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(medAnosAntIngles)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -594,8 +637,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelFisica.setBackground(new java.awt.Color(204, 204, 204));
-        panelFisica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        panelArtes.setBackground(new java.awt.Color(204, 204, 204));
+        panelArtes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         medAnosAntFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         medAnosAntFisica.setText("jLabel31");
@@ -615,13 +658,13 @@ public class JFEstatisticas extends javax.swing.JFrame {
         presencaFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         presencaFisica.setText("jLabel36");
 
-        javax.swing.GroupLayout panelFisicaLayout = new javax.swing.GroupLayout(panelFisica);
-        panelFisica.setLayout(panelFisicaLayout);
-        panelFisicaLayout.setHorizontalGroup(
-            panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFisicaLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelArtesLayout = new javax.swing.GroupLayout(panelArtes);
+        panelArtes.setLayout(panelArtesLayout);
+        panelArtesLayout.setHorizontalGroup(
+            panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelArtesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(medAnosAntFisica)
                     .addComponent(medAnoAtualFisica)
                     .addComponent(progressoFisica)
@@ -630,9 +673,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
                     .addComponent(presencaFisica))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panelFisicaLayout.setVerticalGroup(
-            panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFisicaLayout.createSequentialGroup()
+        panelArtesLayout.setVerticalGroup(
+            panelArtesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelArtesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(medAnosAntFisica)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -645,6 +688,114 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addComponent(faltasFisica)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(presencaFisica)
+                .addContainerGap())
+        );
+
+        panelIngles.setBackground(new java.awt.Color(204, 204, 204));
+        panelIngles.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inglês", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        medAnosAntFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medAnosAntFisica3.setText("jLabel31");
+
+        medAnoAtualFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medAnoAtualFisica3.setText("jLabel32");
+
+        progressoFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        progressoFisica3.setText("jLabel33");
+
+        medTurmaFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medTurmaFisica3.setText("jLabel34");
+
+        faltasFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        faltasFisica3.setText("jLabel35");
+
+        presencaFisica3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        presencaFisica3.setText("jLabel36");
+
+        javax.swing.GroupLayout panelInglesLayout = new javax.swing.GroupLayout(panelIngles);
+        panelIngles.setLayout(panelInglesLayout);
+        panelInglesLayout.setHorizontalGroup(
+            panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInglesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(medAnosAntFisica3)
+                    .addComponent(medAnoAtualFisica3)
+                    .addComponent(progressoFisica3)
+                    .addComponent(medTurmaFisica3)
+                    .addComponent(faltasFisica3)
+                    .addComponent(presencaFisica3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelInglesLayout.setVerticalGroup(
+            panelInglesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInglesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(medAnosAntFisica3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(medAnoAtualFisica3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressoFisica3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(medTurmaFisica3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(faltasFisica3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(presencaFisica3)
+                .addContainerGap())
+        );
+
+        panelFisica.setBackground(new java.awt.Color(204, 204, 204));
+        panelFisica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ed. Física", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        medAnosAntFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medAnosAntFisica4.setText("jLabel31");
+
+        medAnoAtualFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medAnoAtualFisica4.setText("jLabel32");
+
+        progressoFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        progressoFisica4.setText("jLabel33");
+
+        medTurmaFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        medTurmaFisica4.setText("jLabel34");
+
+        faltasFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        faltasFisica4.setText("jLabel35");
+
+        presencaFisica4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        presencaFisica4.setText("jLabel36");
+
+        javax.swing.GroupLayout panelFisicaLayout = new javax.swing.GroupLayout(panelFisica);
+        panelFisica.setLayout(panelFisicaLayout);
+        panelFisicaLayout.setHorizontalGroup(
+            panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFisicaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(medAnosAntFisica4)
+                    .addComponent(medAnoAtualFisica4)
+                    .addComponent(progressoFisica4)
+                    .addComponent(medTurmaFisica4)
+                    .addComponent(faltasFisica4)
+                    .addComponent(presencaFisica4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelFisicaLayout.setVerticalGroup(
+            panelFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFisicaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(medAnosAntFisica4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(medAnoAtualFisica4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressoFisica4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(medTurmaFisica4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(faltasFisica4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(presencaFisica4)
                 .addContainerGap())
         );
 
@@ -662,52 +813,123 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelCiencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelArtes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGeografia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelArtes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(panelIngles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelFisica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneNotasEFaltasLayout.setVerticalGroup(
             paneNotasEFaltasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(paneMatematica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panePortugues, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelCiencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelGeografia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelArtes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(paneLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelIngles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelFisica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(paneLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("Insira o número da matrícula do aluno:");
+        jLabel27.setText("Buscar aluno:");
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+
+        tabelaAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tabelaAluno);
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel29.setText("jLabel29");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel30.setText("jLabel30");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("jLabel31");
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel32.setText("jLabel32");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel32))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
 
         javax.swing.GroupLayout paneAlunoEstatisticasLayout = new javax.swing.GroupLayout(paneAlunoEstatisticas);
         paneAlunoEstatisticas.setLayout(paneAlunoEstatisticasLayout);
         paneAlunoEstatisticasLayout.setHorizontalGroup(
             paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscaAlunoEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(692, Short.MAX_VALUE))
-            .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel27)
+                            .addComponent(txtBuscaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 921, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneAlunoEstatisticasLayout.setVerticalGroup(
             paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneAlunoEstatisticasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paneAlunoEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscaAlunoEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27))
-                .addGap(18, 18, 18)
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(paneNotasEFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tabbedPaneEstatisticas.addTab("Aluno", paneAlunoEstatisticas);
@@ -715,15 +937,12 @@ public class JFEstatisticas extends javax.swing.JFrame {
         paneEscolaEstatisticas.setBackground(new java.awt.Color(204, 204, 204));
         paneEscolaEstatisticas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
         panelMediaNotasFaltasTurma.setBackground(new java.awt.Color(204, 204, 204));
         panelMediaNotasFaltasTurma.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Média de notas/faltas por turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         jListTurmasDaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jListTurmasDaEscola.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPaneListaTurmas.setViewportView(jListTurmasDaEscola);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -790,10 +1009,9 @@ public class JFEstatisticas extends javax.swing.JFrame {
         panelMediaNotasFaltasTurmaLayout.setVerticalGroup(
             panelMediaNotasFaltasTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMediaNotasFaltasTurmaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelMediaNotasFaltasTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneListaTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelMediaNotasFaltasTurmaLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panelMediaNotasFaltasTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(medTurmMatemEscola))
@@ -816,8 +1034,10 @@ public class JFEstatisticas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelMediaNotasFaltasTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(medTurmFisicaEscola))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(medTurmFisicaEscola))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneListaTurmas, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -874,105 +1094,90 @@ public class JFEstatisticas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(numAlunosPortNesseEspAcomp))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(numAlunosPortNeceEsp))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel26)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(numAlunosTranspEscolar))))
-                    .addComponent(panelMediaNotasFaltasTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numAlunosSala))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(JLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numAlunosEscola))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(medPresencaEscola))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(medALunosSala, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(medPresencaSala, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
+                    .addComponent(panelMediaNotasFaltasTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numAlunosPortNesseEspAcomp))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numAlunosPortNeceEsp))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel26)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numAlunosTranspEscolar))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numAlunosSala))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(JLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numAlunosEscola))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel25)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(medPresencaEscola))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(medALunosSala, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(medPresencaSala, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(panelMediaNotasFaltasTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(numAlunosSala))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel1)
+                    .addComponent(numAlunosEscola))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel2)
+                    .addComponent(medALunosSala))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(medPresencaSala))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(medPresencaEscola))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelMediaNotasFaltasTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(numAlunosPortNeceEsp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(numAlunosPortNesseEspAcomp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26)
-                            .addComponent(numAlunosTranspEscolar)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel21)
-                            .addComponent(numAlunosSala))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLabel1)
-                            .addComponent(numAlunosEscola))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLabel2)
-                            .addComponent(medALunosSala))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24)
-                            .addComponent(medPresencaSala))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel25)
-                            .addComponent(medPresencaEscola))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
+                    .addComponent(numAlunosPortNeceEsp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(numAlunosPortNesseEspAcomp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26)
+                    .addComponent(numAlunosTranspEscolar))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         txtBuscaEscolaEstatisticas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tabelaEscolas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaEscolas.setModel(tme);
+        jScrollPane1.setViewportView(tabelaEscolas);
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel28.setText("Busque uma escola:");
@@ -984,24 +1189,24 @@ public class JFEstatisticas extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel28))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscaEscolaEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1020,10 +1225,13 @@ public class JFEstatisticas extends javax.swing.JFrame {
             paneEscolaEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneEscolaEstatisticasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paneEscolaEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(paneEscolaEstatisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneEscolaEstatisticasLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(paneEscolaEstatisticasLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         tabbedPaneEstatisticas.addTab("Escola", paneEscolaEstatisticas);
@@ -1031,6 +1239,8 @@ public class JFEstatisticas extends javax.swing.JFrame {
         paneRedeEstatisticas.setBackground(new java.awt.Color(204, 204, 204));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText("Funcionários administrativos na rede:");
@@ -1080,31 +1290,44 @@ public class JFEstatisticas extends javax.swing.JFrame {
         lblFuncAdminRede.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFuncAdminRede.setText("0");
 
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel33.setText("Escola com a maior média em tal matéria:");
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel34.setText("ADIs na rede:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel22)
-                    .addComponent(jLabel23))
-                .addGap(49, 49, 49)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNumAlunosRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblQntdEscolasRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblMediaAlunosPorEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEscolaMaisAlunos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblFuncAdminRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblProfPebIIRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblProfPebIRede, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEscolaMenosAlunos, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel23))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNumAlunosRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblQntdEscolasRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblMediaAlunosPorEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEscolaMaisAlunos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblFuncAdminRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblProfPebIIRede, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblProfPebIRede, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEscolaMenosAlunos, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel33))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1142,7 +1365,11 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFuncAdminRede)
                     .addComponent(jLabel23))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel33)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1151,7 +1378,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 618, Short.MAX_VALUE))
+                .addGap(0, 484, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1172,7 +1399,7 @@ public class JFEstatisticas extends javax.swing.JFrame {
             .addGroup(paneRedeEstatisticasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         tabbedPaneEstatisticas.addTab("Rede Municipal", paneRedeEstatisticas);
@@ -1182,14 +1409,16 @@ public class JFEstatisticas extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tabbedPaneEstatisticas)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(tabbedPaneEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 942, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPaneEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabbedPaneEstatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1219,6 +1448,10 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JLabel faltasArtes;
     private javax.swing.JLabel faltasCiencias;
     private javax.swing.JLabel faltasFisica;
+    private javax.swing.JLabel faltasFisica1;
+    private javax.swing.JLabel faltasFisica2;
+    private javax.swing.JLabel faltasFisica3;
+    private javax.swing.JLabel faltasFisica4;
     private javax.swing.JLabel faltasIngles;
     private javax.swing.JLabel faltasMatem;
     private javax.swing.JLabel faltasPortug;
@@ -1243,21 +1476,28 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jListTurmasDaEscola;
+    private javax.swing.JList<Turma> jListTurmasDaEscola;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneListaTurmas;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblEscolaMaisAlunos;
     private javax.swing.JLabel lblEscolaMenosAlunos;
     private javax.swing.JLabel lblFuncAdminRede;
@@ -1271,12 +1511,20 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JLabel medAnoAtualArtes;
     private javax.swing.JLabel medAnoAtualCiencias;
     private javax.swing.JLabel medAnoAtualFisica;
+    private javax.swing.JLabel medAnoAtualFisica1;
+    private javax.swing.JLabel medAnoAtualFisica2;
+    private javax.swing.JLabel medAnoAtualFisica3;
+    private javax.swing.JLabel medAnoAtualFisica4;
     private javax.swing.JLabel medAnoAtualIngles;
     private javax.swing.JLabel medAnoAtualMatem;
     private javax.swing.JLabel medAnoAtualPortug;
     private javax.swing.JLabel medAnosAntArtes;
     private javax.swing.JLabel medAnosAntCiencias;
     private javax.swing.JLabel medAnosAntFisica;
+    private javax.swing.JLabel medAnosAntFisica1;
+    private javax.swing.JLabel medAnosAntFisica2;
+    private javax.swing.JLabel medAnosAntFisica3;
+    private javax.swing.JLabel medAnosAntFisica4;
     private javax.swing.JLabel medAnosAntIngles;
     private javax.swing.JLabel medAnosAntPortug;
     private javax.swing.JLabel medAnosAnteMatem;
@@ -1291,6 +1539,10 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JLabel medTurmaArtes;
     private javax.swing.JLabel medTurmaCiencias;
     private javax.swing.JLabel medTurmaFisica;
+    private javax.swing.JLabel medTurmaFisica1;
+    private javax.swing.JLabel medTurmaFisica2;
+    private javax.swing.JLabel medTurmaFisica3;
+    private javax.swing.JLabel medTurmaFisica4;
     private javax.swing.JLabel medTurmaIngles;
     private javax.swing.JLabel medTurmaMatem;
     private javax.swing.JLabel medTurmaPortug;
@@ -1307,34 +1559,47 @@ public class JFEstatisticas extends javax.swing.JFrame {
     private javax.swing.JPanel panePortugues;
     private javax.swing.JPanel paneRedeEstatisticas;
     private javax.swing.JPanel panelArtes;
+    private javax.swing.JPanel panelArtes1;
+    private javax.swing.JPanel panelArtes2;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelCiencias;
     private javax.swing.JPanel panelFisica;
+    private javax.swing.JPanel panelGeografia;
+    private javax.swing.JPanel panelHistoria;
     private javax.swing.JPanel panelIngles;
     private javax.swing.JPanel panelMediaNotasFaltasTurma;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JLabel presencaArtes;
     private javax.swing.JLabel presencaCiencias;
     private javax.swing.JLabel presencaFisica;
+    private javax.swing.JLabel presencaFisica1;
+    private javax.swing.JLabel presencaFisica2;
+    private javax.swing.JLabel presencaFisica3;
+    private javax.swing.JLabel presencaFisica4;
     private javax.swing.JLabel presencaIngles;
     private javax.swing.JLabel presencaMatem;
     private javax.swing.JLabel presencaPortug;
     private javax.swing.JLabel progressoArtes;
     private javax.swing.JLabel progressoCiencias;
     private javax.swing.JLabel progressoFisica;
+    private javax.swing.JLabel progressoFisica1;
+    private javax.swing.JLabel progressoFisica2;
+    private javax.swing.JLabel progressoFisica3;
+    private javax.swing.JLabel progressoFisica4;
     private javax.swing.JLabel progressoIngles;
     private javax.swing.JLabel progressoMatem;
     private javax.swing.JLabel progressoPortug;
     private javax.swing.JTabbedPane tabbedPaneEstatisticas;
-    private javax.swing.JTextField txtBuscaAlunoEstatisticas;
+    private javax.swing.JTable tabelaAluno;
+    private javax.swing.JTable tabelaEscolas;
+    private javax.swing.JTextField txtBuscaAluno;
     private javax.swing.JTextField txtBuscaEscolaEstatisticas;
     // End of variables declaration//GEN-END:variables
-    private EscolaDAO eDao = new EscolaDAO();
+    private EscolaDAO edao = new EscolaDAO();
     private EstatisticasDAO statsDao = new EstatisticasDAO();
-    private OuvintesAction oa = new OuvintesAction();
+    private TableModelEscola tme = new TableModelEscola();
     
     private class OuvintesAction implements ActionListener{
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             if (ae.getSource() == btnMinimizar){
@@ -1343,6 +1608,79 @@ public class JFEstatisticas extends javax.swing.JFrame {
                 JFEstatisticas.this.dispose();
             }
         }
+    }
+    
+    private class TableModelEscola extends AbstractTableModel {
+        private List<Escola> linhas;
+        private String[] colunas = new String[] {"Nome"};
+        private static final int NOME = 0;
+ 
+        public TableModelEscola() {
+            linhas = new ArrayList<>();
+        }
+ 
+        public TableModelEscola(List<Escola> lista) {
+            linhas = new ArrayList<>(lista);
+        }
         
+        @Override
+        public int getRowCount() {
+            return linhas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+        
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        };
+        
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+            case NOME:
+                return String.class;
+            default:
+                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Collections.sort(linhas, (Escola e1, Escola e2) -> e1.getNome().compareTo(e2.getNome()));
+            Escola e = linhas.get(rowIndex);
+            
+            switch (columnIndex) {
+                case NOME:
+                    return e.getNome();
+                default:
+                    throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        public Escola getEscola(int indiceLinha) {
+            return linhas.get(indiceLinha);
+        }
+ 
+        public void removeEscola(int indiceLinha) {
+            linhas.remove(indiceLinha);
+
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+ 
+        public void addListaDeEscolas(List<Escola> escolas) {
+            int indice = getRowCount();
+            linhas.addAll(escolas);
+
+            fireTableRowsInserted(indice, indice + escolas.size());
+        }
     }
 }

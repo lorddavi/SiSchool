@@ -28,8 +28,6 @@ public class Escola implements Serializable {
     private String endereco;
     @Column
     private String bairro;
-    @Column
-    private String cnpj;
     @OneToMany(targetEntity = Telefone.class, fetch = FetchType.LAZY, 
             cascade = CascadeType.ALL)
     private List<Telefone> telefones;
@@ -63,14 +61,6 @@ public class Escola implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
     }
 
     public List<Turma> getTurmas() {

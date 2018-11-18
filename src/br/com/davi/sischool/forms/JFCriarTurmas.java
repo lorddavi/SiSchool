@@ -11,6 +11,7 @@ import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.Turma;
+import br.com.davi.sischool.regras.AlunoDAO;
 import br.com.davi.sischool.regras.TurmaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +61,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         btnEditar.addActionListener(oa);
         btnCancelar.addActionListener(oa);
         btnNovaTurma.addActionListener(oa);
+        btnAvancarTurma.addActionListener(oa);
         comboEscolas.addItemListener(oi);
         tabelaTurmas.getSelectionModel().addListSelectionListener(ols);
     }
@@ -90,6 +92,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         btnCancelar.setEnabled(true);
         btnNovaTurma.setEnabled(false);
         btnRemoverTurma.setEnabled(false);
+        btnAvancarTurma.setEnabled(true);
     }
     
     private void defineCamposEditar(){
@@ -133,6 +136,38 @@ public class JFCriarTurmas extends javax.swing.JFrame {
             exclusao = false;
             turmaExclui = null;
         }
+    }
+    
+    private Turma pegaTurma(){
+        int linha = tabelaTurmas.getSelectedRow();
+        return tmt.getTurma(linha);
+    }
+    
+    private void avancarTurma(){
+        Turma t = pegaTurma();
+        AlunoDAO adao = new AlunoDAO();
+        TurmaDAO tdao = new TurmaDAO();
+        
+        try {
+            if (!t.getTurma().substring(0, 1).equals("5")){
+                JOptionPane.showMessageDialog(this, "Essa turma ainda não completou o Fundamental Ciclo I");
+            } else {
+                for (Aluno a: t.getAlunos()){
+                    if (a.isAprovado()){
+                        a.setAtivo(false);
+                        a.setSerie(null);
+                        a.setEscola(null);
+
+                        adao.editar(a);
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this, "Turma editada com sucesso.");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Não foi possível avançar a turma.");
+        }
+        
     }
     
     private void novaTurma(){
@@ -219,6 +254,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnNovaTurma.setEnabled(true);
+        comboEscolas.setEnabled(true);
     }
     /**
      * Inicia todos os componentes. Gerado automaticamente pelo Swing e, portanto,
@@ -603,6 +639,8 @@ public class JFCriarTurmas extends javax.swing.JFrame {
                 cancelar();
             } else if (ae.getSource() == btnNovaTurma){
                 novaTurma();
+            } else if (ae.getSource() == btnAvancarTurma){
+                avancarTurma();
             }
         }
         

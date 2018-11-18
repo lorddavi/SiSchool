@@ -49,6 +49,8 @@ public class Turma implements Serializable {
     private ProfessorPebI profPebI;
     @ManyToMany(mappedBy = "turmas", targetEntity = ProfessorPebII.class, cascade = CascadeType.MERGE)
     private List<ProfessorPebII> profPebII;
+    @OneToMany
+    private List<OutroCargo> adi;
     
     public Turma(){   
     }
@@ -137,5 +139,13 @@ public class Turma implements Serializable {
     public String toString() {
         return turma + " " + letra;
     }
-  
+
+    public List<OutroCargo> getAdi() {
+        return adi;
+    }
+
+    public void setAdi(List<OutroCargo> adi) {
+        this.adi = adi;
+    }
+    
 }

@@ -19,20 +19,26 @@ import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Telefone;
 import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.regras.AlunoDAO;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -82,6 +88,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         btnAddTelefCadAluno.addActionListener(oa);
         radioOutroResponsavelCadAluno.addActionListener(oa);
         btnProcurarFoto.addActionListener(oa);
+        btnProcurarComprovResidencia.addActionListener(oa);
+        btnCancelar.addActionListener(oa);
     }
     
     public void iniciarEdicao(Aluno a){
@@ -110,9 +118,10 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         checaOutroResp = a.isOutroResponsavel();
         nomeResponsavel = a.getNomeResponsavel();
         parentescoResponsavel = a.getParentescoResponsavel();
-        foto3x4 = "TEM QUE VER ESSA FITA AÍ";
+        foto = a.getFoto3x4();
         telef = a.getTelefones();
         observacoes = a.getObservacoes();
+        comprovante = a.getComprovanteResidencia();
         
         txtNome.setText(nome);
         txtRa.setText(ra);
@@ -134,11 +143,23 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         radioOutroResponsavelCadAluno.setSelected(checaOutroResp);
         txtNomeResponsavel.setText(nomeResponsavel);
         txtParentescoResponsavel.setText(parentescoResponsavel);
-        //foto3x4
+        lblImagem.setText("");
+        try {
+            lblImagem.setIcon(pegaImagemByte(foto, 117, 117));
+        } catch (NullPointerException e){
+            lblImagem.setIcon(null);
+            lblImagem.setText("Carregue uma imagem");
+        }
         
+        try {
+            lblComprovante.setIcon(pegaImagemByte(comprovante, 50, 50));
+        } catch (NullPointerException e){
+            lblComprovante.setIcon(null);
+        }
         camposTelef.exibeTelefonesNoJList(jListTelefones, telef);
         txtAObservacoes.setText(observacoes);
         
+        comboEscolas.setEnabled(false);
     }
     
     public void editaGenero(String genero){
@@ -223,72 +244,118 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     * valores a um aluno.
     */
     private void defineAluno() {
-        nome = txtNome.getText();
-        ra = txtRa.getText();
-        dataNasc = converteData.converteDataParaUtilDate(ftxtDataNasc);
-        genero = verificaCheck.checaGenero(radioMasculinoCadastroAluno);
-        endereco = txtEndereco.getText();
-        bairro = txtBairro.getText();
-        cep = txtCep.getText();
-        escola =  preencheCombo.pegaEscola(comboEscolas);
-        turma = preencheCombo.pegaTurma(comboBoxSerie);
-        comprovanteResidencia = "A VER MAIS TARDE";
-        necesEspec = verificaCheck.checaVerdadeiroFalso(checkNecessidadesEspeciaisCadastroAluno);
-        necesAcomp = verificaCheck.checaVerdadeiroFalso(checkNecessidadesEspeciaisAcompCadAluno);
-        transpEsc = verificaCheck.checaVerdadeiroFalso(checkTransporteEscolarCadastroAluno);
-        nomePai = txtNomePai.getText();
-        checaPaiResp = verificaCheck.checaVerdadeiroFalso(checkPaiResponsavelCadAluno);
-        nomeMae = txtNomeMae.getText();
-        checaMaeResp = verificaCheck.checaVerdadeiroFalso(checkMaeResponsavelCadAluno);
-        checaOutroResp = verificaCheck.checaVerdadeiroFalso(radioOutroResponsavelCadAluno);
-        nomeResponsavel = txtNomeResponsavel.getText();
-        parentescoResponsavel = txtParentescoResponsavel.getText();
-        foto3x4 = "TEM QUE VER ESSA FITA AÍ";
-        List<Telefone> telefones = telef;
-        observacoes = txtAObservacoes.getText();
+        try { 
+            nome = txtNome.getText();
+            ra = txtRa.getText();
+            dataNasc = converteData.converteDataParaUtilDate(ftxtDataNasc);
+            genero = verificaCheck.checaGenero(radioMasculinoCadastroAluno);
+            endereco = txtEndereco.getText();
+            bairro = txtBairro.getText();
+            cep = txtCep.getText();
+            escola =  preencheCombo.pegaEscola(comboEscolas);
+            turma = preencheCombo.pegaTurma(comboBoxSerie);
+            //comprovanteResidencia = "A VER MAIS TARDE";
+            necesEspec = verificaCheck.checaVerdadeiroFalso(checkNecessidadesEspeciaisCadastroAluno);
+            necesAcomp = verificaCheck.checaVerdadeiroFalso(checkNecessidadesEspeciaisAcompCadAluno);
+            transpEsc = verificaCheck.checaVerdadeiroFalso(checkTransporteEscolarCadastroAluno);
+            nomePai = txtNomePai.getText();
+            checaPaiResp = verificaCheck.checaVerdadeiroFalso(checkPaiResponsavelCadAluno);
+            nomeMae = txtNomeMae.getText();
+            checaMaeResp = verificaCheck.checaVerdadeiroFalso(checkMaeResponsavelCadAluno);
+            checaOutroResp = verificaCheck.checaVerdadeiroFalso(radioOutroResponsavelCadAluno);
+            nomeResponsavel = txtNomeResponsavel.getText();
+            parentescoResponsavel = txtParentescoResponsavel.getText();
+            //foto3x4 = "TEM QUE VER ESSA FITA AÍ";
+            List<Telefone> telefones = telef;
+            observacoes = txtAObservacoes.getText();
 
-
-        
-        aluno.setNome(nome);
-        aluno.setRa(ra);
-        aluno.setDataNasc(dataNasc);
-        aluno.setGenero(genero);
-        aluno.setEndereco(endereco);
-        aluno.setBairro(bairro);
-        aluno.setCep(cep);
-        aluno.setCidade("Avaré");
-        aluno.setEscola(escola);
-        aluno.setSerie(turma);
-        aluno.setComprovanteResidencia(comprovanteResidencia);
-        aluno.setNecesEspec(necesEspec);
-        aluno.setNecesEspecAcomp(necesAcomp);
-        aluno.setTranspPublicoEscolar(transpEsc);
-        aluno.setNomePai(nomePai);
-        aluno.setPaiResponsavel(checaPaiResp);
-        aluno.setNomeMae(nomeMae);
-        aluno.setMaeResponsavel(checaMaeResp);
-        aluno.setOutroResponsavel(checaOutroResp);
-        aluno.setNomeResponsavel(nomeResponsavel);
-        aluno.setParentescoResponsavel(parentescoResponsavel);
-        aluno.setFoto3x4(foto3x4);
-        aluno.setTelefones(telefones);
-        aluno.setObservacoes(observacoes);
+            aluno.setNome(nome);
+            aluno.setRa(ra);
+            aluno.setDataNasc(dataNasc);
+            aluno.setGenero(genero);
+            aluno.setEndereco(endereco);
+            aluno.setBairro(bairro);
+            aluno.setCep(cep);
+            aluno.setCidade("Avaré");
+            aluno.setEscola(escola);
+            aluno.setSerie(turma);
+            aluno.setComprovanteResidencia(comprovante);
+            aluno.setNecesEspec(necesEspec);
+            aluno.setNecesEspecAcomp(necesAcomp);
+            aluno.setTranspPublicoEscolar(transpEsc);
+            aluno.setNomePai(nomePai);
+            aluno.setPaiResponsavel(checaPaiResp);
+            aluno.setNomeMae(nomeMae);
+            aluno.setMaeResponsavel(checaMaeResp);
+            aluno.setOutroResponsavel(checaOutroResp);
+            aluno.setNomeResponsavel(nomeResponsavel);
+            aluno.setParentescoResponsavel(parentescoResponsavel);
+            aluno.setAtivo(true);
+            try{
+                aluno.setFoto3x4(foto);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+            aluno.setTelefones(telefones);
+            aluno.setObservacoes(observacoes);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
     
     private void procurarFoto(){
-        int returnVal = fileChooser.showOpenDialog(this);
-        if (returnVal == fileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
+        fileChooserFoto.setFileFilter(new FileNameExtensionFilter("Imagem", "jpg", "jpeg"));
+        fileChooserFoto.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooserFoto.showDialog(fileChooserFoto, "Selecione");
+        ImageIcon mostrarFoto = pegaImagem(fileChooserFoto.getSelectedFile().getAbsolutePath(), 117, 117);
         try {
-          // What to do with the file, e.g. display it in a TextArea
-          txtAObservacoes.read( new FileReader( file.getAbsolutePath() ), null );
-        } catch (IOException ex) {
-          System.out.println("problem accessing file"+file.getAbsolutePath());
+            foto = converterArquivo(fileChooserFoto.getSelectedFile());
+        } catch (Exception ex) {
+            System.out.println("Erro ao gravar foto." + ex.getMessage());
         }
-    } else {
-        System.out.println("File access cancelled by user.");
+        lblImagem.setText("");
+        lblImagem.setIcon(mostrarFoto);
     }
+    
+    private void procurarComprovante(){
+        fileChooserComprovante.setFileFilter(new FileNameExtensionFilter("Imagem", "jpg", "jpeg"));
+        fileChooserComprovante.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooserComprovante.showDialog(fileChooserComprovante, "Selecione");
+        ImageIcon mostrarComp = pegaImagem(fileChooserComprovante.getSelectedFile().getAbsolutePath(), 50, 50);
+        try {
+            comprovante = converterArquivo(fileChooserComprovante.getSelectedFile());
+        } catch (Exception ex) {
+            System.out.println("Erro ao gravar comprovante: " +  ex.getMessage());
+        }
+        lblComprovante.setIcon(mostrarComp);
+    }
+    
+    public byte[] converterArquivo(File file) throws Exception {
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[25600];
+        int bytesRead = 0;
+        while ((bytesRead = fis.read(buffer, 0, buffer.length)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+    
+    private ImageIcon pegaImagem(String caminho, int w, int h){
+        ImageIcon foto = new ImageIcon(caminho);
+        Image imagem = foto.getImage();
+        Image newimg = imagem.getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon pronta = new ImageIcon(newimg);
+        return pronta;
+    }
+    
+    private ImageIcon pegaImagemByte(byte[] b, int w, int h){
+        ImageIcon foto = new ImageIcon(b);
+        Image imagem = foto.getImage();
+        Image newimg = imagem.getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon pronta = new ImageIcon(newimg);
+        return pronta;
     }
     
     private void adicionaTelefone(){
@@ -307,6 +374,42 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Nenhum telefone selecionado.");
         }
+    }
+    
+    private void limpar(){
+       telef = new ArrayList<>();
+       nome = ""; ra = ""; genero = "Masculino"; endereco = ""; bairro = ""; 
+       cep = ""; nomePai = ""; nomeMae = ""; nomeResponsavel = ""; 
+       parentescoResponsavel = ""; observacoes = ""; 
+       foto = null; comprovante = null; dataNasc = null; escola = null;
+       turma = null; necesEspec = false; necesAcomp = false; transpEsc = false;
+       checaPaiResp = false; checaMaeResp = false; checaOutroResp = false;
+       notasFaltas = new ArrayList<>();
+       edicao = false;
+       aluno = new Aluno();
+       
+       txtNome.setText(""); txtRa.setText(""); ftxtDataNasc.setText("");
+       editaGenero(genero); txtEndereco.setText(""); txtBairro.setText("");
+        txtCep.setText("");
+        comboEscolas.setSelectedIndex(0); comboBoxSerie.setSelectedIndex(0);
+        
+        checkNecessidadesEspeciaisCadastroAluno.setSelected(false);
+        checkNecessidadesEspeciaisAcompCadAluno.setSelected(false);
+        checkTransporteEscolarCadastroAluno.setSelected(false);
+        checkMaeResponsavelCadAluno.setSelected(false);
+        radioOutroResponsavelCadAluno.setSelected(false);
+        checkPaiResponsavelCadAluno.setSelected(false);
+                
+        txtNomePai.setText(""); txtNomeMae.setText(""); txtNomeResponsavel.setText("");
+        txtParentescoResponsavel.setText("");
+        lblImagem.setText("Carregue uma imagem.");
+        lblImagem.setIcon(null);
+        lblComprovante.setIcon(null);
+        
+        camposTelef.exibeTelefonesNoJList(jListTelefones, telef);
+        txtAObservacoes.setText("");
+        
+        comboEscolas.setEnabled(true);
     }
     
     /*
@@ -360,7 +463,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 }
                 
                 aluno = null;
-                //FAZER LIMPAR TODAS AS VARIAVEIS
+                limpar();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -376,7 +479,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        fileChooser = new javax.swing.JFileChooser();
+        fileChooserFoto = new javax.swing.JFileChooser();
+        fileChooserComprovante = new javax.swing.JFileChooser();
         panelPrincipal = new javax.swing.JPanel();
         panelBarraDeTitulo = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
@@ -398,13 +502,11 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtBairro = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        lblComprovanteResidenciaCadAluno = new javax.swing.JLabel();
-        btnProcurarComprovResidenciaCadAluno = new javax.swing.JButton();
+        btnProcurarComprovResidencia = new javax.swing.JButton();
         panelCheckBoxCadastroAluno = new javax.swing.JPanel();
         checkTransporteEscolarCadastroAluno = new javax.swing.JCheckBox();
         checkNecessidadesEspeciaisAcompCadAluno = new javax.swing.JCheckBox();
         checkNecessidadesEspeciaisCadastroAluno = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
         ftxtDataNasc = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -412,6 +514,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         comboBoxSerie = new javax.swing.JComboBox<>();
         txtCep = new javax.swing.JFormattedTextField();
+        lblComprovante = new javax.swing.JLabel();
         scrollPaneCadastroAlunoResponsavel = new javax.swing.JScrollPane();
         paneCadastroAlunoResponsavel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -426,9 +529,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         scrollPaneObservacoesCadAluno = new javax.swing.JScrollPane();
         txtAObservacoes = new javax.swing.JTextArea();
         paneFotoAluno = new javax.swing.JPanel();
-        btnFotoAlunoCadAluno = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         btnProcurarFoto = new javax.swing.JButton();
+        lblImagem = new javax.swing.JLabel();
         btnAddTelefCadAluno = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTelefones = new javax.swing.JList<>();
@@ -440,9 +543,10 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtParentescoResponsavel = new javax.swing.JTextField();
         btnSalvarCadAluno = new javax.swing.JButton();
-        btnCancelarCadAluno = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
-        fileChooser.setDialogTitle("Selecione uma imagem");
+        fileChooserFoto.setDialogTitle("Selecione uma imagem");
+        fileChooserFoto.setFileFilter(new MeuFiltroPersonalizado());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -568,14 +672,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         txtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setLabelFor(lblComprovanteResidenciaCadAluno);
         jLabel14.setText("Comprovante de residência:");
 
-        lblComprovanteResidenciaCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblComprovanteResidenciaCadAluno.setText("Nenhum arquivo selecionado...");
-        lblComprovanteResidenciaCadAluno.setToolTipText("Nenhum arquivo selecionado...");
-
-        btnProcurarComprovResidenciaCadAluno.setText("Procurar");
+        btnProcurarComprovResidencia.setText("Procurar");
 
         panelCheckBoxCadastroAluno.setBackground(new java.awt.Color(204, 204, 204));
         panelCheckBoxCadastroAluno.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -592,26 +691,17 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         checkNecessidadesEspeciaisCadastroAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkNecessidadesEspeciaisCadastroAluno.setText("Portador de necessidades especiais.");
 
-        jCheckBox1.setBackground(new java.awt.Color(204, 204, 204));
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox1.setText("Recebe Auxílio");
-
         javax.swing.GroupLayout panelCheckBoxCadastroAlunoLayout = new javax.swing.GroupLayout(panelCheckBoxCadastroAluno);
         panelCheckBoxCadastroAluno.setLayout(panelCheckBoxCadastroAlunoLayout);
         panelCheckBoxCadastroAlunoLayout.setHorizontalGroup(
             panelCheckBoxCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCheckBoxCadastroAlunoLayout.createSequentialGroup()
                 .addGroup(panelCheckBoxCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCheckBoxCadastroAlunoLayout.createSequentialGroup()
-                        .addComponent(checkTransporteEscolarCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
-                    .addGroup(panelCheckBoxCadastroAlunoLayout.createSequentialGroup()
-                        .addComponent(checkNecessidadesEspeciaisCadastroAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(panelCheckBoxCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkNecessidadesEspeciaisAcompCadAluno)
-                    .addComponent(jCheckBox1))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(checkNecessidadesEspeciaisCadastroAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                    .addComponent(checkTransporteEscolarCadastroAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkNecessidadesEspeciaisAcompCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         panelCheckBoxCadastroAlunoLayout.setVerticalGroup(
             panelCheckBoxCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -621,9 +711,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                     .addComponent(checkNecessidadesEspeciaisAcompCadAluno)
                     .addComponent(checkNecessidadesEspeciaisCadastroAluno))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelCheckBoxCadastroAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkTransporteEscolarCadastroAluno)
-                    .addComponent(jCheckBox1))
+                .addComponent(checkTransporteEscolarCadastroAluno)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -665,46 +753,46 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                        .addComponent(panelCheckBoxCadastroAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))
+                        .addComponent(panelCheckBoxCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel12))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
+                                    .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel9)
+                                        .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
+                                            .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel10)
+                                                .addComponent(txtRa, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel11)))
+                                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.LEADING)))
+                                    .addGap(110, 110, 110)
+                                    .addComponent(paneGeneroCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addComponent(comboBoxSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel17)
+                                .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel12))
                             .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                                .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(txtRa, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel11)))
-                                    .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                                        .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.LEADING)))
-                                .addGap(68, 68, 68)
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
-                                        .addComponent(lblComprovanteResidenciaCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnProcurarComprovResidenciaCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(paneGeneroCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel7)
-                            .addComponent(comboBoxSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)
-                            .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 23, Short.MAX_VALUE))))
+                                        .addGap(10, 10, 10)
+                                        .addComponent(lblComprovante, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnProcurarComprovResidencia))))
+                        .addGap(0, 102, Short.MAX_VALUE))))
         );
         paneCadastroAlunoAlunoLayout.setVerticalGroup(
             paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -729,27 +817,28 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
+                .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblComprovanteResidenciaCadAluno)
-                    .addComponent(btnProcurarComprovResidenciaCadAluno))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel18)
-                .addGap(10, 10, 10)
-                .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel17)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel14)
+                    .addComponent(btnProcurarComprovResidencia))
+                .addGap(5, 5, 5)
+                .addGroup(paneCadastroAlunoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(paneCadastroAlunoAlunoLayout.createSequentialGroup()
+                        .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel17))
+                    .addComponent(lblComprovante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboBoxSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(panelCheckBoxCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -803,40 +892,44 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
 
         paneFotoAluno.setBackground(new java.awt.Color(204, 204, 204));
 
-        btnFotoAlunoCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnFotoAlunoCadAluno.setText("foto 3x4");
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setLabelFor(btnFotoAlunoCadAluno);
         jLabel8.setText("Foto 3x4 do aluno.");
 
         btnProcurarFoto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnProcurarFoto.setText("Procurar");
 
+        lblImagem.setText("Carregue uma imagem.");
+
         javax.swing.GroupLayout paneFotoAlunoLayout = new javax.swing.GroupLayout(paneFotoAluno);
         paneFotoAluno.setLayout(paneFotoAlunoLayout);
         paneFotoAlunoLayout.setHorizontalGroup(
             paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(paneFotoAlunoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneFotoAlunoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
+                                .addComponent(btnProcurarFoto)
+                                .addGap(21, 21, 21))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFotoAlunoLayout.createSequentialGroup()
-                        .addComponent(btnProcurarFoto)
-                        .addGap(21, 21, 21))))
+                        .addComponent(lblImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         paneFotoAlunoLayout.setVerticalGroup(
             paneFotoAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneFotoAlunoLayout.createSequentialGroup()
-                .addComponent(btnFotoAlunoCadAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(lblImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProcurarFoto)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         btnAddTelefCadAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
@@ -917,9 +1010,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                         .addComponent(paneFotoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(paneCadastroAlunoResponsavelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(79, 79, 79)
+                        .addGap(57, 57, 57)
                         .addComponent(checkMaeResponsavelCadAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-                        .addGap(187, 187, 187))
+                        .addGap(209, 209, 209))
                     .addGroup(paneCadastroAlunoResponsavelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(66, 66, 66)
@@ -984,7 +1077,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                                 .addComponent(btnRemoveTelefoneCadAluno))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(scrollPaneObservacoesCadAluno))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         scrollPaneCadastroAlunoResponsavel.setViewportView(paneCadastroAlunoResponsavel);
@@ -994,9 +1087,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
         btnSalvarCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalvarCadAluno.setText("Salvar");
 
-        btnCancelarCadAluno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCancelarCadAluno.setText("Cancelar");
-        btnCancelarCadAluno.setToolTipText("");
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("");
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -1005,7 +1098,7 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addComponent(btnCancelarCadAluno)
+                .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvarCadAluno)
                 .addGap(123, 123, 123))
@@ -1019,11 +1112,11 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabbedPaneCadastroAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarCadAluno)
-                    .addComponent(btnCancelarCadAluno))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -1045,11 +1138,10 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     //Início de código inalterável criado pelo Netbeans.
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddTelefCadAluno;
-    private javax.swing.JButton btnCancelarCadAluno;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton btnFotoAlunoCadAluno;
     private javax.swing.JButton btnMinimizar;
-    private javax.swing.JButton btnProcurarComprovResidenciaCadAluno;
+    private javax.swing.JButton btnProcurarComprovResidencia;
     private javax.swing.JButton btnProcurarFoto;
     private javax.swing.JButton btnRemoveTelefoneCadAluno;
     private javax.swing.JButton btnSalvarCadAluno;
@@ -1061,9 +1153,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkTransporteEscolarCadastroAluno;
     private javax.swing.JComboBox<Turma> comboBoxSerie;
     private javax.swing.JComboBox<Escola> comboEscolas;
-    private javax.swing.JFileChooser fileChooser;
+    private javax.swing.JFileChooser fileChooserComprovante;
+    private javax.swing.JFileChooser fileChooserFoto;
     private javax.swing.JFormattedTextField ftxtDataNasc;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1082,7 +1174,8 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<Telefone> jListTelefones;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblComprovanteResidenciaCadAluno;
+    private javax.swing.JLabel lblComprovante;
+    private javax.swing.JLabel lblImagem;
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JPanel paneCadastroAlunoAluno;
     private javax.swing.JPanel paneCadastroAlunoResponsavel;
@@ -1121,8 +1214,9 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     private ChecaCamposEmBranco checaCampos = new ChecaCamposEmBranco();
     private OuvintesAction oa = new OuvintesAction();
     private String nome, ra, genero, endereco, bairro, cep, comprovanteResidencia,
-            nomePai, nomeMae, nomeResponsavel, parentescoResponsavel, foto3x4, 
-            observacoes;
+            nomePai, nomeMae, nomeResponsavel, parentescoResponsavel, 
+            observacoes; 
+    private byte[] foto, comprovante;
     private Date dataNasc;
     private Escola escola;
     private Turma turma;
@@ -1299,7 +1393,25 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
                 adicionaTelefone();
             }  else if (evt.getSource() == btnProcurarFoto){
                 procurarFoto();
+            } else if (evt.getSource() == btnProcurarComprovResidencia){
+                procurarComprovante();
+            } else if (evt.getSource() == btnCancelar){
+                limpar();
             }
         }
     }
+    
+    class MeuFiltroPersonalizado extends javax.swing.filechooser.FileFilter {
+        @Override
+        public boolean accept(File file) {
+            //Permite apenas arquivos com a extensão jpg
+            return file.isDirectory() || file.getAbsolutePath().endsWith(".jpg");
+        }
+        @Override
+        public String getDescription() {
+            // This description will be displayed in the dialog,
+            // hard-coded = ugly, should be done via I18N
+            return "Imagem (*.jpg)";
+        }
+    } 
 }

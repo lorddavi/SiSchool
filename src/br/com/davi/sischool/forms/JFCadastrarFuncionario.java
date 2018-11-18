@@ -22,8 +22,6 @@ import br.com.davi.sischool.regras.ProfessorPebIDAO;
 import br.com.davi.sischool.regras.ProfessorPebIIDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -36,6 +34,7 @@ import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -92,7 +91,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         radioPebICadFunc.addItemListener(oi);
         radioPebIICadFunc.addItemListener(oi);
         tabelaBuscaFuncionarios.getSelectionModel().addListSelectionListener(ols);
-        txtCpf.addFocusListener(of);
     }
     
     private String checaCargo() {
@@ -399,11 +397,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     }
 
     public boolean checaAtivo(){
-        if (checkDesligado.isSelected()){
-            return false;
-        } else {
-            return true;
-        }
+        return checkDesligado.isSelected();
     }
     
     public void editarFunc(int id){
@@ -651,6 +645,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     private void editar(){
         novoFuncEnabled();
         estadoBotoesNovo();
+        checkDesligado.setEnabled(true);
         if ((funcLogado.getAcesso() > pegaFuncTabela().getAcesso()) || funcLogado.getAcesso()>=2){
             edicao = true;
             editarFunc(pegaFuncTabela().getId());
@@ -810,11 +805,11 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaBuscaFuncionarios = new javax.swing.JTable();
         txtBuscaFunc = new javax.swing.JTextField();
+        btnNovo = new javax.swing.JButton();
         btnCancelarCadFunc = new javax.swing.JButton();
         btnSalvarCadFunc = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnNovo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -987,7 +982,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtTelefonesCadFunc.setInputVerifier(new VerificadorDeTelefone());
 
         checkDesligado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        checkDesligado.setText("Funcionário desligado.");
+        checkDesligado.setText("Funcionário ativo.");
         checkDesligado.setEnabled(false);
 
         try {
@@ -1101,7 +1096,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                                 .addComponent(btnAddTelefoneCadFunc)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRemoveTelefoneCadFunc)))))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         txtFDataNasc.getAccessibleContext().setAccessibleName("");
@@ -1356,7 +1351,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addGroup(tabCargoCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(radioCargoOutrosCadFunc)
                     .addComponent(panelOutrosCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         tabbedCadastrarFuncionarios.addTab("Cargo", tabCargoCadFunc);
@@ -1371,6 +1366,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
 
         txtNickNameUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNickNameUsrCadFunc.setEnabled(false);
+        txtNickNameUsrCadFunc.setInputVerifier(new VerificadorUsuario());
 
         comboAcessoUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboAcessoUsrCadFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
@@ -1408,7 +1404,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelTabUsuarioLayout.setVerticalGroup(
             panelTabUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabUsuarioLayout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
+                .addContainerGap(111, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNickNameUsrCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1471,24 +1467,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
-        panelFundo.setLayout(panelFundoLayout);
-        panelFundoLayout.setHorizontalGroup(
-            panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFundoLayout.createSequentialGroup()
-                .addComponent(tabbedCadastrarFuncionarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTabelaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelFundoLayout.setVerticalGroup(
-            panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFundoLayout.createSequentialGroup()
-                .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelTabelaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabbedCadastrarFuncionarios))
-                .addContainerGap())
-        );
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnNovo.setText("Novo Funcionário");
 
         btnCancelarCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelarCadFunc.setText("Cancelar");
@@ -1506,20 +1486,17 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
 
-        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnNovo.setText("Novo Funcionário");
-
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(159, 159, 159)
+        javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
+        panelFundo.setLayout(panelFundoLayout);
+        panelFundoLayout.setHorizontalGroup(
+            panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFundoLayout.createSequentialGroup()
+                .addComponent(tabbedCadastrarFuncionarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelTabelaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(panelFundoLayout.createSequentialGroup()
+                .addGap(129, 129, 129)
                 .addComponent(btnNovo)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelarCadFunc)
@@ -1531,19 +1508,38 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addComponent(btnExcluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        panelFundoLayout.setVerticalGroup(
+            panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFundoLayout.createSequentialGroup()
+                .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tabbedCadastrarFuncionarios, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelTabelaBusca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarCadFunc)
+                    .addComponent(btnSalvarCadFunc)
+                    .addComponent(btnEditar)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnNovo))
+                .addGap(25, 25, 25))
+        );
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarCadFunc)
-                    .addComponent(btnSalvarCadFunc)
-                    .addComponent(btnEditar)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnNovo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1662,7 +1658,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     private OuvintesAction oa = new OuvintesAction();
     private OuvintesItem oi = new OuvintesItem();
     private OuvintesListSelection ols = new OuvintesListSelection();
-    private OuvinteFocus of = new OuvinteFocus();
     private OuvintesKeyListener okl = new OuvintesKeyListener();
     private TableModelFuncionario tmf = new TableModelFuncionario();
     private String nome, genero, endereco, bairro, cidade, cep, observacoes, cargo,
@@ -1893,6 +1888,33 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         }
     }    
     
+    class VerificadorUsuario extends InputVerifier {
+	public VerificadorUsuario() {
+        }
+        
+        @Override
+	public boolean verify(JComponent jc) {
+            txtNickNameUsrCadFunc = (JTextField) jc;
+            String texto = txtNickNameUsrCadFunc.getText();
+           
+            try {
+                if (texto.trim().length() == 0){
+                    return true;
+		} 
+                
+                if (texto.trim().length() >= 5){
+                    return true;
+                } else {
+                    throw new IllegalArgumentException();
+                }
+                
+            } catch (IllegalArgumentException ex) {
+		JOptionPane.showMessageDialog(null, "O nome de usuário precisa ter ao menos 5 caracteres.");
+		return (false);
+            }
+        }
+    }    
+    
     private class OuvintesAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -1931,17 +1953,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 pebiiEnabled();
             } else if (ie.getSource() == radioPebICadFunc){
                 pebiEnabled();
-            }
-        }
-    }
-    
-    class OuvinteFocus extends FocusAdapter {
-        // Não seleciona
-        @Override
-	public void focusGained(FocusEvent e) {
-            if (e.getSource() == txtCpf){
-		txtCpf.setSelectionStart(0);
-		txtCpf.setSelectionEnd(((String) txtCpf.getValue()).length());
             }
         }
     }

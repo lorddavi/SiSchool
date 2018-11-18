@@ -8,7 +8,10 @@ package br.com.davi.sischool.forms;
 import br.com.davi.sischool.criacaoautomatica.ActionBD;
 import br.com.davi.sischool.funcoes.AbrirTelas;
 import br.com.davi.sischool.regras.LoginDAO;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,6 +34,17 @@ public class JFLogin extends javax.swing.JFrame {
     public void iniciarComponentes(){
         criarBD.createDB("sischoolbd");
         criarBD.criarDavi("sischoolbd");
+        setarIconeNoTitulo(this, "SiSchool - Login");
+    }
+    
+     private void setarIconeNoTitulo(JFrame frame, String titulo) {
+        try {
+            Image icon = Toolkit.getDefaultToolkit().getImage("../src/br/com/davi/sischool/icons/bandeja.png");
+            frame.setIconImage(icon);
+            frame.setTitle(titulo);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     public void checaLogin(){
@@ -123,6 +137,11 @@ public class JFLogin extends javax.swing.JFrame {
                 btnLogarActionPerformed(evt);
             }
         });
+        btnLogar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLogarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panePrincipalLayout = new javax.swing.GroupLayout(panePrincipal);
         panePrincipal.setLayout(panePrincipalLayout);
@@ -197,6 +216,12 @@ public class JFLogin extends javax.swing.JFrame {
             checaLogin();
         }
     }//GEN-LAST:event_txtSenhaLoginKeyPressed
+
+    private void btnLogarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLogarKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER) {
+            checaLogin();
+        }      
+    }//GEN-LAST:event_btnLogarKeyPressed
 
     /**
      * @param args the command line arguments

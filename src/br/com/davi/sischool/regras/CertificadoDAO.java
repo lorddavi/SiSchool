@@ -6,7 +6,10 @@
 package br.com.davi.sischool.regras;
 
 import br.com.davi.sischool.model.Certificado;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -47,4 +50,20 @@ public class CertificadoDAO {
 	em.close();
 	cem.fecharEM();
     }
+    
+    public List<Certificado> buscaTodos(){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<Certificado> certificados = null;
+        try {
+            Query consulta = em.createQuery("SELECT c FROM Certificado c", Certificado.class);
+            certificados = consulta.getResultList();
+        } catch(NoResultException ex) {
+            System.out.println("Erro ao buscar todos os certificados.");
+        }
+        em.close();
+        cem.fecharEM();    
+        
+        return certificados;
+    } 
 }

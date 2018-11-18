@@ -52,11 +52,11 @@ public class ProfessorDAO {
             if (f.getCargo().equals("Professor PEB I")){
                 ProfessorPebI p = new ProfessorPebI();
                 p = pidao.buscarId(f.getId());
-                listaP.add(p);
+                    listaP.add(p);
             } else if (f.getCargo().equals("Professor PEB II")){
                 ProfessorPebII p = new ProfessorPebII();
                 p = piidao.buscarId(f.getId());
-                listaP.add(p);
+                    listaP.add(p);
             }
 
         }
@@ -86,8 +86,7 @@ public class ProfessorDAO {
     public List<Professor> buscarPorNome(String busca){
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
-        TypedQuery<Professor> consulta = em.createQuery("SELECT p FROM Professor p "
-                + "WHERE p.nome LIKE :busca", Professor.class);
+        TypedQuery<Professor> consulta = em.createQuery("SELECT p FROM Professor p WHERE p.nome LIKE :busca", Professor.class);
         consulta.setParameter("busca", busca);
         List<Professor> professores = consulta.getResultList();
         em.close();

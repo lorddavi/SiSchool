@@ -6,7 +6,10 @@
 package br.com.davi.sischool.regras;
 
 import br.com.davi.sischool.model.NotasFaltas;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -32,5 +35,21 @@ public class NotasFaltasDAO {
 	em.getTransaction().commit();
 	em.close();
 	cem.fecharEM();
+    }
+    
+    public List<NotasFaltas> buscaTodos(){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        List<NotasFaltas> nf = null;
+        try {
+            TypedQuery<NotasFaltas> consulta = em.createQuery("SELECT n FROM NotasFaltas n", NotasFaltas.class);
+            nf = consulta.getResultList();
+        } catch(NoResultException ex) {
+            System.out.println("Erro para encontrar todos as notas e faltas.");
+        }
+        em.close();
+        cem.fecharEM();    
+        
+        return nf;
     }
 }

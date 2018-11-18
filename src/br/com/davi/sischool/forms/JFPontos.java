@@ -53,6 +53,7 @@ public class JFPontos extends javax.swing.JFrame {
     
     public void setaTabelas(){
         tabelaProfessores.setModel(tmp);
+        tabelaCertificados.setModel(tmc);
     }
     
     public void setaListeners(){

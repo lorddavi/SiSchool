@@ -38,4 +38,5 @@ public class OutroCargo extends Funcionario {
         return escola;
     }
     
+    
 }

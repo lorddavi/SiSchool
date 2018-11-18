@@ -5,20 +5,13 @@
  */
 package br.com.davi.sischool.json;
 
+import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Funcionario;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -69,7 +62,33 @@ public class JSONRead {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    public void lerJSONAluno(int index) throws FileNotFoundException, IOException {
+        JSONObject jsonObject;
+        //Cria o parse de tratamento
+        JSONParser parser = new JSONParser();
+        //Variaveis que irao armazenar os dados do arquivo JSON
+        ImageIcon foto = new ImageIcon();
         
-        //return f;
+        Aluno a = new Aluno();
+ 
+        try {
+            //Salva no objeto JSONObject o que o parse tratou do arquivo
+            jsonObject = (JSONObject) parser.parse(new FileReader(
+                    "Arquivos/Aluno" + String.valueOf(index) + ".json"));
+             
+            //Salva nas variaveis os dados retirados do arquivo
+            foto = (ImageIcon) jsonObject.get("foto");
+            
+            
+ 
+            
+        //Trata as exceptions que podem ser lançadas no decorrer do processo
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
     }
 }

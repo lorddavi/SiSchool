@@ -392,7 +392,7 @@ public class JFConsultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtConsultaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(scrolltabelaalunos, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -448,7 +448,7 @@ public class JFConsultas extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(7, 7, 7)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 179, Short.MAX_VALUE))
+                        .addGap(0, 182, Short.MAX_VALUE))
                     .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -464,13 +464,16 @@ public class JFConsultas extends javax.swing.JFrame {
         txtBuscaFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnGroupFuncionario.add(radioNomeFunc);
+        radioNomeFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioNomeFunc.setSelected(true);
         radioNomeFunc.setText("Nome");
 
         btnGroupFuncionario.add(radioCPFFunc);
+        radioCPFFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCPFFunc.setText("CPF");
 
         btnGroupFuncionario.add(radioCargoFunc);
+        radioCargoFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCargoFunc.setText("Cargo");
 
         javax.swing.GroupLayout tabFuncionariosLayout = new javax.swing.GroupLayout(tabFuncionarios);

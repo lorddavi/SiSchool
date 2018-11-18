@@ -18,14 +18,16 @@ import javax.persistence.TypedQuery;
  * @author Davi
  */
 public class EscolaDAO {
-    CriaEntityManager cem = new CriaEntityManager();
-    EntityManager em = cem.criarEM();
+    CriaEntityManager cem;
+    EntityManager em;
     
     public EscolaDAO(){
         
     }
     
     public void inserir(Escola escola){
+        cem = new CriaEntityManager();
+        em = cem.criarEM();
 	em.getTransaction().begin();
 	em.persist(escola);
 	em.getTransaction().commit();
@@ -34,16 +36,23 @@ public class EscolaDAO {
     }
     
     public void editar(Escola escola){
+        cem = new CriaEntityManager();
+        em = cem.criarEM();
 	em.getTransaction().begin();
-	em.merge(escola);
+        Escola e = escola;
+	em.merge(e);
 	em.getTransaction().commit();
 	em.close();
 	cem.fecharEM();
     }
     
     public void excluir(Escola escola){
+        cem = new CriaEntityManager();
+        em = cem.criarEM();
 	em.getTransaction().begin();
-	em.remove(escola);
+        escola.setTurmas(null);
+        Escola e = em.merge(escola);
+	em.remove(e);
 	em.getTransaction().commit();
 	em.close();
 	cem.fecharEM();

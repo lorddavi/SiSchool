@@ -6,9 +6,9 @@
 package br.com.davi.sischool.model;
 
 
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Aluno")
 @PrimaryKeyJoinColumn(name="id")
-public class Aluno extends Pessoa implements Serializable {
+public class Aluno extends Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OneToOne(cascade = {CascadeType.ALL})
@@ -55,15 +55,15 @@ public class Aluno extends Pessoa implements Serializable {
     //@JoinColumn(name = "notas_id")
     private List<NotasFaltas> notasFaltas; //pensar no historico */
     @Column
-    private String comprovanteResidencia;
+    private byte[] comprovanteResidencia;
     @Column
-    private String foto3x4;
+    private byte[] foto3x4;
     @Column
     private boolean aprovado;
 
     public Aluno() {
     }
-    
+
     public String getRa() {
         return ra;
     }
@@ -176,19 +176,19 @@ public class Aluno extends Pessoa implements Serializable {
         this.notasFaltas = notasFaltas;
     }
 
-    public String getComprovanteResidencia() {
+    public byte[] getComprovanteResidencia() {
         return comprovanteResidencia;
     }
 
-    public void setComprovanteResidencia(String comprovanteResidencia) {
+    public void setComprovanteResidencia(byte[] comprovanteResidencia) {
         this.comprovanteResidencia = comprovanteResidencia;
     }
 
-    public String getFoto3x4() {
+    public byte[] getFoto3x4() {
         return foto3x4;
     }
 
-    public void setFoto3x4(String foto3x4) {
+    public void setFoto3x4(byte[] foto3x4) {
         this.foto3x4 = foto3x4;
     }
 

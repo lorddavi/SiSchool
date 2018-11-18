@@ -80,7 +80,7 @@ public class ProfessorPebIDAO {
         EntityManager em = cem.criarEM();
         List<ProfessorPebI> profs = null;
         try {
-            TypedQuery<ProfessorPebI> consulta = em.createQuery("SELECT p FROM ProfessorPebI p WHERE "
+            TypedQuery<ProfessorPebI> consulta = em.createQuery("SELECT p FROM ProfessorPebI p = true "
                     + "p.escola = :e", ProfessorPebI.class);
             consulta.setParameter("e", e);
             profs = consulta.getResultList();

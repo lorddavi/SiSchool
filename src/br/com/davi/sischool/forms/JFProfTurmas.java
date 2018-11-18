@@ -9,10 +9,13 @@ import br.com.davi.sischool.funcoes.PreencheCombo;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.Funcionario;
+import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Professor;
 import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.model.ProfessorPebI;
 import br.com.davi.sischool.model.ProfessorPebII;
+import br.com.davi.sischool.regras.EscolaDAO;
+import br.com.davi.sischool.regras.OutroCargoDAO;
 import br.com.davi.sischool.regras.ProfessorPebIDAO;
 import br.com.davi.sischool.regras.ProfessorPebIIDAO;
 import br.com.davi.sischool.regras.TurmaDAO;
@@ -48,21 +51,52 @@ public class JFProfTurmas extends javax.swing.JFrame {
     }
     
     private void iniciarComponentes(){
-        preencheCombos.preencheEscolas(comboEscola1);
+        preencheEscolas();
         
         Escola e = (Escola) comboEscola1.getSelectedItem();
-
-        preencheCombos.preencheEscolas(comboEscola2);
-        
         Escola e2 = (Escola) comboEscola2.getSelectedItem();
+        Escola e3 = (Escola) comboEscola3.getSelectedItem();
         
         preencheCombos.preencheTurmas(comboTurma1, e);
         preencheCombos.preencheTurmas(comboTurma2, e2);
+        preencheCombos.preencheTurmas(comboTurma3, e3);
         setaListeners();
         setaTabelas();
         
         preencheLabelsPebI((Turma) comboTurma1.getSelectedItem());
         preencheLabelsPebII((Turma) comboTurma2.getSelectedItem());
+        preencheLabelsAdi((Turma) comboTurma3.getSelectedItem());
+        
+        try {
+            atualizaTabelaPebI(listaProfs1());
+            atualizaTabelaPebII(listaProfs2());
+            atualizaTabelaAdi(listaAdis());
+        } catch (Exception ex) {
+            tmp1 = new TableModelPeb1();
+            tmp2 = new TableModelPeb2();
+            tma = new TableModelAdi();
+            
+            tabelaPebI.setModel(tmp1);
+            tabelaPebII.setModel(tmp2);
+            tabelaAdi.setModel(tma);
+        }
+    }
+    
+    public void preencheEscolas(){
+        EscolaDAO edao = new EscolaDAO();
+        
+        for(Escola e: edao.buscaTodas()){
+            if (e.getNome().substring(0, 1).equals("E")){
+                comboEscola1.addItem(e);
+                comboEscola2.addItem(e);
+            }
+        }
+        
+        for (Escola e: edao.buscaTodas()){
+            if (e.getNome().substring(0, 1).equals("C")){
+                comboEscola3.addItem(e);
+            }
+        }
     }
     
     private void setaListeners(){
@@ -70,15 +104,19 @@ public class JFProfTurmas extends javax.swing.JFrame {
         btnMinimizar.addActionListener(oa);
         btnAtribuir1.addActionListener(oa);
         btnAtribuir2.addActionListener(oa);
+        btnAtribuir3.addActionListener(oa);
         btnRemover1.addActionListener(oa);
         btnRemover2.addActionListener(oa);
+        btnRemover3.addActionListener(oa);
         comboEscola1.addItemListener(oi);
         comboEscola2.addItemListener(oi);
         comboTurma1.addItemListener(oi);
         comboTurma2.addItemListener(oi);
+        comboTurma3.addItemListener(oi);
         checkEscola.addItemListener(oi);
         txtBusca1.addKeyListener(new OuvintesKey());
         txtBusca2.addKeyListener(new OuvintesKey());
+        txtBuscaAdi.addKeyListener(new OuvintesKey());
     }
  
     private void setaTabelas(){
@@ -94,6 +132,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
         return piidao.buscaTodos();
     }
     
+    private List<OutroCargo> listaAdis(){
+        return ocdao.buscarAdis();
+    }
+    
     private void atualizaTabelaPebI(List<ProfessorPebI> prof){
         tmp1 = new TableModelPeb1(prof);
         tabelaPebI.setModel(tmp1);
@@ -102,6 +144,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private void atualizaTabelaPebII(List<ProfessorPebII> prof){
         tmp2 = new TableModelPeb2(prof);
         tabelaPebII.setModel(tmp2);
+    }
+    
+    private void atualizaTabelaAdi(List<OutroCargo> adi){
+        tma = new TableModelAdi(adi);
+        tabelaAdi.setModel(tma);
     }
     
     private boolean verificaTurmas(ProfessorPebI p, Turma turma){
@@ -121,6 +168,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private ProfessorPebII pegaPeb2(){
         int linha = tabelaPebII.getSelectedRow();
         return tmp2.getProf(linha);
+    }
+    
+    private OutroCargo pegaAdi(){
+        int linha = tabelaAdi.getSelectedRow();
+        return tma.getAdi(linha);
     }
     
     private void removerAtribuicaoPebI(){
@@ -184,6 +236,33 @@ public class JFProfTurmas extends javax.swing.JFrame {
             } catch (Exception e){
                 JOptionPane.showMessageDialog(this, "Não foi possível remover a turma selecionada.");
                 e.printStackTrace();
+            }
+        }
+    }
+    
+    private void removerAtribuicaoAdi(){
+        if (tabelaAdi.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(this, "Você ");
+        } else {
+            OutroCargo adi = pegaAdi();
+            Turma t = (Turma) comboTurma3.getSelectedItem();
+            boolean pertence = false;
+            OutroCargo ro = new OutroCargo();
+            
+            for (OutroCargo oc : t.getAdi()){
+                if (oc.getId() == adi.getId()){
+                    pertence = true;
+                    ro = oc;
+                }
+            }
+            
+            if (!pertence){
+                JOptionPane.showMessageDialog(this, "Este ADI não é dessa turma.");
+            } else {
+                t.getAdi().remove(ro);
+                tdao.editar(t);
+                JOptionPane.showMessageDialog(this, "Atribuição removida com sucesso!");
+                preencheLabelsAdi((Turma) comboTurma3.getSelectedItem());
             }
         }
     }
@@ -291,7 +370,37 @@ public class JFProfTurmas extends javax.swing.JFrame {
         }
     }
     
-    public void verificaEscola(List<Escola> escola, Escola e){
+    private void salvarAdi(){
+        if (tabelaAdi.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar um ADI.");
+        } else {
+            OutroCargo adi = pegaAdi();
+            Turma t = (Turma) comboTurma3.getSelectedItem();
+            boolean verificaAdi = true;
+            
+            for (Turma turma: tdao.buscaTodas()){
+                for (OutroCargo oc : turma.getAdi()){
+                    if (oc.getId() == adi.getId()){
+                        verificaAdi = false;
+                    }
+                }
+            }
+            
+            if (t.getAdi().size() == 2){
+                JOptionPane.showMessageDialog(this, "Essa turma já possui 2 ADIS.");
+            } else if (!verificaAdi) {
+                JOptionPane.showMessageDialog(this, "Esse ADI já foi designado a uma turma.");
+            } else {
+                t.getAdi().add(adi);
+                tdao.editar(t);
+                JOptionPane.showMessageDialog(this, "Turma atribuída com sucesso!");
+                
+                preencheLabelsAdi((Turma) comboTurma3.getSelectedItem());
+            }
+        }
+    }
+    
+    private void verificaEscola(List<Escola> escola, Escola e){
         for (int i=0; i<escola.size(); i++){
             if (escola.get(i) != e){
                 escola.add(e);
@@ -299,11 +408,44 @@ public class JFProfTurmas extends javax.swing.JFrame {
         }
     }
     
-    public void verificaTurma(List<Turma> turma, Turma t){
+    private void verificaTurma(List<Turma> turma, Turma t){
         for (int i=0; i<turma.size(); i++){
             if (turma.get(i) != t){
                 turma.add(t);
             }
+        }
+    }
+    
+    private void preencheLabelsAdi(Turma t){
+        try {
+            switch(t.getAdi().size()){
+                case 1:
+                    if (t.getAdi().get(0) != null){
+                        lblAdi1.setText(t.getAdi().get(0).getNome());
+                    } else {
+                        lblAdi1.setText("");
+                    }
+                    break;
+                case 2: 
+                    if (t.getAdi().get(0) != null){
+                        lblAdi1.setText(t.getAdi().get(0).getNome());
+                    } else {
+                        lblAdi1.setText("");
+                    }
+                    if (t.getAdi().get(1) != null){
+                        lblAdi2.setText(t.getAdi().get(1).getNome());
+                    } else {
+                        lblAdi2.setText("");
+                    }
+                    break;
+                default:
+                    lblAdi1.setText("");
+                    lblAdi2.setText("");
+            }
+        } catch (Exception e){
+            lblAdi1.setText("");
+            lblAdi2.setText("");
+            e.printStackTrace();
         }
     }
     
@@ -433,9 +575,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         panelFundoAtribuicaoADI = new javax.swing.JPanel();
         panelEscola3 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboEscola3 = new javax.swing.JComboBox<>();
         panelTurma3 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboTurma3 = new javax.swing.JComboBox<>();
         panelADI1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         panelLBLadi1 = new javax.swing.JPanel();
@@ -447,6 +589,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
         btnRemover3 = new javax.swing.JButton();
         btnAtribuir3 = new javax.swing.JButton();
         panelTabelaAdi = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaAdi = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        txtBuscaAdi = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -594,7 +740,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelLBLpeb1.setBackground(new java.awt.Color(204, 204, 204));
 
         lblPebI.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblPebI.setText("jLabel9");
 
         javax.swing.GroupLayout panelLBLpeb1Layout = new javax.swing.GroupLayout(panelLBLpeb1);
         panelLBLpeb1.setLayout(panelLBLpeb1Layout);
@@ -728,6 +873,8 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Buscar professor(a)");
 
+        txtBusca2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout panelTabelaProfPebIILayout = new javax.swing.GroupLayout(panelTabelaProfPebII);
         panelTabelaProfPebII.setLayout(panelTabelaProfPebIILayout);
         panelTabelaProfPebIILayout.setHorizontalGroup(
@@ -751,7 +898,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(txtBusca2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -760,13 +907,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
         PanelEscola2.setBackground(new java.awt.Color(204, 204, 204));
         PanelEscola2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        comboEscola2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout PanelEscola2Layout = new javax.swing.GroupLayout(PanelEscola2);
         PanelEscola2.setLayout(PanelEscola2Layout);
         PanelEscola2Layout.setHorizontalGroup(
             PanelEscola2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelEscola2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(comboEscola2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboEscola2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelEscola2Layout.setVerticalGroup(
@@ -779,6 +928,8 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelTurma2.setBackground(new java.awt.Color(204, 204, 204));
         panelTurma2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        comboTurma2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -788,7 +939,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(84, 17));
 
         lblArtes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblArtes.setText("jLabel10");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -802,7 +952,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 17, Short.MAX_VALUE)
                 .addComponent(lblArtes))
         );
 
@@ -831,7 +981,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel7.setPreferredSize(new java.awt.Dimension(84, 17));
 
         lblIngles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblIngles.setText("jLabel11");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -845,7 +994,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 17, Short.MAX_VALUE)
                 .addComponent(lblIngles))
         );
 
@@ -874,7 +1023,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(84, 17));
 
         lblEducacaoFisica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblEducacaoFisica.setText("jLabel12");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -888,7 +1036,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 17, Short.MAX_VALUE)
                 .addComponent(lblEducacaoFisica))
         );
 
@@ -1013,7 +1161,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelEscola3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escola", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         panelEscola3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboEscola3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelEscola3Layout = new javax.swing.GroupLayout(panelEscola3);
         panelEscola3.setLayout(panelEscola3Layout);
@@ -1021,20 +1169,20 @@ public class JFProfTurmas extends javax.swing.JFrame {
             panelEscola3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEscola3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboEscola3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         panelEscola3Layout.setVerticalGroup(
             panelEscola3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEscola3Layout.createSequentialGroup()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboEscola3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         panelTurma3.setBackground(new java.awt.Color(204, 204, 204));
         panelTurma3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Turma", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboTurma3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         panelADI1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1044,7 +1192,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelLBLadi1.setBackground(new java.awt.Color(204, 204, 204));
 
         lblAdi1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblAdi1.setText("jLabel11");
 
         javax.swing.GroupLayout panelLBLadi1Layout = new javax.swing.GroupLayout(panelLBLadi1);
         panelLBLadi1.setLayout(panelLBLadi1Layout);
@@ -1081,7 +1228,6 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelLBLadi2.setBackground(new java.awt.Color(204, 204, 204));
 
         lblAdi2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblAdi2.setText("jLabel12");
 
         javax.swing.GroupLayout panelLBLadi2Layout = new javax.swing.GroupLayout(panelLBLadi2);
         panelLBLadi2.setLayout(panelLBLadi2Layout);
@@ -1128,7 +1274,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
                     .addComponent(panelADI2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelTurma3Layout.createSequentialGroup()
                         .addGroup(panelTurma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboTurma3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panelADI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -1137,7 +1283,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             panelTurma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTurma3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboTurma3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelADI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1156,11 +1302,11 @@ public class JFProfTurmas extends javax.swing.JFrame {
         panelFundoAtribuicaoADILayout.setHorizontalGroup(
             panelFundoAtribuicaoADILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFundoAtribuicaoADILayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelFundoAtribuicaoADILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelEscola3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelTurma3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(panelFundoAtribuicaoADILayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(btnRemover3)
@@ -1179,18 +1325,42 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 .addGroup(panelFundoAtribuicaoADILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRemover3)
                     .addComponent(btnAtribuir3))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panelTabelaAdi.setBackground(new java.awt.Color(204, 204, 204));
+
+        tabelaAdi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaAdi.setModel(tma);
+        jScrollPane3.setViewportView(tabelaAdi);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Buscar ADI:");
+
+        txtBuscaAdi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTabelaAdiLayout = new javax.swing.GroupLayout(panelTabelaAdi);
         panelTabelaAdi.setLayout(panelTabelaAdiLayout);
         panelTabelaAdiLayout.setHorizontalGroup(
             panelTabelaAdiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGroup(panelTabelaAdiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTabelaAdiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtBuscaAdi, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         panelTabelaAdiLayout.setVerticalGroup(
             panelTabelaAdiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelTabelaAdiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscaAdi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -1199,7 +1369,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(panelFundoAtribuicaoADI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTabelaAdi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -1260,14 +1430,15 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkEscola;
     private javax.swing.JComboBox<Escola> comboEscola1;
     private javax.swing.JComboBox<Escola> comboEscola2;
+    private javax.swing.JComboBox<Escola> comboEscola3;
     private javax.swing.JComboBox<Turma> comboTurma1;
     private javax.swing.JComboBox<Turma> comboTurma2;
-    private javax.swing.JComboBox<Escola> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<Turma> comboTurma3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1283,6 +1454,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblAdi1;
     private javax.swing.JLabel lblAdi2;
     private javax.swing.JLabel lblArtes;
@@ -1311,22 +1483,26 @@ public class JFProfTurmas extends javax.swing.JFrame {
     private javax.swing.JPanel panelTurma2;
     private javax.swing.JPanel panelTurma3;
     private javax.swing.JTabbedPane tabbedFundo;
+    private javax.swing.JTable tabelaAdi;
     private javax.swing.JTable tabelaPebI;
     private javax.swing.JTable tabelaPebII;
     private javax.swing.JTextField txtBusca1;
     private javax.swing.JTextField txtBusca2;
+    private javax.swing.JTextField txtBuscaAdi;
     // End of variables declaration//GEN-END:variables
     private Funcionario func = new Funcionario();
     private List<Escola> escolas = new ArrayList<>();
     private List<Turma> turmas = new ArrayList<>();
     private ProfessorPebIDAO pidao = new ProfessorPebIDAO();
     private ProfessorPebIIDAO piidao = new ProfessorPebIIDAO();
+    private OutroCargoDAO ocdao = new OutroCargoDAO();
     private PreencheCombo preencheCombos = new PreencheCombo();
     private TurmaDAO tdao = new TurmaDAO();
     private OuvintesAction oa = new OuvintesAction();
     private OuvintesItems oi = new OuvintesItems();
-    private TableModelPeb1 tmp1 = new TableModelPeb1(listaProfs1());
-    private TableModelPeb2 tmp2 = new TableModelPeb2(listaProfs2());
+    private TableModelPeb1 tmp1 = new TableModelPeb1();
+    private TableModelPeb2 tmp2 = new TableModelPeb2();
+    private TableModelAdi tma = new TableModelAdi();
     
     private class OuvintesAction implements ActionListener{
         @Override
@@ -1343,6 +1519,10 @@ public class JFProfTurmas extends javax.swing.JFrame {
                 removerAtribuicaoPebI();
             } else if (ae.getSource() == btnRemover2){
                 removerAtribuicaoPebII();
+            } else if (ae.getSource() == btnAtribuir3){
+                salvarAdi();
+            } else if (ae.getSource() == btnRemover3){
+                removerAtribuicaoAdi();
             }
         }
     }
@@ -1363,7 +1543,7 @@ public class JFProfTurmas extends javax.swing.JFrame {
             } else if (ie.getSource() == comboTurma1) {
                 setaTabelas();
                 preencheLabelsPebI((Turma) comboTurma1.getSelectedItem());
-            }else if (ie.getSource()==checkEscola){
+            } else if (ie.getSource()==checkEscola){
                 if(ie.getStateChange()==ItemEvent.SELECTED){
                     txtBusca1.setEnabled(false);
                     Escola e = (Escola) comboEscola1.getSelectedItem();
@@ -1379,6 +1559,8 @@ public class JFProfTurmas extends javax.swing.JFrame {
                     txtBusca1.setEnabled(true);
                     atualizaTabelaPebI(pidao.buscaTodos());
                 }
+            } else if (ie.getSource() == comboTurma3){
+                preencheLabelsAdi((Turma) comboTurma3.getSelectedItem());
             }
         }
     }
@@ -1401,6 +1583,9 @@ public class JFProfTurmas extends javax.swing.JFrame {
             } else if (ke.getSource() == txtBusca2){
                 String busca = "%" + txtBusca2.getText() + "%";
                 atualizaTabelaPebII(piidao.buscaPorNome(busca));
+            } else if (ke.getSource() == txtBuscaAdi){
+                String busca = "%" + txtBuscaAdi.getText() + "%";
+                atualizaTabelaAdi(ocdao.buscarAdisPorNome(busca));
             }
         }
     }
@@ -1665,6 +1850,123 @@ public class JFProfTurmas extends javax.swing.JFrame {
 
             // Notifica a mudança.
             fireTableRowsInserted(indice, indice + profs.size());
+        }
+ 
+        // Remove todos os registros.
+        public void limpar() {
+            // Remove todos os elementos da lista de sócios.
+            linhas.clear();
+
+            // Notifica a mudança.
+            fireTableDataChanged();
+        }
+    }
+    
+    private class TableModelAdi extends AbstractTableModel{
+        // Lista de professores a serem exibidos na tabela
+        private List<OutroCargo> linhas;
+        private String[] colunas = new String[] {"CPF", "Nome"};
+        private static final int CPF = 0;
+        private static final int NOME = 1;
+
+ 
+        // Cria um SocioTableModel sem nenhuma linha
+        public TableModelAdi() {
+            linhas = new ArrayList<>();
+        }
+ 
+        // Cria um SocioTableModel contendo a lista recebida por parâmetro
+        public TableModelAdi(List<OutroCargo> listaAdis) {
+            linhas = new ArrayList<>(listaAdis);
+        }
+        
+        @Override
+        public int getRowCount() {
+            return linhas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+        
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        };
+        
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+            case CPF:
+                return String.class;
+            case NOME:
+                return String.class;
+            default:
+                throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            tabelaAdi.getColumnModel().getColumn(1).setPreferredWidth(260);
+            Collections.sort(linhas, (OutroCargo oc1, OutroCargo oc2) -> oc1.getNome().compareTo(oc2.getNome()));
+            
+            OutroCargo adi = linhas.get(rowIndex);
+            switch (columnIndex) {
+                case CPF:
+                    return adi.getCpf();
+                case NOME:
+                    return adi.getNome();
+                default:
+                    throw new IndexOutOfBoundsException("columnIndex out of bounds");
+            }
+        }
+        
+        // Retorna o professor referente a linha especificada
+        public OutroCargo getAdi(int indiceLinha) {
+            return linhas.get(indiceLinha);
+        }
+
+        // Adiciona o professor especificado ao modelo
+        public void addAdi(OutroCargo adi) {
+            // Adiciona o registro.
+            linhas.add(adi);
+ 
+            // Pega a quantidade de registros e subtrai 1 para
+            // achar o último índice. A subtração é necessária
+            // porque os índices começam em zero.
+            int ultimoIndice = getRowCount() - 1;
+
+            // Notifica a mudança.
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+ 
+        // Remove o sócio da linha especificada.
+        public void removeAdi(int indiceLinha) {
+            // Remove o registro.
+            linhas.remove(indiceLinha);
+
+            // Notifica a mudança.
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+ 
+        // Adiciona uma lista de sócios no final da lista.
+        public void addListaDeProfessores(List<OutroCargo> adis) {
+            // Pega o tamanho antigo da tabela, que servirá
+            // como índice para o primeiro dos novos registros
+            int indice = getRowCount();
+
+            // Adiciona os registros.
+            linhas.addAll(adis);
+
+            // Notifica a mudança.
+            fireTableRowsInserted(indice, indice + adis.size());
         }
  
         // Remove todos os registros.

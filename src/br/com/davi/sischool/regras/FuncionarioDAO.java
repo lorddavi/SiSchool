@@ -120,7 +120,11 @@ public class FuncionarioDAO {
             funcionario.setId(buscarId(busca));
             em.close();
             cem.fecharEM();
-            return funcionario;
+            if (funcionario.isAtivo()){
+                return funcionario;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             System.out.println("erro ao buscar funcionário por login");
             e.printStackTrace();

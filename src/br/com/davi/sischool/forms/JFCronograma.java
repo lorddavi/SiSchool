@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +49,6 @@ public class JFCronograma extends javax.swing.JFrame {
     
     public void iniciarComponentes(){
         Escola e = oc.getEscola();
-        System.out.println(e.getNome());
         preencheCombo.preencheTurmas(comboTurmas, e);
         t = (Turma) comboTurmas.getSelectedItem();
         lblNomeTurma.setText(t.toString());
@@ -66,7 +67,12 @@ public class JFCronograma extends javax.swing.JFrame {
         btnRemover.addActionListener(oa);
         btnFechar.addActionListener(oa);
         btnMinimizar.addActionListener(oa);
-        txtBusca.addActionListener(oa);
+        txtBusca.addKeyListener(new OuvintesKeyListener());
+    }
+    
+    private void atualizaTabela(List<Professor> lista){
+        tmp = new TableModelProfessor(lista);
+        tabelaProfs.setModel(tmp);
     }
     
     private Professor selecionaProfessor(){
@@ -79,23 +85,34 @@ public class JFCronograma extends javax.swing.JFrame {
         }
     }
     
-    private void buscar(){
-        busca = txtBusca.getText();
-        tmp = new TableModelProfessor(pdao.buscarPorNome("%" + busca + "%"));
-        tabelaProfs.setModel(tmp);
-    }
-    
-    public void btnAtribuir(){
+    private void btnAtribuir(){
         int linha = comboDia.getSelectedIndex();
         int coluna = comboAula.getSelectedIndex();
         int[][] cronograma = t.getCronograma();
-        prof = selecionaProfessor();
-        if (prof != null){
-            cronograma[linha][coluna] = prof.getId();
-            t.setCronograma(cronograma);
-            tmc = new TableModelCronograma(t);
-            tabelaCrono.setModel(tmc);
+        if (tabelaProfs.getSelectedRow() != -1){
+            prof = selecionaProfessor();
+            if (verificaCronograma(prof, linha, coluna)){
+                cronograma[linha][coluna] = prof.getId();
+                t.setCronograma(cronograma);
+                tmc = new TableModelCronograma(t);
+                tabelaCrono.setModel(tmc);
+            } else {
+                JOptionPane.showMessageDialog(this, "O professor selecionado já leciona uma aula nesse horário.");
+            }
         }
+    }
+    
+    private boolean verificaCronograma(Professor p, int linha, int coluna){
+        int[][] cronograma;
+        
+        for (Turma t: tdao.buscaTodas()){
+            cronograma = t.getCronograma();
+            if (cronograma[linha][coluna] == p.getId()){
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     /**
@@ -424,6 +441,7 @@ public class JFCronograma extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private OutroCargo oc = new OutroCargo();
     private OutroCargoDAO ocdao = new OutroCargoDAO();
+    private TurmaDAO tdao = new TurmaDAO();
     private PreencheCombo preencheCombo = new PreencheCombo();
     private OuvintesItens ov = new OuvintesItens();
     private OuvintesActions oa = new OuvintesActions();
@@ -475,8 +493,22 @@ public class JFCronograma extends javax.swing.JFrame {
                 t.setCronograma(cronograma);
                 tmc = new TableModelCronograma(t);
                 tabelaCrono.setModel(tmc);
-            } else if (ae.getSource()==txtBusca){
-                buscar();
+            } 
+        }
+    }
+    
+    private class OuvintesKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent ke) {
+        }
+        @Override
+        public void keyPressed(KeyEvent ke) {
+        }
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            if (ke.getSource() == txtBusca){
+                String busca = "%" + txtBusca.getText() + "%";
+                atualizaTabela(pdao.buscarPorNome(busca));
             }
         }
         

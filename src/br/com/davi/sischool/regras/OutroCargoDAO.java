@@ -81,4 +81,29 @@ public class OutroCargoDAO {
             return null;
         }
     }
+    
+    public List<OutroCargo> buscarAdisPorNome(String busca){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        try {
+            TypedQuery<OutroCargo> consulta = em.createQuery("SELECT o FROM OutroCargo o WHERE o.cargo = :cargo AND o.nome LIKE :busca", OutroCargo.class);
+            consulta.setParameter("cargo", "ADI");
+            consulta.setParameter("busca", busca);
+            return consulta.getResultList();
+        } catch(Exception e){
+            return null;
+        }
+    }
+    
+    public List<OutroCargo> buscarAdis(){
+        CriaEntityManager cem = new CriaEntityManager();
+        EntityManager em = cem.criarEM();
+        try {
+            TypedQuery<OutroCargo> consulta = em.createQuery("SELECT o FROM OutroCargo o WHERE o.cargo = :cargo", OutroCargo.class);
+            consulta.setParameter("cargo", "ADI");
+            return consulta.getResultList();
+        } catch(Exception e){
+            return null;
+        }
+    }
 }

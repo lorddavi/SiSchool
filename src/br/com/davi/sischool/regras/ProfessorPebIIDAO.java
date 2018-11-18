@@ -93,9 +93,8 @@ public class ProfessorPebIIDAO {
         EntityManager em = cem.criarEM();
         List<ProfessorPebII> profs = null;
         try {
-            TypedQuery<ProfessorPebII> consulta = em.createQuery("SELECT p FROM ProfessorPebII p WHERE "
-                    + "p.escola = :e", ProfessorPebII.class);
-            consulta.setParameter("e", e);
+            TypedQuery<ProfessorPebII> consulta = em.createQuery("SELECT p FROM ProfessorPebII p WHERE p.escola.id = :e", ProfessorPebII.class);
+            consulta.setParameter("e", e.getId());
             profs = consulta.getResultList();
         } catch (NoResultException ex) {
             System.out.println("erro ao buscar profpebii pela escola");
@@ -109,8 +108,7 @@ public class ProfessorPebIIDAO {
         EntityManager em = cem.criarEM();
         List<ProfessorPebII> profs = null;
         try {
-            TypedQuery<ProfessorPebII> consulta = em.createQuery("SELECT p FROM ProfessorPebII p WHERE "
-                    + "p.especialidade = :esp", ProfessorPebII.class);
+            TypedQuery<ProfessorPebII> consulta = em.createQuery("SELECT p FROM ProfessorPebII p WHERE p.especialidade = :esp", ProfessorPebII.class);
             consulta.setParameter("esp", esp);
             profs = consulta.getResultList();
         } catch (NoResultException ex) {

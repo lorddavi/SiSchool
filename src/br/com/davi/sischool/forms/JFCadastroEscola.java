@@ -6,7 +6,6 @@
 package br.com.davi.sischool.forms;
 
 import br.com.davi.sischool.funcoes.CamposDeTelefone;
-import br.com.davi.sischool.funcoes.Tabela;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.OutroCargo;
@@ -19,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -52,11 +53,13 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         btnAddTel.addActionListener(oa);
         btnRemoveTel.addActionListener(oa);
         btnBuscar.addActionListener(oa);
-        btnCancelCadEscola.addActionListener(oa);
+        btnCancelar.addActionListener(oa);
         btnEditar.addActionListener(oa);
-        btnSalvarCadEscola.addActionListener(oa);
+        btnSalvar.addActionListener(oa);
         txtBuscar.addActionListener(oa);
         btnExcluir.addActionListener(oa);
+        btnNovaEscola.addActionListener(oa);
+        tabelaEscolas.getSelectionModel().addListSelectionListener(new OuvintesListSelection());
     }
     
     private void buscaEscola(){
@@ -79,22 +82,92 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         edicao = true;
         escola = esc;
         
+        enablaTudo();
+        
         nome = escola.getNome();
         endereco = escola.getEndereco();
         bairro = escola.getBairro();
-        cnpj = escola.getCnpj();
         telef = escola.getTelefones();
         
         txtNomeCadEscola.setText(nome);
         txtEnderecoCadEscola.setText(endereco);
         txtBairroCadEscola.setText(bairro);
-        txtCnpjCadEscola.setText(cnpj);
         camposTelef.exibeTelefonesNoJList(listTelefone, telef);
+        
+        btnNovaEscola.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnSalvar.setEnabled(true);
+    }
+    
+    private void situacaoInicial(){
+        txtNomeCadEscola.setEnabled(false);
+        txtEnderecoCadEscola.setEnabled(false);
+        txtBairroCadEscola.setEnabled(false);
+        txtTelefones.setEnabled(false);
+        btnAddTel.setEnabled(false);
+        btnRemoveTel.setEnabled(false);
+        
+        btnNovaEscola.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnSalvar.setEnabled(false);
+    }
+    
+    private void enablaTudo(){
+        txtNomeCadEscola.setEnabled(true);
+        txtEnderecoCadEscola.setEnabled(true);
+        txtBairroCadEscola.setEnabled(true);
+        txtTelefones.setEnabled(true);
+        btnAddTel.setEnabled(true);
+        btnRemoveTel.setEnabled(true);
+    }
+    
+    private void limpar(){
+        nome = ""; endereco = ""; bairro = "";
+        edicao = false;
+        escolas = new ArrayList<>();
+        telef = new ArrayList<>();
+        
+        txtNomeCadEscola.setText("");
+        txtEnderecoCadEscola.setText("");
+        txtBairroCadEscola.setText("");
+        txtTelefones.setText("");
+        camposTelef.exibeTelefonesNoJList(listTelefone, telef);
+    }
+    
+    private void cancelar(){
+        tabelaEscolas.clearSelection();
+        situacaoInicial();
+        limpar();
+    }
+    
+    private void novo(){
+        enablaTudo();
+        limpar();
+        
+        btnNovaEscola.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnSalvar.setEnabled(true);
     }
     
     private void excluirEscola(){
         Escola esc = selecionaEscola();
-        edao.excluir(esc);
+        try {
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Exclusão", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                edao.excluir(esc);
+                JOptionPane.showMessageDialog(this, "A exclusão foi efetuada com sucesso!");
+                atualizaTabelaEscolas(edao.buscaTodas());
+            } 
+        } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar uma escola!");
+            e.printStackTrace();
+        } 
     }
     
     private boolean checaNaoPreenchido() {
@@ -107,9 +180,6 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         } else if (txtBairroCadEscola.getText().trim().equals("")) {
             txtBairroCadEscola.requestFocus();
             return false;
-        } else if (txtCnpjCadEscola.getText().trim().equals("")) {
-            txtCnpjCadEscola.requestFocus();
-            return false;
        }
         return true;
     }
@@ -118,13 +188,11 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         nome = txtNomeCadEscola.getText();
         endereco = txtEnderecoCadEscola.getText();
         bairro = txtBairroCadEscola.getText();
-        cnpj = txtCnpjCadEscola.getText();
         //telef
        
         escola.setNome(nome);
         escola.setEndereco(endereco);
         escola.setBairro(bairro);
-        escola.setCnpj(cnpj);
         escola.setTelefones(telef);
     }
     
@@ -133,18 +201,19 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         try {
             defineEscola();
             if (preenchido != true){
-                JOptionPane.showMessageDialog(null, "Há campos em branco!",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Há campos em branco!", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (edicao){
                     edao.editar(escola);
                     JOptionPane.showMessageDialog(this, "Dados alterados!");
                     edicao = false;
-                    tabelaEscolas.clearSelection();
                 } else {
                     edao.inserir(escola);
                     JOptionPane.showMessageDialog(this, "Sucesso!"); //PROCURAR FUTURAMENTE UM OPTION PANE ADEQUADO PRA MENSAGENS DE SUCESSO
                 }
+                tabelaEscolas.clearSelection();
+                limpar();
+                situacaoInicial();
             }
             escolas = edao.buscaTodas();
             atualizaTabelaEscolas(escolas);
@@ -175,13 +244,11 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtTelefones = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         listTelefone = new javax.swing.JList<>();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtBairroCadEscola = new javax.swing.JTextField();
         btnAddTel = new javax.swing.JButton();
         btnRemoveTel = new javax.swing.JButton();
-        txtCnpjCadEscola = new javax.swing.JTextField();
-        btnCancelCadEscola = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         panelTabela = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaEscolas = new javax.swing.JTable();
@@ -189,9 +256,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnSalvarCadEscola = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnNovaEscola = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -254,35 +321,36 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         jLabel1.setText("Nome:");
 
         txtNomeCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNomeCadEscola.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Endereço:");
 
         txtEnderecoCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEnderecoCadEscola.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Telefones:");
 
         txtTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTelefones.setEnabled(false);
 
         listTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listTelefone);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("CNPJ:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Bairro:");
 
         txtBairroCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBairroCadEscola.setEnabled(false);
 
         btnAddTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/adic.png"))); // NOI18N
         btnAddTel.setContentAreaFilled(false);
+        btnAddTel.setEnabled(false);
 
         btnRemoveTel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/minus.png"))); // NOI18N
         btnRemoveTel.setContentAreaFilled(false);
-
-        txtCnpjCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRemoveTel.setEnabled(false);
 
         javax.swing.GroupLayout panelCadastroLayout = new javax.swing.GroupLayout(panelCadastro);
         panelCadastro.setLayout(panelCadastroLayout);
@@ -291,13 +359,11 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             .addGroup(panelCadastroLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCnpjCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(txtNomeCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtEnderecoCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBairroCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
@@ -324,11 +390,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(5, 5, 5)
                 .addComponent(txtBairroCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCnpjCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -340,8 +402,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnCancelCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCancelCadEscola.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
 
         panelTabela.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -390,15 +453,18 @@ public class JFCadastroEscola extends javax.swing.JFrame {
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
 
-        btnSalvarCadEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnSalvarCadEscola.setText("Salvar");
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
 
         btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Nova Escola");
+        btnNovaEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnNovaEscola.setText("Nova Escola");
 
         javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
         panelFundo.setLayout(panelFundoLayout);
@@ -407,11 +473,12 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             .addGroup(panelFundoLayout.createSequentialGroup()
                 .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelFundoLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnNovaEscola)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar)
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnCancelCadEscola))
+                        .addGap(8, 8, 8))
                     .addComponent(panelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,7 +487,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(btnEditar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSalvarCadEscola)))
+                        .addComponent(btnSalvar)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         panelFundoLayout.setVerticalGroup(
@@ -431,12 +498,12 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                     .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnCancelCadEscola)
-                    .addComponent(btnSalvarCadEscola)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSalvar)
                     .addComponent(btnEditar)
-                    .addComponent(jButton1))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(btnNovaEscola)
+                    .addComponent(btnExcluir))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
@@ -454,7 +521,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -503,18 +570,17 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddTel;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelCadEscola;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnMinimizar;
+    private javax.swing.JButton btnNovaEscola;
     private javax.swing.JButton btnRemoveTel;
-    private javax.swing.JButton btnSalvarCadEscola;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
@@ -529,7 +595,6 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private javax.swing.JTable tabelaEscolas;
     private javax.swing.JTextField txtBairroCadEscola;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtCnpjCadEscola;
     private javax.swing.JTextField txtEnderecoCadEscola;
     private javax.swing.JTextField txtNomeCadEscola;
     private javax.swing.JTextField txtTelefones;
@@ -543,7 +608,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private CamposDeTelefone camposTelef = new CamposDeTelefone();
     private List<Escola> escolas = new ArrayList<>();
     private TableModelEscola tme = new TableModelEscola();
-    private String nome, endereco, bairro, cnpj;
+    private String nome, endereco, bairro;
     private boolean edicao = false;
     
     private class OuvintesAction implements ActionListener {
@@ -559,11 +624,12 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             } else if (ae.getSource() == btnRemoveTel){
                 camposTelef.excluiTelefoneDaLista(listTelefone, telef);
                 camposTelef.exibeTelefonesNoJList(listTelefone, telef);
-            } else if (ae.getSource() == btnCancelCadEscola){
+            } else if (ae.getSource() == btnCancelar){
+                cancelar();
                 edicao = false;
             } else if (ae.getSource() == btnEditar){
                 editarEscola(selecionaEscola());
-            } else if (ae.getSource() == btnSalvarCadEscola){
+            } else if (ae.getSource() == btnSalvar){
                 salvar();
             } else if (ae.getSource() == btnBuscar){
                 buscaEscola();
@@ -571,9 +637,19 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 buscaEscola();
             } else if (ae.getSource() == btnExcluir){
                 excluirEscola();
+            } else if (ae.getSource() == btnNovaEscola){
+                novo();
             }
         } 
     }    
+    
+    private class OuvintesListSelection implements ListSelectionListener{
+        @Override
+        public void valueChanged(ListSelectionEvent lse) {
+            btnEditar.setEnabled(true);
+        }
+        
+    }
     
     private class TableModelEscola extends AbstractTableModel {
         private List<Escola> linhas;

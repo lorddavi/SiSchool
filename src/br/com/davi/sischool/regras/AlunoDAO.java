@@ -5,11 +5,8 @@
  */
 package br.com.davi.sischool.regras;
 
-import br.com.davi.sischool.funcoes.ConverteData;
 import br.com.davi.sischool.model.Aluno;
-import br.com.davi.sischool.model.Turma;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -64,7 +61,7 @@ public class AlunoDAO {
         CriaEntityManager cem = new CriaEntityManager();
         EntityManager em = cem.criarEM();
         TypedQuery<Aluno> consulta = em.createQuery(
-            "SELECT a FROM Aluno a WHERE a.nome LIKE :busca", Aluno.class);
+            "SELECT a FROM Aluno a WHERE a.nome LIKE :busca AND a.ativo = true", Aluno.class);
         consulta.setParameter("busca", busca);
         List<Aluno> alunos = consulta.getResultList();
         em.close();
@@ -77,7 +74,7 @@ public class AlunoDAO {
         EntityManager em = cem.criarEM();
         List<Aluno> alunos = new ArrayList<>();
         try {
-            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a WHERE a.ra like :ra", Aluno.class);
+            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a WHERE a.ra like :ra AND a.ativo = true", Aluno.class);
             consulta.setParameter("ra", ra);
             alunos = consulta.getResultList();
         } catch(NoResultException ex) {
@@ -96,7 +93,7 @@ public class AlunoDAO {
         EntityManager em = cem.criarEM();
         List<Aluno> alunos = null;
         try {
-            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a", Aluno.class);
+            TypedQuery<Aluno> consulta = em.createQuery("SELECT a FROM Aluno a WHERE a.ativo = true", Aluno.class);
             alunos = consulta.getResultList();
         } catch(NoResultException ex) {
     		System.out.println("Aluno não encontrado");

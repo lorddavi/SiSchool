@@ -5,18 +5,37 @@
  */
 package br.com.davi.sischool.forms;
 
+import br.com.davi.sischool.funcoes.FazBackup;
 import br.com.davi.sischool.json.JSONRead;
 import br.com.davi.sischool.json.JSONWrite;
+import br.com.davi.sischool.model.Aluno;
+import br.com.davi.sischool.model.Certificado;
+import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
+import br.com.davi.sischool.model.NotasFaltas;
+import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.ProfessorPebI;
+import br.com.davi.sischool.model.ProfessorPebII;
+import br.com.davi.sischool.model.Telefone;
+import br.com.davi.sischool.model.Turma;
+import br.com.davi.sischool.regras.AlunoDAO;
+import br.com.davi.sischool.regras.CertificadoDAO;
+import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.FuncionarioDAO;
+import br.com.davi.sischool.regras.NotasFaltasDAO;
+import br.com.davi.sischool.regras.OutroCargoDAO;
 import br.com.davi.sischool.regras.ProfessorPebIDAO;
+import br.com.davi.sischool.regras.ProfessorPebIIDAO;
+import br.com.davi.sischool.regras.TelefoneDAO;
+import br.com.davi.sischool.regras.TurmaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,29 +70,87 @@ public class JFBackup extends javax.swing.JFrame {
     
     private void gerarBackup(){
         int index = 0;
-
-        for (ProfessorPebI p: pdao.buscaTodos()){
+        
+        for (Telefone t: teldao.buscaTodos()){
+            jsonw.gerarJSONTelefone(t, index);
+            index++;
+        }
+        index = 0;
+        
+        for (Escola e: edao.buscaTodas()){
+            jsonw.gerarJSONEscola(e, index);
+            index++;
+        }
+        index = 0;
+        
+        for (Turma t: tdao.buscaTodas()){
+            jsonw.gerarJSONTurma(t, index);
+            index++;
+        }
+        index = 0;
+        
+        for (ProfessorPebI p: pidao.buscaTodos()){
             jsonw.gerarJSONPebI(p, index);  
             index++;
         }
+        index = 0;    
+
+        for (ProfessorPebII p: piidao.buscaTodos()){
+            jsonw.gerarJSONPebII(p, index);
+            index++;
+        }
+        index = 0;
         
-        JOptionPane.showMessageDialog(null, "Backup realizado com sucesso!");
+        for (OutroCargo oc: ocdao.buscaTodos()){
+            jsonw.gerarJSONOutroCargo(oc, index);
+            index++;
+        }
+        index = 0;
+
+        for (Certificado c: cdao.buscaTodos()){
+            jsonw.gerarJSONCertificado(c, index);
+            index++;
+        }
+        index = 0;
+
+        for (Aluno a: adao.buscaTodos()){
+            jsonw.gerarJSONAluno(a, index);
+            index++;
+        }
+        index = 0;
+        
+        for (NotasFaltas nf : nfdao.buscaTodos()){
+            jsonw.gerarJSONNotasFaltas(nf, index);
+            index++;
+        }
+        index = 0;
+        
+        FazBackup fb = new FazBackup();
+        fb.backup();
+        
     }
     
     private void restaurarBackup(){
-        boolean possivel = true;
-        int index = 0;
-        while (possivel){
-            try {
-                jsonr.lerJSONFuncionario(index);
-                index++;
-            } catch (FileNotFoundException e){
-                possivel = false;
-            } catch (IOException e){
-                possivel = false;
-            }
+        try {
+            /*boolean possivel = true;
+            int index = 0;
+            while (possivel){
+                try {
+                    jsonr.lerJSONFuncionario(index);
+                    index++;
+                } catch (FileNotFoundException e){
+                    possivel = false;
+                } catch (IOException e){
+                    possivel = false;
+                }
+            }*/
+            
+            FazBackup fb = new FazBackup();
+            fb.restaurar();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(JFBackup.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JOptionPane.showMessageDialog(null, "Backup restaurado com sucesso!");
     }
 
     /**
@@ -83,7 +160,6 @@ public class JFBackup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnGroupBackup = new javax.swing.ButtonGroup();
         panelPrincipal = new javax.swing.JPanel();
         panelBarraDeTitulo = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
@@ -91,16 +167,13 @@ public class JFBackup extends javax.swing.JFrame {
         btnMinimizar = new javax.swing.JButton();
         panelFundo = new javax.swing.JPanel();
         panelBackup = new javax.swing.JPanel();
-        radioBackupAlunos = new javax.swing.JRadioButton();
-        radioBackupProfessores = new javax.swing.JRadioButton();
-        radioBackupFuncionarios = new javax.swing.JRadioButton();
-        radioBackupEscolas = new javax.swing.JRadioButton();
         btnBackup = new javax.swing.JButton();
         btnRestaura = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        checkAlunos = new javax.swing.JCheckBox();
+        checkProfessores = new javax.swing.JCheckBox();
+        checkFuncionarios = new javax.swing.JCheckBox();
+        checkEscolas = new javax.swing.JCheckBox();
+        lblfoto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -158,43 +231,25 @@ public class JFBackup extends javax.swing.JFrame {
         panelBackup.setBackground(new java.awt.Color(204, 204, 204));
         panelBackup.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fazer backup", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
-        radioBackupAlunos.setBackground(new java.awt.Color(204, 204, 204));
-        btnGroupBackup.add(radioBackupAlunos);
-        radioBackupAlunos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        radioBackupAlunos.setText("Alunos");
-
-        radioBackupProfessores.setBackground(new java.awt.Color(204, 204, 204));
-        btnGroupBackup.add(radioBackupProfessores);
-        radioBackupProfessores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        radioBackupProfessores.setText("Professores");
-
-        radioBackupFuncionarios.setBackground(new java.awt.Color(204, 204, 204));
-        btnGroupBackup.add(radioBackupFuncionarios);
-        radioBackupFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        radioBackupFuncionarios.setText("Funcionários");
-
-        radioBackupEscolas.setBackground(new java.awt.Color(204, 204, 204));
-        btnGroupBackup.add(radioBackupEscolas);
-        radioBackupEscolas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        radioBackupEscolas.setText("Escolas");
-
         btnBackup.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBackup.setText("Fazer Backup");
 
         btnRestaura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnRestaura.setText("Restaurar Backup");
 
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox1.setText("jCheckBox1");
+        checkAlunos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        checkAlunos.setText("Alunos");
 
-        jCheckBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox2.setText("jCheckBox2");
+        checkProfessores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        checkProfessores.setText("Professores");
 
-        jCheckBox3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox3.setText("jCheckBox3");
+        checkFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        checkFuncionarios.setText("Funcionários");
 
-        jCheckBox4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox4.setText("jCheckBox4");
+        checkEscolas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        checkEscolas.setText("Escolas");
+
+        lblfoto.setText("jLabel1");
 
         javax.swing.GroupLayout panelBackupLayout = new javax.swing.GroupLayout(panelBackup);
         panelBackup.setLayout(panelBackupLayout);
@@ -202,46 +257,35 @@ public class JFBackup extends javax.swing.JFrame {
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupLayout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBackupLayout.createSequentialGroup()
-                        .addComponent(btnBackup)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnRestaura))
-                    .addGroup(panelBackupLayout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radioBackupProfessores)
-                            .addComponent(radioBackupFuncionarios)
-                            .addComponent(radioBackupEscolas)
-                            .addComponent(radioBackupAlunos))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox4)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox2))))
+                .addComponent(btnBackup)
+                .addGap(51, 51, 51)
+                .addComponent(btnRestaura)
                 .addContainerGap(51, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackupLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lblfoto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkAlunos)
+                    .addComponent(checkEscolas)
+                    .addComponent(checkFuncionarios)
+                    .addComponent(checkProfessores))
+                .addGap(166, 166, 166))
         );
         panelBackupLayout.setVerticalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioBackupAlunos)
-                    .addComponent(jCheckBox1))
+                    .addComponent(checkAlunos)
+                    .addComponent(lblfoto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioBackupProfessores)
-                    .addComponent(jCheckBox2))
+                .addComponent(checkProfessores)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioBackupFuncionarios)
-                    .addComponent(jCheckBox3))
+                .addComponent(checkFuncionarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioBackupEscolas)
-                    .addComponent(jCheckBox4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(checkEscolas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBackup)
                     .addComponent(btnRestaura))
@@ -303,28 +347,32 @@ public class JFBackup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackup;
     private javax.swing.JButton btnFechar;
-    private javax.swing.ButtonGroup btnGroupBackup;
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnRestaura;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox checkAlunos;
+    private javax.swing.JCheckBox checkEscolas;
+    private javax.swing.JCheckBox checkFuncionarios;
+    private javax.swing.JCheckBox checkProfessores;
     private javax.swing.JLabel lblTituloPrincipal;
+    private javax.swing.JLabel lblfoto;
     private javax.swing.JPanel panelBackup;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelFundo;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JRadioButton radioBackupAlunos;
-    private javax.swing.JRadioButton radioBackupEscolas;
-    private javax.swing.JRadioButton radioBackupFuncionarios;
-    private javax.swing.JRadioButton radioBackupProfessores;
     // End of variables declaration//GEN-END:variables
     private OuvintesAction oa = new OuvintesAction();
     private JSONWrite jsonw = new JSONWrite();
     private JSONRead jsonr = new JSONRead();
     private FuncionarioDAO fdao = new FuncionarioDAO();
-    private ProfessorPebIDAO pdao = new ProfessorPebIDAO();
+    private ProfessorPebIDAO pidao = new ProfessorPebIDAO();
+    private ProfessorPebIIDAO piidao = new ProfessorPebIIDAO();
+    private OutroCargoDAO ocdao = new OutroCargoDAO();
+    private AlunoDAO adao = new AlunoDAO();
+    private NotasFaltasDAO nfdao = new NotasFaltasDAO();
+    private TelefoneDAO teldao = new TelefoneDAO();
+    private CertificadoDAO cdao = new CertificadoDAO();
+    private EscolaDAO edao = new EscolaDAO();
+    private TurmaDAO tdao = new TurmaDAO();
     
     private Funcionario func = new Funcionario();
     

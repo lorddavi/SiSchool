@@ -41,6 +41,14 @@ public class NotasFaltas implements Serializable {
     public NotasFaltas(Login login){
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Aluno getAluno() {
         return aluno;
     }

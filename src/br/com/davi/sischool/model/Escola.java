@@ -28,6 +28,10 @@ public class Escola implements Serializable {
     private String endereco;
     @Column
     private String bairro;
+    @Column
+    private String cep;
+    @Column 
+    private String email;
     @OneToMany(targetEntity = Telefone.class, fetch = FetchType.LAZY, 
             cascade = CascadeType.ALL)
     private List<Telefone> telefones;
@@ -85,6 +89,22 @@ public class Escola implements Serializable {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<OutroCargo> getFuncOutroCargo() {

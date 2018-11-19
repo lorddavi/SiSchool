@@ -268,7 +268,21 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
             //foto3x4 = "TEM QUE VER ESSA FITA AÍ";
             List<Telefone> telefones = telef;
             observacoes = txtAObservacoes.getText();
-
+            
+            NotasFaltas nf[] = new NotasFaltas[8];
+            String materias[] =  {"Matemática", "Português", "Ciências", "História",
+                "Geografia", "Artes", "Inglês", "Educação Física"};
+            Calendar cal = Calendar.getInstance();
+            int ano = cal.get(Calendar.YEAR);
+            for (int i=0; i<8; i++){
+                nf[i] = new NotasFaltas();
+                nf[i].setAno(String.valueOf(ano));
+                nf[i].setMateria(materias[i]);
+                nf[i].setSituacao("Reprovado");
+                notasFaltas.add(nf[i]);
+            }
+            
+            aluno.setNotasFaltas(notasFaltas);
             aluno.setNome(nome);
             aluno.setRa(ra);
             aluno.setDataNasc(dataNasc);
@@ -418,56 +432,45 @@ public class JFCadastrarAlunos extends javax.swing.JFrame {
     */
     private void salvar() {
        defineAluno();
-        if (edicao){
-            adao.editar(aluno);
-            JOptionPane.showMessageDialog(this, "Editado!");
-        } else {
-            NotasFaltas nf[] = new NotasFaltas[8];
-            String materias[] =  {"Matemática", "Português", "Ciências", "História",
-                "Geografia", "Artes", "Inglês", "Educação Física"};
-            Calendar cal = Calendar.getInstance();
-            int ano = cal.get(Calendar.YEAR);
-            for (int i=0; i<8; i++){
-                nf[i] = new NotasFaltas();
-                nf[i].setAno(String.valueOf(ano));
-                nf[i].setMateria(materias[i]);
-                nf[i].setSituacao("Reprovado");
-                notasFaltas.add(nf[i]);
-            }
-            
-            aluno.setNotasFaltas(notasFaltas);
-
-            boolean preenchido = checaNaoPreenchido();
-            boolean responsavel = checaResponsavel();
-            boolean preenchidoResponsavel = checaPreenchidoResponsavel();
-            boolean data = checaData();
-            try {
-                if (preenchido != true){
-                    JOptionPane.showMessageDialog(null, "Há campos em branco!",
-                            "Erro", JOptionPane.ERROR_MESSAGE);
-                } else if (responsavel != true) {
-                    JOptionPane.showMessageDialog(null, "Você precisa marcar alguém como responsável.", 
+        boolean preenchido = checaNaoPreenchido();
+        boolean responsavel = checaResponsavel();
+        boolean preenchidoResponsavel = checaPreenchidoResponsavel();
+        boolean data = checaData();
+        try {
+            if (preenchido != true){
+                JOptionPane.showMessageDialog(null, "Há campos em branco!",
                         "Erro", JOptionPane.ERROR_MESSAGE);
-                } else if (preenchidoResponsavel != true) {
-                    JOptionPane.showMessageDialog(null, "Preencha o nome e parentesco do responsável.", 
-                            "Erro", JOptionPane.ERROR_MESSAGE);
-                } else if(data != true) {
-                    JOptionPane.showMessageDialog(null, "Data inválida!", 
+            } else if (responsavel != true) {
+                JOptionPane.showMessageDialog(null, "Você precisa marcar alguém como responsável.", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            } else if (preenchidoResponsavel != true) {
+                JOptionPane.showMessageDialog(null, "Preencha o nome e parentesco do responsável.", 
                         "Erro", JOptionPane.ERROR_MESSAGE);
+            } else if(data != true) {
+                JOptionPane.showMessageDialog(null, "Data inválida!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
 
+            } else if (turma.getVagas() <= turma.getAlunos().size()) {
+                JOptionPane.showMessageDialog(this, "Não há vagas na turma escolhida!");
+            } else {
+                if (edicao){
+                    adao.editar(aluno);
+                    JOptionPane.showMessageDialog(this, "Editado!");
+
+                    limpar();
                 } else {
                     adao.inserir(aluno);
                     //defineTurma(aluno);
                     JDConfirmaCadastroAluno cc = new JDConfirmaCadastroAluno(this, rootPaneCheckingEnabled);
                     cc.setVisible(true);
+
+                    aluno = null;
+                    limpar();
                 }
-                
-                aluno = null;
-                limpar();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
-        } 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     /**

@@ -12,6 +12,7 @@ import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.regras.AlunoDAO;
+import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.TurmaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,10 +47,8 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     public void iniciarComponentes(){
         preencheCombo.preencheEscolas(comboEscolas);
         esc = (Escola) comboEscolas.getSelectedItem();
-        turmas = esc.getTurmas();
         setaListeners();
-        tmt = new TableModelTurma(turmas);
-        tabelaTurmas.setModel(tmt);
+        atualizarTabelaTurmas(buscaAtualizado());
     }
     
     private void setaListeners(){
@@ -66,33 +65,56 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         tabelaTurmas.getSelectionModel().addListSelectionListener(ols);
     }
     
-    private void editarTurma(){
-        edicao = true;
-        int linha = tabelaTurmas.getSelectedRow();
-        turmaEdita = tmt.getTurma(linha);
+    private void estadoInicial(){
+        comboEscolas.setEnabled(true);
+        comboSerie.setEnabled(false);
+        txtTurma.setEnabled(false);
+        txtVagas.setEnabled(false);
+        comboPeriodo.setEnabled(false);
         
-        comboEscolas.setSelectedItem(turmaEdita.getEscola());
-        comboEscolas.setEnabled(false);
-        
-        comboPeriodo.setEnabled(true);
-        comboPeriodo.setSelectedItem(turmaEdita.getPeriodo());
-        
-        comboSerie.setEnabled(true);
-        comboSerie.setSelectedItem(turmaEdita.getTurma());
-        
-        txtTurma.setEnabled(true);
-        txtTurma.setText(turmaEdita.getLetra());
-        
-        txtVagas.setEnabled(true);
-        txtVagas.setText(String.valueOf(turmaEdita.getVagas()));
-        
+        btnNovaTurma.setEnabled(true);
+        btnCancelar.setEnabled(false);
         btnAddTurma.setEnabled(false);
-        btnSalvar.setEnabled(true);
-        btnEditar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-        btnNovaTurma.setEnabled(false);
         btnRemoverTurma.setEnabled(false);
-        btnAvancarTurma.setEnabled(true);
+        btnAvancarTurma.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnSalvar.setEnabled(false);
+    }
+    
+    private Turma pegaTurma(){
+        int linha = tabelaTurmas.getSelectedRow();
+        return tmt.getTurma(linha);
+    }
+    
+    private void editarTurma(){
+        if (tabelaTurmas.getSelectedRow() != -1){
+            edicao = true;
+            apto = true;
+
+            turmaEdita = pegaTurma();
+
+            comboEscolas.setSelectedItem(turmaEdita.getEscola());
+            comboPeriodo.setSelectedItem(turmaEdita.getPeriodo());
+            comboSerie.setSelectedItem(turmaEdita.getTurma());
+            txtTurma.setText(turmaEdita.getLetra());
+            txtVagas.setText(String.valueOf(turmaEdita.getVagas()));
+
+            comboEscolas.setEnabled(false);
+            comboPeriodo.setEnabled(true);
+            comboSerie.setEnabled(true);
+            txtTurma.setEnabled(true);
+            txtVagas.setEnabled(true);
+
+            btnAddTurma.setEnabled(false);
+            btnSalvar.setEnabled(true);
+            btnEditar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnNovaTurma.setEnabled(false);
+            btnRemoverTurma.setEnabled(false);
+            btnAvancarTurma.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar uma turma para editá-la.");
+        }
     }
     
     private void defineCamposEditar(){
@@ -105,44 +127,29 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     }
     
     public void cancelar(){
+        apto = false;
         tabelaTurmas.clearSelection();
         
-        comboEscolas.setEnabled(true);
-        
-        comboPeriodo.setEnabled(false);
-        
-        comboSerie.setEnabled(false);
-        
-        txtTurma.setEnabled(false);
         txtTurma.setText("");
-        
-        txtVagas.setEnabled(false);
         txtVagas.setText("");
         
-        btnAddTurma.setEnabled(false);
-        btnSalvar.setEnabled(false);
-        btnEditar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-        btnNovaTurma.setEnabled(true);
-        btnRemoverTurma.setEnabled(false);
-        
+        estadoInicial();
+        turma = new Turma();
         if (edicao){
             turmaEdita = null;
             edicao = false;
+            System.out.println("edicao");
         } else if (exclusao){
             comboEscolas.setSelectedItem(turmaExclui.getEscola());
-            turmas.add(turmaExclui);
-            tmt.addTurma(turmaExclui);
             exclusao = false;
-            turmaExclui = null;
+            turmaExclui = new Turma();
+            System.out.println("exclusao");
+        } else {
+            
         }
+        atualizarTabelaTurmas(buscaAtualizado());
     }
-    
-    private Turma pegaTurma(){
-        int linha = tabelaTurmas.getSelectedRow();
-        return tmt.getTurma(linha);
-    }
-    
+   
     private void avancarTurma(){
         Turma t = pegaTurma();
         AlunoDAO adao = new AlunoDAO();
@@ -180,7 +187,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
         txtVagas.setEnabled(true);
         
         btnAddTurma.setEnabled(true);
-        btnSalvar.setEnabled(false);
+        btnSalvar.setEnabled(true);
         btnEditar.setEnabled(false);
         btnCancelar.setEnabled(true);
         btnNovaTurma.setEnabled(false);
@@ -188,38 +195,48 @@ public class JFCriarTurmas extends javax.swing.JFrame {
        
     }
     
-    private void colocaTurmaNaLista(List<Turma> turmas){
-        Turma t = new Turma();
+    private boolean verificaCampos(){
         if (!txtTurma.getText().trim().equals("") && !txtVagas.getText().trim().equals("")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private void colocaTurmaNaLista(){
+        Turma t = new Turma();
+        if (verificaCampos()){
             int vagas = Integer.parseInt(txtVagas.getText());
             t.setEscola(esc);
             t.setTurma(comboSerie.getSelectedItem().toString());
             t.setLetra(txtTurma.getText());
             t.setVagas(vagas);
             t.setPeriodo(comboPeriodo.getSelectedItem().toString());
-            turmas.add(t);
-            txtTurma.setText("");
-            txtVagas.setText("");
-            btnSalvar.setEnabled(true);
+            turma = t;
+            limpar();
+            btnAddTurma.setEnabled(false);
             tmt.addTurma(t);
+            apto = true;
         } else {
             JOptionPane.showMessageDialog(null, "Você não preencheu todos os campos"); //trocar isso aqui por um hint
         }
     }
     
     private void excluiTurmaDaLista(List<Turma> turmas){
+        apto = true;
         exclusao = true;
-        int linha = tabelaTurmas.getSelectedRow();
-        Turma t = tmt.getTurma(linha);
+        Turma t = pegaTurma();
         
-        tabelaTurmas.clearSelection();
-        btnEditar.setEnabled(false);
-            
         turmaExclui = t;
         turmas.remove(t);
+        
+        btnRemoverTurma.setEnabled(false);
         btnSalvar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnNovaTurma.setEnabled(false);
+        btnEditar.setEnabled(false);
+        
+        tabelaTurmas.clearSelection();
     }
     
     private void limpar(){
@@ -234,27 +251,45 @@ public class JFCriarTurmas extends javax.swing.JFrame {
 
     private void salvar(){
         TurmaDAO tdao = new TurmaDAO();
-        if (edicao){
-            defineCamposEditar();
-            tdao.editar(turmaEdita);
-            JOptionPane.showMessageDialog(this, "Turma editada!");
-            limpar();
-            atualizarTabelaTurmas(turmas);
-        } else if (exclusao) {
-            tdao.excluir(turmaExclui);
-            JOptionPane.showMessageDialog(this, "Turma excluída!");
+        
+        if (apto){
+            if (edicao){
+                defineCamposEditar();
+                tdao.editar(turmaEdita);
+                JOptionPane.showMessageDialog(this, "Turma editada!");
+                limpar();
+                edicao = false;
+                cancelar();
+            } else if (exclusao) {
+                tdao.excluir(turmaExclui);
+                JOptionPane.showMessageDialog(this, "Turma excluída!");
+                exclusao = false;
+                cancelar();
+            } else {
+                tdao.inserir(turma);
+                JOptionPane.showMessageDialog(this, "Turmas salvas!");
+                limpar();
+                cancelar();
+            }
+            atualizarTabelaTurmas(buscaAtualizado());
+            tabelaTurmas.clearSelection();
+            apto = false;
         } else {
-            tdao.editarList(turmas);
-            JOptionPane.showMessageDialog(this, "Turmas salvas!");
-            limpar();
-            atualizarTabelaTurmas(turmas);
+            JOptionPane.showMessageDialog(this, "Não é possível salvar sem preencher todos os campos.");
         }
         
-        btnSalvar.setEnabled(false);
-        btnEditar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-        btnNovaTurma.setEnabled(true);
-        comboEscolas.setEnabled(true);
+    }
+    
+    private List<Turma> buscaAtualizado(){
+        TurmaDAO tdao = new TurmaDAO();
+        List<Turma> turmas = new ArrayList<>();
+            for (Turma t : tdao.buscaTodas()){
+                if (t.getEscola().getId() == esc.getId()){
+                    turmas.add(t);
+                    //System.out.println(t);
+                }
+            }
+        return turmas;
     }
     /**
      * Inicia todos os componentes. Gerado automaticamente pelo Swing e, portanto,
@@ -607,7 +642,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     private javax.swing.JTextField txtVagas;
     // End of variables declaration//GEN-END:variables
     private Escola esc = new Escola();
-    private List<Turma> turmas = null;
+    private Turma turma = new Turma();
     private OuvintesAction oa = new OuvintesAction();
     private OuvintesItems oi = new OuvintesItems();
     private OuvintesLista ols = new OuvintesLista();
@@ -618,6 +653,7 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     private Turma turmaEdita = new Turma();
     private boolean exclusao = false;
     private Turma turmaExclui = new Turma();
+    private boolean apto;
     
     class OuvintesAction implements ActionListener{
         @Override
@@ -627,10 +663,10 @@ public class JFCriarTurmas extends javax.swing.JFrame {
             } else if (ae.getSource() == btnMinimizar){
                 setExtendedState(ICONIFIED);
             } else if (ae.getSource() == btnAddTurma){
-                colocaTurmaNaLista(turmas);
+                colocaTurmaNaLista();
             } else if  (ae.getSource() == btnRemoverTurma){
-                excluiTurmaDaLista(turmas);
-                atualizarTabelaTurmas(turmas);
+                excluiTurmaDaLista(esc.getTurmas());
+                atualizarTabelaTurmas(esc.getTurmas());
             } else if (ae.getSource() == btnSalvar){
                 salvar();
             } else if (ae.getSource() == btnEditar){
@@ -652,9 +688,9 @@ public class JFCriarTurmas extends javax.swing.JFrame {
             if (ie.getSource() == comboEscolas){
                 tabelaTurmas.clearSelection();
                 esc = (Escola) comboEscolas.getSelectedItem();
-                turmas = esc.getTurmas();
-                tmt = new TableModelTurma(turmas);
-                tabelaTurmas.setModel(tmt);
+                atualizarTabelaTurmas(buscaAtualizado());
+                cancelar();
+                estadoInicial();
             }
         }
     }
@@ -662,18 +698,18 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     class OuvintesLista implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent lse) {
-                int linha = tabelaTurmas.getSelectedRow();
-                Turma t = tmt.getTurma(linha);
-                try {
-                    tma = new TableModelAluno(t.getAlunos());
-                    tabelaAlunos.setModel(tma);
-                } catch (Exception e){
-                    
-                }
-                if (!exclusao){
-                    btnEditar.setEnabled(true);
-                }
-                btnRemoverTurma.setEnabled(true);
+            btnRemoverTurma.setEnabled(true);
+            int linha = tabelaTurmas.getSelectedRow();
+            Turma t = tmt.getTurma(linha);
+            try {
+                tma = new TableModelAluno(t.getAlunos());
+                tabelaAlunos.setModel(tma);
+            } catch (Exception e){
+
+            }
+            if (!exclusao){
+                btnEditar.setEnabled(true);
+            }
         }
     }
     

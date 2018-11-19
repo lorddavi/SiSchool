@@ -240,7 +240,7 @@ public class AbrirTelas {
     }
     
     public void abrirJFBackup(Login login){
-        if (nivelAcesso(login) == 2) {
+        if (nivelAcesso(login) >= 2) {
             if (bac == null){
                 bac = new JFBackup(login);
                 setarIconeNoTitulo(bac, "SiSchool - Backup");

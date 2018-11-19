@@ -982,6 +982,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtTelefonesCadFunc.setInputVerifier(new VerificadorDeTelefone());
 
         checkDesligado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        checkDesligado.setSelected(true);
         checkDesligado.setText("Funcionário ativo.");
         checkDesligado.setEnabled(false);
 
@@ -1841,7 +1842,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                     return false;
                 }
                 
-                switch (texto.length()) {
+                switch (texto.trim().length()) {
                     case 8: 
                         return true;
                     case 9:

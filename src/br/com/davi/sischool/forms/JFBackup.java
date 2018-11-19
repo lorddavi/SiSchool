@@ -169,11 +169,8 @@ public class JFBackup extends javax.swing.JFrame {
         panelBackup = new javax.swing.JPanel();
         btnBackup = new javax.swing.JButton();
         btnRestaura = new javax.swing.JButton();
-        checkAlunos = new javax.swing.JCheckBox();
-        checkProfessores = new javax.swing.JCheckBox();
-        checkFuncionarios = new javax.swing.JCheckBox();
-        checkEscolas = new javax.swing.JCheckBox();
-        lblfoto = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -208,7 +205,7 @@ public class JFBackup extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBarraDeTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,59 +234,46 @@ public class JFBackup extends javax.swing.JFrame {
         btnRestaura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnRestaura.setText("Restaurar Backup");
 
-        checkAlunos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        checkAlunos.setText("Alunos");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/restaurarbackup.png"))); // NOI18N
 
-        checkProfessores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        checkProfessores.setText("Professores");
-
-        checkFuncionarios.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        checkFuncionarios.setText("Funcionários");
-
-        checkEscolas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        checkEscolas.setText("Escolas");
-
-        lblfoto.setText("jLabel1");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/davi/sischool/icons/fazerbackup.png"))); // NOI18N
 
         javax.swing.GroupLayout panelBackupLayout = new javax.swing.GroupLayout(panelBackup);
         panelBackup.setLayout(panelBackupLayout);
         panelBackupLayout.setHorizontalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(btnBackup)
-                .addGap(51, 51, 51)
-                .addComponent(btnRestaura)
-                .addContainerGap(51, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackupLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(lblfoto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkAlunos)
-                    .addComponent(checkEscolas)
-                    .addComponent(checkFuncionarios)
-                    .addComponent(checkProfessores))
-                .addGap(166, 166, 166))
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRestaura))
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBackup)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBackupLayout.setVerticalGroup(
             panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBackupLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(checkAlunos)
-                    .addComponent(lblfoto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkProfessores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkFuncionarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkEscolas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBackup)
-                    .addComponent(btnRestaura))
-                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackupLayout.createSequentialGroup()
+                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addContainerGap(12, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btnBackup)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(panelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBackupLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackupLayout.createSequentialGroup()
+                        .addComponent(btnRestaura)
+                        .addGap(62, 62, 62))))
         );
 
         javax.swing.GroupLayout panelFundoLayout = new javax.swing.GroupLayout(panelFundo);
@@ -298,8 +282,8 @@ public class JFBackup extends javax.swing.JFrame {
             panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFundoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelBackup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelFundoLayout.setVerticalGroup(
             panelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,9 +298,7 @@ public class JFBackup extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(panelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,12 +331,9 @@ public class JFBackup extends javax.swing.JFrame {
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnRestaura;
-    private javax.swing.JCheckBox checkAlunos;
-    private javax.swing.JCheckBox checkEscolas;
-    private javax.swing.JCheckBox checkFuncionarios;
-    private javax.swing.JCheckBox checkProfessores;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblTituloPrincipal;
-    private javax.swing.JLabel lblfoto;
     private javax.swing.JPanel panelBackup;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelFundo;

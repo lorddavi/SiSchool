@@ -14,10 +14,16 @@ import br.com.davi.sischool.regras.EscolaDAO;
 import br.com.davi.sischool.regras.OutroCargoDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -52,13 +58,12 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         btnMinimizar.addActionListener(oa);
         btnAddTel.addActionListener(oa);
         btnRemoveTel.addActionListener(oa);
-        btnBuscar.addActionListener(oa);
         btnCancelar.addActionListener(oa);
         btnEditar.addActionListener(oa);
         btnSalvar.addActionListener(oa);
-        txtBuscar.addActionListener(oa);
         btnExcluir.addActionListener(oa);
         btnNovaEscola.addActionListener(oa);
+        txtBuscar.addKeyListener(new OuvintesKeyListener());
         tabelaEscolas.getSelectionModel().addListSelectionListener(new OuvintesListSelection());
     }
     
@@ -88,10 +93,14 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         endereco = escola.getEndereco();
         bairro = escola.getBairro();
         telef = escola.getTelefones();
+        cep = escola.getCep();
+        email = escola.getEmail();
         
         txtNomeCadEscola.setText(nome);
         txtEnderecoCadEscola.setText(endereco);
         txtBairroCadEscola.setText(bairro);
+        txtFCep.setText(cep);
+        txtEmail.setText(email);
         camposTelef.exibeTelefonesNoJList(listTelefone, telef);
         
         btnNovaEscola.setEnabled(false);
@@ -106,6 +115,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtEnderecoCadEscola.setEnabled(false);
         txtBairroCadEscola.setEnabled(false);
         txtTelefones.setEnabled(false);
+        txtFCep.setEnabled(false);
+        txtEmail.setEnabled(false);
         btnAddTel.setEnabled(false);
         btnRemoveTel.setEnabled(false);
         
@@ -121,12 +132,14 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtEnderecoCadEscola.setEnabled(true);
         txtBairroCadEscola.setEnabled(true);
         txtTelefones.setEnabled(true);
+        txtFCep.setEnabled(true);
+        txtEmail.setEnabled(true);
         btnAddTel.setEnabled(true);
         btnRemoveTel.setEnabled(true);
     }
     
     private void limpar(){
-        nome = ""; endereco = ""; bairro = "";
+        nome = ""; endereco = ""; bairro = ""; email = ""; cep = "";
         edicao = false;
         escolas = new ArrayList<>();
         telef = new ArrayList<>();
@@ -135,6 +148,8 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtEnderecoCadEscola.setText("");
         txtBairroCadEscola.setText("");
         txtTelefones.setText("");
+        txtFCep.setText("");
+        txtEmail.setText("");
         camposTelef.exibeTelefonesNoJList(listTelefone, telef);
     }
     
@@ -180,6 +195,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         } else if (txtBairroCadEscola.getText().trim().equals("")) {
             txtBairroCadEscola.requestFocus();
             return false;
+       } else if (txtFCep.getText().trim().length()<7){
+           txtFCep.requestFocus();
+           return false;
        }
         return true;
     }
@@ -188,11 +206,14 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         nome = txtNomeCadEscola.getText();
         endereco = txtEnderecoCadEscola.getText();
         bairro = txtBairroCadEscola.getText();
-        //telef
+        cep = txtFCep.getText();
+        email = txtEmail.getText();
        
         escola.setNome(nome);
         escola.setEndereco(endereco);
         escola.setBairro(bairro);
+        escola.setCep(cep);
+        escola.setEmail(email);
         escola.setTelefones(telef);
     }
     
@@ -248,13 +269,16 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         txtBairroCadEscola = new javax.swing.JTextField();
         btnAddTel = new javax.swing.JButton();
         btnRemoveTel = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        txtFCep = new javax.swing.JFormattedTextField();
         btnCancelar = new javax.swing.JButton();
         panelTabela = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaEscolas = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -334,6 +358,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
 
         txtTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTelefones.setEnabled(false);
+        txtTelefones.setInputVerifier(new VerificadorDeTelefone());
 
         listTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listTelefone);
@@ -352,27 +377,49 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         btnRemoveTel.setContentAreaFilled(false);
         btnRemoveTel.setEnabled(false);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("CEP:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("E-mail:");
+
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setEnabled(false);
+
+        try {
+            txtFCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtFCep.setEnabled(false);
+        txtFCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtFCep.setInputVerifier(new VerificadorCEP());
+
         javax.swing.GroupLayout panelCadastroLayout = new javax.swing.GroupLayout(panelCadastro);
         panelCadastro.setLayout(panelCadastroLayout);
         panelCadastroLayout.setHorizontalGroup(
             panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCadastroLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4)
                     .addComponent(jLabel1)
-                    .addComponent(txtNomeCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeCadEscola, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(txtEnderecoCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnderecoCadEscola, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBairroCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(txtBairroCadEscola, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                     .addComponent(jLabel8)
                     .addGroup(panelCadastroLayout.createSequentialGroup()
                         .addComponent(txtTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAddTel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRemoveTel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRemoveTel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFCep, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
         panelCadastroLayout.setVerticalGroup(
@@ -390,7 +437,15 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(5, 5, 5)
                 .addComponent(txtBairroCadEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(4, 4, 4)
+                .addComponent(txtFCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -399,7 +454,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                     .addComponent(btnAddTel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -416,9 +471,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         jLabel5.setText("Buscar Escola:");
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnBuscar.setText("Buscar");
+        txtBuscar.setToolTipText("Digite paraprocurar");
 
         javax.swing.GroupLayout panelTabelaLayout = new javax.swing.GroupLayout(panelTabela);
         panelTabela.setLayout(panelTabelaLayout);
@@ -427,15 +480,12 @@ public class JFCadastroEscola extends javax.swing.JFrame {
             .addGroup(panelTabelaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                     .addGroup(panelTabelaLayout.createSequentialGroup()
                         .addGroup(panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelTabelaLayout.createSequentialGroup()
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(btnBuscar))
-                            .addComponent(jLabel5))
-                        .addGap(0, 95, Short.MAX_VALUE)))
+                            .addComponent(jLabel5)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelTabelaLayout.setVerticalGroup(
@@ -444,11 +494,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -569,7 +617,6 @@ public class JFCadastroEscola extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddTel;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
@@ -581,7 +628,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -595,7 +644,9 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private javax.swing.JTable tabelaEscolas;
     private javax.swing.JTextField txtBairroCadEscola;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEnderecoCadEscola;
+    private javax.swing.JFormattedTextField txtFCep;
     private javax.swing.JTextField txtNomeCadEscola;
     private javax.swing.JTextField txtTelefones;
     // End of variables declaration//GEN-END:variables
@@ -608,7 +659,7 @@ public class JFCadastroEscola extends javax.swing.JFrame {
     private CamposDeTelefone camposTelef = new CamposDeTelefone();
     private List<Escola> escolas = new ArrayList<>();
     private TableModelEscola tme = new TableModelEscola();
-    private String nome, endereco, bairro;
+    private String nome, endereco, bairro, cep, email;
     private boolean edicao = false;
     
     private class OuvintesAction implements ActionListener {
@@ -631,10 +682,6 @@ public class JFCadastroEscola extends javax.swing.JFrame {
                 editarEscola(selecionaEscola());
             } else if (ae.getSource() == btnSalvar){
                 salvar();
-            } else if (ae.getSource() == btnBuscar){
-                buscaEscola();
-            } else if (ae.getSource() == txtBuscar){
-                buscaEscola();
             } else if (ae.getSource() == btnExcluir){
                 excluirEscola();
             } else if (ae.getSource() == btnNovaEscola){
@@ -643,13 +690,98 @@ public class JFCadastroEscola extends javax.swing.JFrame {
         } 
     }    
     
+    private class OuvintesKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            if (ke.getSource()==txtBuscar){
+                buscaEscola();
+            }
+        }
+        
+    }
+    
     private class OuvintesListSelection implements ListSelectionListener{
         @Override
         public void valueChanged(ListSelectionEvent lse) {
             btnEditar.setEnabled(true);
         }
-        
     }
+    
+    class VerificadorDeTelefone extends InputVerifier {
+	public VerificadorDeTelefone() {
+        }
+        
+        @Override
+	public boolean verify(JComponent jc) {
+            txtTelefones = (JTextField) jc;
+            String texto = txtTelefones.getText();
+
+            try {
+                if (texto.trim().length() == 0){
+                    return(true);
+		} 
+                
+                try {
+                    long numero = Long.parseLong(texto);
+                } catch (NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Digite apenas números!");
+                    return false;
+                }
+                
+                switch (texto.trim().length()) {
+                    case 8: 
+                        return true;
+                    case 9:
+                        return true;
+                    case 10:
+                        return true;
+                    case 11:
+                        return true;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+                
+            } catch (IllegalArgumentException ex) {
+		JOptionPane.showMessageDialog(null, "Telefone inválido");
+		return (false);
+            }
+        }
+    }    
+    
+    class VerificadorCEP extends InputVerifier {
+	public VerificadorCEP() {
+        }
+        
+        @Override
+	public boolean verify(JComponent jc) {
+            txtFCep = (JFormattedTextField) jc;
+            String texto = txtFCep.getText();
+           
+            try {
+                if (texto.trim().length() == 1){
+                    return true;
+		} 
+                
+                if (texto.trim().length() == 9){
+                    return true;
+                } else {
+                    throw new IllegalArgumentException();
+                }
+                
+            } catch (IllegalArgumentException ex) {
+		JOptionPane.showMessageDialog(null, "CEP inválido!");
+		return (false);
+            }
+        }
+    }    
     
     private class TableModelEscola extends AbstractTableModel {
         private List<Escola> linhas;

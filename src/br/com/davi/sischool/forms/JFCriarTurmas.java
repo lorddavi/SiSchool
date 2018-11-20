@@ -140,10 +140,14 @@ public class JFCriarTurmas extends javax.swing.JFrame {
             edicao = false;
             System.out.println("edicao");
         } else if (exclusao){
-            comboEscolas.setSelectedItem(turmaExclui.getEscola());
-            exclusao = false;
-            turmaExclui = new Turma();
-            System.out.println("exclusao");
+            try{
+                comboEscolas.setSelectedItem(turmaExclui.getEscola());
+                exclusao = false;
+                turmaExclui = new Turma();
+                System.out.println("exclusao");
+            } catch (Exception e){
+                
+            }
         } else {
             
         }
@@ -245,7 +249,13 @@ public class JFCriarTurmas extends javax.swing.JFrame {
     }
     
     private void atualizarTabelaTurmas(List<Turma> turmas){
-        tmt = new TableModelTurma(turmas);
+        TurmaDAO tdao = new TurmaDAO();
+        List<Turma> lista = new ArrayList<>();
+        
+        for (Turma t: turmas){
+            lista.add(tdao.buscarId(t.getId()));
+        }
+        tmt = new TableModelTurma(lista);
         tabelaTurmas.setModel(tmt);
     }
 

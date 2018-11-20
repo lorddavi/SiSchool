@@ -54,10 +54,9 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        listSolicitacoes = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAdescricao = new javax.swing.JTextArea();
         btnConfirmarTransferencia = new javax.swing.JButton();
         btnCancelarTransferencia = new javax.swing.JButton();
 
@@ -114,13 +113,13 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(listSolicitacoes);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane3.setViewportView(jTextArea1);
+        txtAdescricao.setColumns(20);
+        txtAdescricao.setLineWrap(true);
+        txtAdescricao.setRows(5);
+        txtAdescricao.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtAdescricao);
 
         btnConfirmarTransferencia.setText("Confirmar");
 
@@ -136,30 +135,27 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(btnCancelarTransferencia)
                         .addGap(64, 64, 64)
                         .addComponent(btnConfirmarTransferencia)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(456, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnConfirmarTransferencia)
                             .addComponent(btnCancelarTransferencia)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -176,7 +172,7 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelBarraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelPrincipal);
@@ -189,7 +185,7 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
         preencheLista();
         setaListeners();
         listaSeleciona();
-        jList1.setSelectedIndex(0);
+        listSolicitacoes.setSelectedIndex(0);
     }
     
     private void  setaListeners(){
@@ -203,11 +199,11 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
         
     private void preencheLista(){
         DefaultListModel<Transferencia> model = new DefaultListModel<>();
-        jList1.setModel(model);
+        listSolicitacoes.setModel(model);
         List<Transferencia> listaTrans = transDao.buscaTodas();
         int i=0;
         for (Transferencia t: listaTrans){
-            if (t.getEscola().getId() == func.getEscola().getId()) {
+            if (t.getAluno().getEscola().getId() == func.getEscola().getId()) {
                 model.add(i, t);
                 i++;
             }
@@ -216,7 +212,7 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
     }
     
     private void pegaItemSelecionado(){
-        transf = jList1.getSelectedValue();
+        transf = listSolicitacoes.getSelectedValue();
         if (transf != null){
             String nome = transf.getFuncionario().getNome();
             String nomeAluno = transf.getAluno().getNome();
@@ -225,24 +221,47 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
             String texto = nome + " deseja transferir o aluno " 
                     + nomeAluno + " da escola " + escolaVelha + " para a turma " +  turma +
                     " da escola " + transf.getEscola().getNome();
-           jTextArea1.setText(texto);
+           txtAdescricao.setText(texto);
+        }
+    }
+    
+    private void cancelar(){
+        if (listSolicitacoes.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar uma solicitação para cancelar.");
+        } else {
+            transf = listSolicitacoes.getSelectedValue();
+            transDao.remover(transf.getId());
+            JOptionPane.showMessageDialog(null, "A solicitação foi cancelada.");
+            preencheLista();
+            limpar();
         }
     }
     
     private void aceitarTransferecia(){
-        transf = jList1.getSelectedValue();
-        Aluno a = transf.getAluno();
-        a.setEscola(transf.getEscola());
-        a.setSerie(transf.getTurma());
-        alunoDao.editar(a);
-        transDao.remover(transf.getId());
-        JOptionPane.showMessageDialog(null, "O aluno foi transferido com sucesso.");
+        if (listSolicitacoes.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar uma solicitação para confirmar.");
+        } else {
+            transf = listSolicitacoes.getSelectedValue();
+            Aluno a = transf.getAluno();
+            a.setEscola(transf.getEscola());
+            a.setSerie(transf.getTurma());
+            alunoDao.editar(a);
+            transDao.remover(transf.getId());
+            JOptionPane.showMessageDialog(null, "O aluno foi transferido com sucesso.");
+            preencheLista();
+            limpar();
+        }
+    }
+    
+    private void limpar(){
+        listSolicitacoes.setSelectedIndex(-1);
+        txtAdescricao.setText("");
     }
 
     //COLOCAR UM LIST SELECTION LISTENER NO LUGAR
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == jList1){
+        if (evt.getSource() == listSolicitacoes){
             pegaItemSelecionado();
         }
     }
@@ -254,7 +273,7 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
                 pegaItemSelecionado();
             }
         };
-        jList1.addListSelectionListener(lsl);
+        listSolicitacoes.addListSelectionListener(lsl);
     }
     
     /**
@@ -297,16 +316,15 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton btnConfirmarTransferencia;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnMinimizar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<Transferencia> jList1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblTituloPrincipal;
+    private javax.swing.JList<Transferencia> listSolicitacoes;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTextArea txtAdescricao;
     // End of variables declaration//GEN-END:variables
     private OutroCargo func = new OutroCargo();
     private Transferencia transf = new Transferencia();
@@ -322,6 +340,8 @@ public class JFAvisos extends javax.swing.JFrame implements ActionListener {
                 dispose();
             } else if (ae.getSource() == btnConfirmarTransferencia){
                 aceitarTransferecia();
+            } else if (ae.getSource() == btnCancelarTransferencia){
+                cancelar();
             }
         }
         

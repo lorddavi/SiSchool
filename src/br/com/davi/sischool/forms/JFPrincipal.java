@@ -8,10 +8,20 @@ package br.com.davi.sischool.forms;
 import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
 import br.com.davi.sischool.funcoes.AbrirTelas;
-import java.awt.Image;
-import java.awt.Toolkit;
+import br.com.davi.sischool.model.OutroCargo;
+import br.com.davi.sischool.model.Transferencia;
+import br.com.davi.sischool.regras.OutroCargoDAO;
+import br.com.davi.sischool.regras.TransferenciaDAO;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -59,6 +69,41 @@ public final class JFPrincipal extends javax.swing.JFrame {
         btnSeguranca.addActionListener(oa);
         btnLogout.addActionListener(oa);
         btnCriarTurmas.addActionListener(oa);
+        btnHelp.addActionListener(oa);
+        
+        this.addWindowListener(new OuvintesWindowsListener());
+    }
+    
+    private void checaTransferencias(){
+        if (func.getAcesso()>=1){
+            boolean temTrans = false;
+            OutroCargo oc = new OutroCargo();
+            OutroCargoDAO ocdao = new OutroCargoDAO();
+
+            oc = ocdao.buscarFunc(func.getId());
+
+            TransferenciaDAO tdao = new TransferenciaDAO();
+            for (Transferencia t: tdao.buscaTodas()){
+                if (t.getAluno().getEscola().getId() == oc.getEscola().getId()){
+                    temTrans = true;
+                }
+            }
+
+            if (temTrans){
+                btnWarning.setEnabled(true);
+            } else {
+                btnWarning.setEnabled(false);
+            }
+        }
+    }
+    
+    private void abrirPdf(){
+        Desktop desktop = Desktop.getDesktop();  
+        try {
+            desktop.open(new File("C:\\Users\\Davi\\Downloads\\Eduvale\\TCC\\SiSchool\\Manual-Do-Usuario.pdf"));
+        } catch (IOException ex) {
+            System.out.println("Arquivo não encontrado.");
+        }
     }
 
     /**
@@ -997,9 +1042,8 @@ public final class JFPrincipal extends javax.swing.JFrame {
                 abrirTelas.abrirJFAvisos(login);
             } else if (ae.getSource() == btnProfTurmasII){
                 abrirTelas.abrirJFProfTurmasPebII(login);
-//            } else if (ae.getSource() == btnInfo){
-//                 JDTestarRetornos ce = new JDTestarRetornos(null, rootPaneCheckingEnabled);
-//                 ce.setVisible(true);
+            } else if (ae.getSource() == btnHelp){
+                 abrirPdf();
             } else if (ae.getSource() == btnTransferirAluno){
                 abrirTelas.abrirJFTransferirAlunos(login);
             } else if (ae.getSource() == btnCriarTurmas){
@@ -1007,5 +1051,33 @@ public final class JFPrincipal extends javax.swing.JFrame {
             }
         }
         
+    }
+    
+    private class OuvintesWindowsListener implements WindowListener {
+        @Override
+        public void windowOpened(WindowEvent we) {
+        }
+        @Override
+        public void windowClosing(WindowEvent we) {
+        }
+        @Override
+        public void windowClosed(WindowEvent we) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent we) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent we) {
+        }
+        @Override
+        public void windowActivated(WindowEvent we) {
+            checaTransferencias();
+        }
+        @Override
+        public void windowDeactivated(WindowEvent we) {
+        }
+
     }
 }

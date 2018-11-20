@@ -113,10 +113,7 @@
 	<columnHeader>
 		<band height="37">
 			<rectangle>
-				<reportElement x="470" y="2" width="85" height="21" backcolor="#E6E6E6" uuid="72cff462-6c51-4f9a-9781-6714596745be"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="324" y="2" width="140" height="21" forecolor="#000000" backcolor="#E6E6E6" uuid="5cdc646c-46b5-4b14-838d-e85261f5d759"/>
+				<reportElement x="324" y="2" width="231" height="21" forecolor="#000000" backcolor="#E6E6E6" uuid="5cdc646c-46b5-4b14-838d-e85261f5d759"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="241" y="2" width="70" height="21" backcolor="#E6E6E6" uuid="4009a522-f59c-417b-aec0-2cadb4b18a1d"/>
@@ -163,15 +160,6 @@
 				</textElement>
 				<text><![CDATA[Escola]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="476" y="7" width="81" height="20" uuid="eadd60bc-c737-4463-838b-751adb812554">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ca636f5-ede7-46fe-a472-206603af0295"/>
-				</reportElement>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Data/Nascimento]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -195,16 +183,10 @@
 				<textFieldExpression><![CDATA[$F{serie}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="324" y="0" width="140" height="20" uuid="67383ab7-b4b1-41f6-923c-7dc8f1523f55">
+				<reportElement x="324" y="0" width="231" height="20" uuid="67383ab7-b4b1-41f6-923c-7dc8f1523f55">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f91e211d-7ceb-4424-8f1e-d2ba0d972f9c"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{escola}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="480" y="0" width="60" height="20" uuid="a74a0210-47d1-4887-a687-71362103e15f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ca636f5-ede7-46fe-a472-206603af0295"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{dataNasc}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="-1" y="18" width="556" height="1" uuid="3453b7c4-5b4a-4e87-9da8-53ca7c3b408c">

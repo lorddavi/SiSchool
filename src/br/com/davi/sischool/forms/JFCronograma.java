@@ -54,10 +54,43 @@ public class JFCronograma extends javax.swing.JFrame {
         lblNomeTurma.setText(t.toString());
         preencheCombo.preenchePeriodo(comboAula, t);
         setaListeners();
-        tmp = new TableModelProfessor(pdao.buscarProfessores());
-        tabelaProfs.setModel(tmp);
+        atualizaTabela(colheProfessores(pdao.buscarProfessores()));
         tmc = new TableModelCronograma(t);
         tabelaCrono.setModel(tmc);
+    }
+    
+    private List<Professor> colheProfessores(List<Professor> profs){
+        List<Professor> lista = new ArrayList<>();
+        Turma t = (Turma) comboTurmas.getSelectedItem();
+        for (Professor p: profs){
+            for (Escola e: p.getEscola()){
+                if (e.getId() == oc.getEscola().getId()){
+                    if (p.getCargo().equals("Professor PEB I")){
+                        try {
+                            if (t.getProfPebI().getId() == p.getId()){
+                                lista.add(p);
+                            }
+                        } catch (Exception ex){
+                            
+                        }
+                    } else {
+                        ProfessorPebIIDAO piidao = new ProfessorPebIIDAO();
+                        ProfessorPebII p2 = piidao.buscarId(p.getId());
+                        for (Turma turma: p2.getTurmas()){
+                            try {
+                                if (turma.getId() == t.getId()){
+                                    lista.add(p);
+                                }
+                            } catch (Exception ex){
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return lista;
     }
     
     private void setaListeners(){
@@ -461,6 +494,7 @@ public class JFCronograma extends javax.swing.JFrame {
                 t = (Turma) comboTurmas.getSelectedItem();
                 lblNomeTurma.setText(t.toString());
                 preencheCombo.preenchePeriodo(comboAula, t);
+                atualizaTabela(colheProfessores(pdao.buscarProfessores()));
                 tmc = new TableModelCronograma(t);
                 tabelaCrono.setModel(tmc);
             }
@@ -508,7 +542,7 @@ public class JFCronograma extends javax.swing.JFrame {
         public void keyReleased(KeyEvent ke) {
             if (ke.getSource() == txtBusca){
                 String busca = "%" + txtBusca.getText() + "%";
-                atualizaTabela(pdao.buscarPorNome(busca));
+                atualizaTabela(colheProfessores(pdao.buscarPorNome(busca)));
             }
         }
         

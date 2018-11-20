@@ -42,22 +42,22 @@ import javax.swing.JOptionPane;
 * 3 = Desenvolvedor.
 */
 public class AbrirTelas {
-    JFPrincipal jfp;
-    JFEstatisticas estatisticas;
-    JFCadastrarAlunos cadAluno;
-    JFConsultas consultas;
-    JFCadastrarFuncionario cadFunc;
-    JFCadastroEscola cadEsc;
-    JFDevCad devCad;
-    JFLogin telaLogin;
-    JFNotasEFaltas notasEFaltas;
-    JFProfTurmas profTurmas;
-    JFTransferirAlunos transfAlunos;
-    JFAvisos avisos;
-    JFPontos telaPontos;
-    JFCronograma crono;
-    JFBackup bac;
-    JFCriarTurmas ct;
+    public JFPrincipal jfp;
+    public JFEstatisticas estatisticas;
+    public JFCadastrarAlunos cadAluno;
+    public JFConsultas consultas;
+    public JFCadastrarFuncionario cadFunc;
+    public JFCadastroEscola cadEsc;
+    public JFDevCad devCad;
+    public JFLogin telaLogin;
+    public JFNotasEFaltas notasEFaltas;
+    public JFProfTurmas profTurmas;
+    public JFTransferirAlunos transfAlunos;
+    public JFAvisos avisos;
+    public JFPontos telaPontos;
+    public JFCronograma crono;
+    public JFBackup bac;
+    public JFCriarTurmas ct;
             
     public AbrirTelas(){
         
@@ -74,27 +74,27 @@ public class AbrirTelas {
     }
     
     public void abrirJFPrincipal(Login login){
-        if (jfp == null){
+      //  if (jfp == null){
             jfp = new JFPrincipal(login);
             setarIconeNoTitulo(jfp, "SiSchool - Tela Principal");
-        }            
+      //  }            
         jfp.setVisible(true);
     }
     
     public void abrirJFEstatisticas(Login login){
-        if (estatisticas == null){
+      //  if (estatisticas == null){
             estatisticas = new JFEstatisticas(login);
             setarIconeNoTitulo(estatisticas, "SiSchool - Estatísticas");
-        }
+      //  }
         estatisticas.setVisible(true);
     }
     
     public void abrirJFCadastrarAlunos(Login login){
         if (nivelAcesso(login)>=1){
-            if (cadAluno == null){
+      //      if (cadAluno == null){
                 cadAluno = new JFCadastrarAlunos(login);
                 setarIconeNoTitulo(cadAluno, "SiSchool - Cadastrar Alunos");
-            }
+       //     }
             cadAluno.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite cadastrar alunos!");
@@ -103,10 +103,10 @@ public class AbrirTelas {
     
     public void abrirJFCadastrarAlunosEdicao(OutroCargo oc, Aluno a){
         if (oc.getAcesso()>=1){
-            if (cadAluno == null){
+       //     if (cadAluno == null){
                 cadAluno = new JFCadastrarAlunos(oc, a);
                 setarIconeNoTitulo(cadAluno, "SiSchool - Cadastrar Alunos");
-            }
+        //    }
             cadAluno.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite cadastrar alunos!");
@@ -114,19 +114,19 @@ public class AbrirTelas {
     }
     
     public void abrirJFConsultas(Login login){
-        if (consultas == null){
+//        if (consultas == null){
             consultas = new JFConsultas(login);
             setarIconeNoTitulo(consultas, "SiSchool - Consultas");
-        }
+  //      }
         consultas.setVisible(true);
     }
     
     public void abrirJFCadastrarFuncionarios(Login login){
         if(nivelAcesso(login) >= 1){
-            if (cadFunc == null){
+  //          if (cadFunc == null){
                 cadFunc = new JFCadastrarFuncionario(login);
                 setarIconeNoTitulo(cadFunc, "SiSchool - Cadastro de Funcionários");
-            }
+  //          }
             cadFunc.setVisible(true);   
         } else {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite cadastrar funcionários!");
@@ -135,10 +135,10 @@ public class AbrirTelas {
     
     public void abrirJFCadastroEscola(Login login){
         if (nivelAcesso(login)>=2){
-            if (cadEsc == null){
+  //          if (cadEsc == null){
                 cadEsc = new JFCadastroEscola(login);
                 setarIconeNoTitulo(cadEsc, "SiSchool - Cadastro de Escolas");
-            }
+  //          }
             cadEsc.setVisible(true);
         } else  {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite cadastrar escolas!");
@@ -159,27 +159,27 @@ public class AbrirTelas {
     }
     
     public void abrirJFLogin(Login login){
-        if (telaLogin == null){
+  //      if (telaLogin == null){
             telaLogin = new JFLogin();
             setarIconeNoTitulo(telaLogin, "SiSchool - Login");
-        }
+  //      }
         telaLogin.setVisible(true);
     }
     
     public void abrirJFNotasEFaltas(Login login){
-        if (notasEFaltas == null){
+  //      if (notasEFaltas == null){
             notasEFaltas = new JFNotasEFaltas(login);
             setarIconeNoTitulo(notasEFaltas, "SiSchool - Notas e Faltas");
-        }
+  //      }
         notasEFaltas.setVisible(true);
     }
     
     public void abrirJFProfTurmas(Login login){
         if(nivelAcesso(login) >= 1){
-            if (profTurmas == null){
+  //          if (profTurmas == null){
                 profTurmas = new JFProfTurmas(login);
                 setarIconeNoTitulo(profTurmas, "SiSchool - Atribuição de Turmas");
-            }
+  //          }
             profTurmas.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -189,10 +189,10 @@ public class AbrirTelas {
     
     public void abrirJFTransferirAlunos(Login login){
         if(nivelAcesso(login) >= 1){
-            if (transfAlunos == null){
+  //          if (transfAlunos == null){
                 transfAlunos = new JFTransferirAlunos(login);
                 setarIconeNoTitulo(transfAlunos, "SiSchool - Transferir Alunos");
-            }
+  //          }
             transfAlunos.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -202,10 +202,10 @@ public class AbrirTelas {
     
     public void abrirJFAvisos(Login login){
         if (nivelAcesso(login) >= 1) {
-            if (avisos == null){
+  //          if (avisos == null){
                 avisos = new JFAvisos(login);
                 setarIconeNoTitulo(avisos, "SiSchool - Notificações");
-            }
+  //          }
             avisos.setVisible(true);
         } else {
                 JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -215,10 +215,10 @@ public class AbrirTelas {
     
     public void abrirJFProfTurmasPebII(Login login){
         if (nivelAcesso(login) >= 1) {
-            if (telaPontos == null){
+  //          if (telaPontos == null){
                 telaPontos = new JFPontos(login);
                 setarIconeNoTitulo(telaPontos, "SiSchool - Certificados");
-            }
+  //          }
             telaPontos.setVisible(true);
         } else {
                 JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -228,10 +228,10 @@ public class AbrirTelas {
     
     public void abrirJFCronograma(Login login){
         if (nivelAcesso(login) >= 1) {
-            if (crono == null){
+  //          if (crono == null){
                 crono = new JFCronograma(login);
                 setarIconeNoTitulo(crono, "SiSchool - Cronograma");
-            }
+  //          }
             crono.setVisible(true);
         } else {
                 JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -241,10 +241,10 @@ public class AbrirTelas {
     
     public void abrirJFBackup(Login login){
         if (nivelAcesso(login) >= 2) {
-            if (bac == null){
+  //          if (bac == null){
                 bac = new JFBackup(login);
                 setarIconeNoTitulo(bac, "SiSchool - Backup");
-            }
+  //          }
             bac.setVisible(true);
         } else {
                 JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "
@@ -254,10 +254,10 @@ public class AbrirTelas {
     
     public void abrirJFCriarTurmas(Login login){
         if (nivelAcesso(login) >= 1) {
-            if (ct == null){
+  //          if (ct == null){
                 ct = new JFCriarTurmas(login);
                 setarIconeNoTitulo(ct, "SiSchool - Gestão de Turmas");
-            }
+  //          }
             ct.setVisible(true);
         } else {
                 JOptionPane.showMessageDialog(null, "Seu nível de acesso não te permite "

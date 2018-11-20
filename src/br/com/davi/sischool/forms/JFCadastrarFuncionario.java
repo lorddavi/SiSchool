@@ -5,6 +5,7 @@
  */
 package br.com.davi.sischool.forms;
 
+import br.com.davi.sischool.funcoes.AbrirTelas;
 import br.com.davi.sischool.funcoes.CamposDeTelefone;
 import br.com.davi.sischool.funcoes.ConverteData;
 import br.com.davi.sischool.funcoes.PreencheCombo;
@@ -64,12 +65,14 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         iniciarComponentes();
         tmf = new TableModelFuncionario(listaF());
         tabelaBuscaFuncionarios.setModel(tmf);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     private void iniciarComponentes(){
         preencheCombo.preencheEscolas(comboEscolaOutroCargo);
         funcs = fdao.buscaTodos();
         setaListeners();
+        limpar();
     }
     
     private void setaListeners(){
@@ -144,7 +147,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtCidade.setEnabled(true);
         txtCep.setEnabled(true);
         txtFDataAdmissao.setEnabled(true);
-        txtTelefonesCadFunc.setEnabled(true);
+        txtTelefones.setEnabled(true);
         txtNickNameUsrCadFunc.setEnabled(true);
         pswSenhaUsrCadFunc.setEnabled(true);
         redPswSenhaUsrCadFunc.setEnabled(true);
@@ -161,10 +164,14 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         radioCargoProfCadFunc.setEnabled(true);
         
         checkPossuiDeficiencia.setEnabled(true);
+        checkDesligado.setSelected(true);
         checkDesligado.setEnabled(false);
     
         jListTelefonesCadFunc.setEnabled(true);
         
+       
+        
+        telef = new ArrayList<>();
     }
     
     public void estadoBotoesNovo(){
@@ -186,7 +193,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtCidade.setEnabled(false);
         txtCep.setEnabled(false);
         txtFDataAdmissao.setEnabled(false);
-        txtTelefonesCadFunc.setEnabled(false);
+        txtTelefones.setEnabled(false);
         txtNickNameUsrCadFunc.setEnabled(false);
         pswSenhaUsrCadFunc.setEnabled(false);
         redPswSenhaUsrCadFunc.setEnabled(false);
@@ -257,16 +264,30 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         radioHabilitaManha.setEnabled(false);
         radioHabilitaTarde.setEnabled(false);
         txtCargo.setEnabled(true);
+        comboEspecialidade.setEnabled(false);
+        
+        radioPebICadFunc.setSelected(false);
+        radioPebIICadFunc.setSelected(false);
+        radioHabilitaManha.setSelected(false);
+        radioHabilitaTarde.setSelected(false);
+        radioCargoProfCadFunc.setSelected(false);
+        
+        txtCargo.setEnabled(true);
         comboEscolaOutroCargo.setEnabled(true);
         txtAObservacoes.setEnabled(true);
     } 
     
     public void setaFuncFalseEnabled(){
         comboEscolaOutroCargo.setEnabled(false);
+        txtCargo.setText("");
+        txtAObservacoes.setText("");
+        
         radioPebICadFunc.setEnabled(true);
+        radioPebICadFunc.setSelected(true);
         radioHabilitaManha.setEnabled(true);
         radioHabilitaTarde.setEnabled(true);
         radioPebIICadFunc.setEnabled(true);
+        
         txtCargo.setEnabled(false);
         txtAObservacoes.setEnabled(false);
     }
@@ -296,7 +317,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtNickNameUsrCadFunc.setText("");
         pswSenhaUsrCadFunc.setText("");
         redPswSenhaUsrCadFunc.setText("");
-        txtTelefonesCadFunc.setText("");
+        txtTelefones.setText("");
         camposTelef.exibeTelefonesNoJList(jListTelefonesCadFunc, telef);
         checkDesligado.setSelected(false);
         
@@ -490,7 +511,13 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
             periodoEditar(periodo);
         }
         checkPossuiDeficiencia.setSelected(deficiencia);
-        comboEscolaOutroCargo.setSelectedItem(escolaOutroCargo);
+        for (int i=0; i<comboEscolaOutroCargo.getItemCount(); i++){
+            comboEscolaOutroCargo.setSelectedIndex(i);
+            Escola e = (Escola) comboEscolaOutroCargo.getSelectedItem();
+            if (e.getId() == escolaOutroCargo.getId()){
+                break;
+            }
+        }
         comboAcessoUsrCadFunc.setSelectedIndex(acesso);
         txtNickNameUsrCadFunc.setText(usrName);
         pswSenhaUsrCadFunc.setText(senha);
@@ -540,9 +567,9 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     }
     
     private void adicionaTelefone(){
-        if (txtTelefonesCadFunc.getText().trim().length() != 0){
-                    camposTelef.colocaTelefoneNaLista(telef, txtTelefonesCadFunc);
-                    camposTelef.exibeTelefonesNoJList(jListTelefonesCadFunc, telef);
+        if (txtTelefones.getText().trim().length() != 0){
+            camposTelef.colocaTelefoneNaLista(telef, txtTelefones);
+            camposTelef.exibeTelefonesNoJList(jListTelefonesCadFunc, telef);
         }
     }
     
@@ -643,18 +670,18 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     }
     
     private void editar(){
-        novoFuncEnabled();
-        estadoBotoesNovo();
-        checkDesligado.setEnabled(true);
         if ((funcLogado.getAcesso() > pegaFuncTabela().getAcesso()) || funcLogado.getAcesso()>=2){
             edicao = true;
             editarFunc(pegaFuncTabela().getId());
             btnCancelarCadFunc.setEnabled(true);
+            novoFuncEnabled();
+            estadoBotoesNovo();
+            checkDesligado.setEnabled(true);
+            editarCargoFalse();
         } else {
             JOptionPane.showMessageDialog(null, "Você não tem autorização para "
                 + "editar esse usuário.");
         }
-        editarCargoFalse();
     }
     
     private void salvarPebI(){
@@ -766,9 +793,9 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         checkPossuiDeficiencia = new javax.swing.JCheckBox();
         txtCpf = new javax.swing.JFormattedTextField();
-        txtTelefonesCadFunc = new javax.swing.JFormattedTextField();
         checkDesligado = new javax.swing.JCheckBox();
         txtCep = new javax.swing.JFormattedTextField();
+        txtTelefones = new javax.swing.JTextField();
         tabCargoCadFunc = new javax.swing.JPanel();
         radioCargoProfCadFunc = new javax.swing.JRadioButton();
         panelProf = new javax.swing.JPanel();
@@ -976,11 +1003,6 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCpf.setInputVerifier(new VerificadorDeCpf());
 
-        txtTelefonesCadFunc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        txtTelefonesCadFunc.setEnabled(false);
-        txtTelefonesCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTelefonesCadFunc.setInputVerifier(new VerificadorDeTelefone());
-
         checkDesligado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         checkDesligado.setSelected(true);
         checkDesligado.setText("Funcionário ativo.");
@@ -994,6 +1016,9 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtCep.setEnabled(false);
         txtCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCep.setInputVerifier(new VerificadorCEP());
+
+        txtTelefones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTelefones.setInputVerifier(new VerificadorDeTelefone());
 
         javax.swing.GroupLayout tabDadosPessoasCadFuncLayout = new javax.swing.GroupLayout(tabDadosPessoasCadFunc);
         tabDadosPessoasCadFunc.setLayout(tabDadosPessoasCadFuncLayout);
@@ -1032,9 +1057,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                         .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
-                                .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtTelefonesCadFunc, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1043,7 +1066,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                                             .addComponent(btnRemoveTelefoneCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                                     .addGroup(tabDadosPessoasCadFuncLayout.createSequentialGroup()
                                         .addGap(258, 258, 258)
-                                        .addComponent(checkDesligado)))))
+                                        .addComponent(checkDesligado))))
+                            .addComponent(txtTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         tabDadosPessoasCadFuncLayout.setVerticalGroup(
@@ -1088,8 +1112,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                             .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefonesCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(txtTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(tabDadosPessoasCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1352,7 +1376,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
                 .addGroup(tabCargoCadFuncLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(radioCargoOutrosCadFunc)
                     .addComponent(panelOutrosCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         tabbedCadastrarFuncionarios.addTab("Cargo", tabCargoCadFunc);
@@ -1370,7 +1394,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         txtNickNameUsrCadFunc.setInputVerifier(new VerificadorUsuario());
 
         comboAcessoUsrCadFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboAcessoUsrCadFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
+        comboAcessoUsrCadFunc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2" }));
         comboAcessoUsrCadFunc.setEnabled(false);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1405,7 +1429,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         panelTabUsuarioLayout.setVerticalGroup(
             panelTabUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabUsuarioLayout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
+                .addContainerGap(114, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNickNameUsrCadFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1641,7 +1665,7 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtFDataNasc;
     private javax.swing.JTextField txtNickNameUsrCadFunc;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JFormattedTextField txtTelefonesCadFunc;
+    private javax.swing.JTextField txtTelefones;
     // End of variables declaration//GEN-END:variables
     private Funcionario funcLogado = new Funcionario();
     private ProfessorPebI profPebI = new ProfessorPebI();
@@ -1826,8 +1850,8 @@ public class JFCadastrarFuncionario extends javax.swing.JFrame {
         
         @Override
 	public boolean verify(JComponent jc) {
-            txtTelefonesCadFunc = (JFormattedTextField) jc;
-            String texto = txtTelefonesCadFunc.getText();
+            txtTelefones = (JTextField) jc;
+            String texto = txtTelefones.getText();
             
 
             try {

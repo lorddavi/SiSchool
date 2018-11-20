@@ -93,31 +93,36 @@
 	<field name="nomeResponsavel" class="java.lang.String">
 		<fieldDescription><![CDATA[nomeResponsavel]]></fieldDescription>
 	</field>
+	<field name="escola" class="br.com.davi.sischool.model.Escola">
+		<fieldDescription><![CDATA[escola]]></fieldDescription>
+	</field>
+	<field name="dataNasc" class="java.util.Date">
+		<fieldDescription><![CDATA[dataNasc]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cep]]></fieldDescription>
+	</field>
+	<field name="genero" class="java.lang.String">
+		<fieldDescription><![CDATA[genero]]></fieldDescription>
+	</field>
 	<title>
-		<band height="106" splitType="Stretch">
+		<band height="117" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
 			<staticText>
-				<reportElement x="19" y="60" width="161" height="30" uuid="29ad8ccf-3dd4-4c0a-aba9-b976a422b41f"/>
+				<reportElement x="90" y="10" width="440" height="30" uuid="29ad8ccf-3dd4-4c0a-aba9-b976a422b41f"/>
 				<textElement>
-					<font size="10"/>
+					<font size="14"/>
 				</textElement>
 				<text><![CDATA[    PREFEITURA MUNICIPAL DA ESTÂNCIA TURÍSTICA DE AVARÉ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="60" y="0" width="50" height="60" uuid="f3b69663-ba01-46e9-9bd9-2b30c76f7ef6"/>
+				<reportElement x="10" y="10" width="70" height="79" uuid="f3b69663-ba01-46e9-9bd9-2b30c76f7ef6"/>
 				<imageExpression><![CDATA["brgrande.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="198" y="10" width="350" height="20" uuid="4e03c34d-e7d3-4352-a598-3aec25ed4166"/>
+				<reportElement x="156" y="30" width="290" height="28" forecolor="#FF2BD8" uuid="0d3671ef-86ed-48d0-88f7-ac2f1115cdf2"/>
 				<textElement>
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[SECRETARIA MUNICIPAL DE EDUCAÇÃO - DIRETORIA DE AVARÉ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="5" y="86" width="205" height="20" forecolor="#FF2BD8" uuid="0d3671ef-86ed-48d0-88f7-ac2f1115cdf2"/>
-				<textElement>
-					<font size="10"/>
+					<font size="14"/>
 				</textElement>
 				<text><![CDATA[SECRETARIA MUNICIPAL DE EDUCAÇÃO]]></text>
 			</staticText>
@@ -133,12 +138,26 @@
 			<line>
 				<reportElement x="0" y="100" width="555" height="1" uuid="4145e33e-ea84-4d5f-a46b-9ab5bce21b04"/>
 			</line>
+			<staticText>
+				<reportElement x="106" y="80" width="350" height="20" uuid="fb220a89-76af-4b31-8a63-bfb0fe095056"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tel:  (014) 3711-2211]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="58" width="350" height="22" uuid="ec2e4742-555a-48fd-9342-45d041aa4c61"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Rua Pernambuco, 1065 - Centro - CEP 18705-020 - Avaré/SP]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="206" splitType="Stretch">
+		<band height="425" splitType="Stretch">
 			<textField>
-				<reportElement x="121" y="1" width="359" height="19" uuid="6ac96b3c-bfba-450b-a2c3-b06388458d4c">
+				<reportElement x="190" y="130" width="340" height="19" uuid="6ac96b3c-bfba-450b-a2c3-b06388458d4c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9835764e-6336-4021-be45-aea2c505dfd8"/>
 				</reportElement>
 				<textElement>
@@ -147,7 +166,7 @@
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="29" width="360" height="20" uuid="08e9bbd8-b306-48e0-b6a7-7d333bb270a2">
+				<reportElement x="190" y="190" width="340" height="20" uuid="08e9bbd8-b306-48e0-b6a7-7d333bb270a2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4037cde9-9630-43cb-bbbf-f86643e7f8d4"/>
 				</reportElement>
 				<textElement>
@@ -156,20 +175,20 @@
 				<textFieldExpression><![CDATA[$F{nomePai}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="6" y="30" width="100" height="20" uuid="e1117b7c-3390-41cb-9e67-ee7580108acc"/>
+				<reportElement x="30" y="191" width="100" height="20" uuid="e1117b7c-3390-41cb-9e67-ee7580108acc"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Nome do Pai:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="-2" width="1" height="208" uuid="05c7a6e4-8137-4c02-9605-38b0f8a200fb"/>
+				<reportElement x="0" y="-12" width="1" height="431" uuid="05c7a6e4-8137-4c02-9605-38b0f8a200fb"/>
 			</line>
 			<line>
-				<reportElement x="555" y="-2" width="1" height="207" uuid="30522654-899d-4d7f-b470-572a57d50ffa"/>
+				<reportElement x="555" y="-11" width="1" height="431" uuid="30522654-899d-4d7f-b470-572a57d50ffa"/>
 			</line>
 			<textField>
-				<reportElement x="122" y="58" width="358" height="26" uuid="ac1db35e-617b-49f7-bf05-4b3cbaf67fb2">
+				<reportElement x="190" y="221" width="340" height="20" uuid="ac1db35e-617b-49f7-bf05-4b3cbaf67fb2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b63d368-5442-4649-9e00-9f2094b25e8c"/>
 				</reportElement>
 				<textElement>
@@ -178,7 +197,7 @@
 				<textFieldExpression><![CDATA[$F{nomeMae}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="6" y="60" width="100" height="22" uuid="22297466-c9d9-4021-8908-ee64d16bd2ff">
+				<reportElement x="30" y="221" width="100" height="22" uuid="22297466-c9d9-4021-8908-ee64d16bd2ff">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b63d368-5442-4649-9e00-9f2094b25e8c"/>
 				</reportElement>
 				<textElement>
@@ -186,35 +205,26 @@
 				</textElement>
 				<text><![CDATA[Nome da Mãe:]]></text>
 			</staticText>
-			<line>
-				<reportElement x="1" y="205" width="555" height="1" uuid="985527b6-be1b-410a-8359-239655553c8b"/>
-			</line>
 			<textField>
-				<reportElement x="10" y="150" width="180" height="19" uuid="af81ccd8-8d17-4e5c-ae8e-590ba28117a3">
+				<reportElement x="190" y="253" width="340" height="19" uuid="af81ccd8-8d17-4e5c-ae8e-590ba28117a3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6f5a5ff-38f3-48fd-90fa-5ef8f38d6885"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="128" width="100" height="22" uuid="a825395b-9317-40f1-8629-c1c4594a0c3b">
+				<reportElement x="30" y="251" width="100" height="22" uuid="a825395b-9317-40f1-8629-c1c4594a0c3b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6f5a5ff-38f3-48fd-90fa-5ef8f38d6885"/>
 				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
 				<text><![CDATA[Endereço:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="444" y="150" width="100" height="50" uuid="fafd4e06-5ec1-4602-aa18-61731c172d18">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b4102db-6e54-4f6f-9acc-8e7db22f21dd"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{telefones}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="444" y="128" width="100" height="22" uuid="f3bb3f4c-16a0-49a0-91eb-d50cef13a128">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b4102db-6e54-4f6f-9acc-8e7db22f21dd"/>
-				</reportElement>
-				<text><![CDATA[telefones]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="5" y="1" width="109" height="19" uuid="08bd2a69-fbf0-4dbe-8ab1-d282df6e48be">
+				<reportElement x="30" y="130" width="109" height="19" uuid="08bd2a69-fbf0-4dbe-8ab1-d282df6e48be">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9835764e-6336-4021-be45-aea2c505dfd8"/>
 				</reportElement>
 				<textElement>
@@ -223,14 +233,119 @@
 				<text><![CDATA[Nome do Aluno:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1" uuid="7760f8b5-7672-44c1-893c-8b1b4ca79426"/>
+				<reportElement x="0" y="420" width="555" height="1" uuid="c2fbd02c-c69f-4d74-b835-a23ef0415a49"/>
 			</line>
+			<staticText>
+				<reportElement x="183" y="0" width="190" height="30" uuid="b7772b5f-56de-49a7-b74a-4f69800fe4fe"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Ficha Cadastral do Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="48" width="60" height="20" uuid="9d4439b5-3a08-4df6-949c-b6c673aca4bd"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Escola]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="30" y="69" width="500" height="21" uuid="c71174a2-76bf-40f5-a126-feaf2dd2f0a2"/>
+			</rectangle>
+			<textField>
+				<reportElement x="30" y="70" width="500" height="20" uuid="abd702f8-2101-4bea-8f82-5481227a7060"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escola}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="190" y="99" width="150" height="21" uuid="1342cfb6-4051-4f1d-b55d-6f98634c12da"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataNasc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="99" width="153" height="21" uuid="1750279e-0441-4f8d-8fba-d8375a250b38"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Data de Nascimento:]]></text>
+			</staticText>
 			<line>
-				<reportElement x="0" y="48" width="555" height="1" uuid="4777287f-2b91-4d01-8aa3-2ba7ef047eeb"/>
+				<reportElement x="174" y="22" width="201" height="1" uuid="7adb90f0-08bc-4c7c-a914-3b3f26c264be"/>
 			</line>
-			<line>
-				<reportElement x="0" y="78" width="555" height="1" uuid="c2fbd02c-c69f-4d74-b835-a23ef0415a49"/>
-			</line>
+			<textField>
+				<reportElement x="190" y="281" width="340" height="20" uuid="98878277-bf85-4cd0-882a-b8dff88e5a26"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="281" width="100" height="20" uuid="0b19f03e-8c96-4219-997b-66d8e8c182eb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Bairro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="99" width="130" height="21" uuid="14e1391d-8ca7-4935-9ece-4fcf5220da43"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ra}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="99" width="30" height="21" uuid="b49e8551-0a07-4e96-99a7-150343511837"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[RA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="160" width="340" height="20" uuid="ce207ece-aa25-4798-9740-da79e2489203"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="160" width="100" height="20" uuid="e46b7418-94e1-490d-a35e-05424fbf8ae4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Genero]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="310" width="340" height="20" uuid="aad45677-70ea-4ebf-8078-6333a1d247f8"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="310" width="100" height="20" uuid="7017ff2d-90ce-487b-9279-acf68e6b4ba6"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[CEP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="340" width="340" height="20" uuid="31f3d0d3-4833-40f1-b102-5fd8effe80de"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serie}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="340" width="100" height="20" uuid="2799d737-7a66-4976-9257-7483ab78a03e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Série:]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>

@@ -164,6 +164,9 @@ public class JFConsultas extends javax.swing.JFrame {
     private void preencheLista(Escola e){ 
         CamposDeTelefone cdt = new CamposDeTelefone();
         cdt.exibeTelefonesNoJList(jListTelefone, e.getTelefones());
+        
+        lblEnderecoEscola.setText(e.getEndereco());
+        lblEmailEscola.setText(e.getEmail());
     }
 
     private List<Aluno> buscarAluno() {
@@ -278,6 +281,10 @@ public class JFConsultas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jListTelefone = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblEnderecoEscola = new javax.swing.JLabel();
+        lblEmailEscola = new javax.swing.JLabel();
         tabFuncionarios = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaFuncionarios = new javax.swing.JTable();
@@ -415,6 +422,18 @@ public class JFConsultas extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Telefones:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Endereço:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("E-mail:");
+
+        lblEnderecoEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEnderecoEscola.setText("jLabel5");
+
+        lblEmailEscola.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEmailEscola.setText("jLabel5");
+
         javax.swing.GroupLayout tabConsultasEscolaLayout = new javax.swing.GroupLayout(tabConsultasEscola);
         tabConsultasEscola.setLayout(tabConsultasEscolaLayout);
         tabConsultasEscolaLayout.setHorizontalGroup(
@@ -422,34 +441,46 @@ public class JFConsultas extends javax.swing.JFrame {
             .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+                    .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                        .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
                         .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                        .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(38, 38, 38)
+                                .addComponent(lblEnderecoEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(60, 60, 60)
+                                .addComponent(lblEmailEscola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         tabConsultasEscolaLayout.setVerticalGroup(
             tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabConsultasEscolaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(8, 8, 8)
                 .addComponent(txtBuscarEscola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabConsultasEscolaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(7, 7, 7)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 182, Short.MAX_VALUE))
-                    .addComponent(scrollTabelaEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEnderecoEscola)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(tabConsultasEscolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(lblEmailEscola))))
                 .addContainerGap())
         );
 
@@ -589,9 +620,13 @@ public class JFConsultas extends javax.swing.JFrame {
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<Telefone> jListTelefone;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblEmailEscola;
+    private javax.swing.JLabel lblEnderecoEscola;
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JPanel panelBarraDeTitulo;
     private javax.swing.JPanel panelPrincipal;
@@ -647,9 +682,11 @@ public class JFConsultas extends javax.swing.JFrame {
         @Override
         public void valueChanged(ListSelectionEvent lse) {
             if (lse.getSource() == tabelaEscolas.getSelectionModel()){
-                int linha = tabelaEscolas.getSelectedRow();
-                Escola e = tme.getEscola(linha);
-                preencheLista(e);
+                if (tabelaEscolas.getSelectedRow() != -1){
+                    int linha = tabelaEscolas.getSelectedRow();
+                    Escola e = tme.getEscola(linha);
+                    preencheLista(e);
+                }
             }
         }
     }
@@ -699,7 +736,7 @@ public class JFConsultas extends javax.swing.JFrame {
                     if (funcLogado.getAcesso() >= 1){
                         btnEditar.setEnabled(true);
                         btnExcluir.setEnabled(true);
-                        btnRelatorio.setEnabled(true);
+                        btnRelatorio.setEnabled(false);
                     } else {
                         btnEditar.setEnabled(false);
                         btnExcluir.setEnabled(false);
@@ -713,7 +750,7 @@ public class JFConsultas extends javax.swing.JFrame {
                         btnRelatorio.setEnabled(false);
                     }   btnExcluir.setEnabled(false);
                     btnEditar.setEnabled(false);
-                    btnEstatisticas.setEnabled(true);
+                    btnEstatisticas.setEnabled(false);
                     break;
                 default:
                     break;

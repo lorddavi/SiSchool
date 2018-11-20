@@ -130,21 +130,27 @@ public class JFNotasEFaltas extends javax.swing.JFrame {
                     ProfessorPebI p1 = pidao.buscarId(func.getId());
                     for (Turma t: p1.getTurma()){
                         if (t.getEscola().getId() == e.getId()){
-                            comboSerie.addItem(t);
+                            if (!t.getTurma().substring(0, 1).equals("J")){
+                                comboSerie.addItem(t);
+                            }
                         }
                     }   break;
                 case "Professor PEB II":
                     ProfessorPebII p2 = piidao.buscarId(func.getId());
                     for (Turma t: p2.getTurmas()){
                         if (t.getEscola().getId() == e.getId()){
-                            comboSerie.addItem(t);
+                            if (!t.getTurma().substring(0, 1).equals("J")){
+                                comboSerie.addItem(t);
+                            }
                         }
                     }   break;
                 default:
                     TurmaDAO tdao = new TurmaDAO();
                     List<Turma> turmas = tdao.buscaPorEscola(e);
                     turmas.forEach((t) -> {
-                        comboSerie.addItem(t);
+                        if (!t.getTurma().substring(0, 1).equals("J")){
+                            comboSerie.addItem(t);
+                        }
                     });
                     break;
             }   

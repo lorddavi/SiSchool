@@ -10,10 +10,12 @@ import br.com.davi.sischool.model.Aluno;
 import br.com.davi.sischool.model.Escola;
 import br.com.davi.sischool.model.Funcionario;
 import br.com.davi.sischool.model.Login;
+import br.com.davi.sischool.model.OutroCargo;
 import br.com.davi.sischool.model.Transferencia;
 import br.com.davi.sischool.model.Turma;
 import br.com.davi.sischool.regras.AlunoDAO;
 import br.com.davi.sischool.regras.EscolaDAO;
+import br.com.davi.sischool.regras.OutroCargoDAO;
 import br.com.davi.sischool.regras.TransferenciaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +43,8 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
     }
     
     public JFTransferirAlunos(Login login){
-        func = login.getFunc();
+        OutroCargoDAO ocdao = new OutroCargoDAO();
+        func = ocdao.buscarFunc(login.getFunc().getId());
         initComponents();
         iniciarComponentes();
     }
@@ -50,6 +53,13 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
         setaListeners();
         preencheEscolas();
         preencheTurmas();
+        List<Aluno> lista = new ArrayList<>();
+        for (Aluno a: adao.buscaTodos()){
+            if (a.getEscola().getId() != func.getEscola().getId()){
+                lista.add(a);
+            }
+        }
+        atualizaTabela(lista);
     }
     
     private void setaListeners(){
@@ -79,7 +89,14 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
     }
     
     private void atualizaTabela(List<Aluno> alunos){
-        tma = new TableModelAluno(alunos);
+        List<Aluno> lista = new ArrayList<>();
+        for (Aluno a: alunos){
+            if (a.getEscola().getId() != func.getEscola().getId()){
+                lista.add(a);
+            }
+        }
+        
+        tma = new TableModelAluno(lista);
         tabelaAlunos.setModel(tma);
     }
         
@@ -105,9 +122,20 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
     }
     
     private void salvarTransferencia(){
-        pegaDados();
-        tDao.inserir(transf);
-        JOptionPane.showMessageDialog(null, "Solicitação enviada. Aguardando confirmação!");
+        Escola e = (Escola) comboEscolas.getSelectedItem();
+        
+        if (tabelaAlunos.getSelectedRow() != -1) {
+            Aluno a = selecionaAluno();
+            if (a.getEscola().getId() != e.getId()) {
+                pegaDados();
+                tDao.inserir(transf);
+                JOptionPane.showMessageDialog(this, "Solicitação enviada. Aguardando confirmação!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Você não pode transferir esse aluno para a escola em que ele estuda atualmente.");
+            }   
+        } else {
+            JOptionPane.showMessageDialog(this, "Você precisa selecionar um aluno para transferir.");
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -411,7 +439,7 @@ public class JFTransferirAlunos extends javax.swing.JFrame {
     private javax.swing.JTable tabelaAlunos;
     private javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables
-    private Funcionario func = new Funcionario();
+    private OutroCargo func = new OutroCargo();
     private EscolaDAO edao = new EscolaDAO();
     private AlunoDAO adao = new AlunoDAO();
     private TableModelAluno tma = new TableModelAluno();
